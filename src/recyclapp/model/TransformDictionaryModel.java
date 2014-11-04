@@ -10,6 +10,6 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public class DiagramController {
+public class TransformDictionaryModel {
     
 }

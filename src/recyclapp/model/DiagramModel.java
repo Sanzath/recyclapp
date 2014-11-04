@@ -10,6 +10,6 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public abstract class ElementModel {
+public class DiagramModel {
     
 }

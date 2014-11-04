@@ -4,12 +4,13 @@
  * Alexandre Poli * Clement Sanquier * Gabriel Grenon * Martin Boisvert
  */
 
-package recyclapp.model;
+package recyclapp.transport;
 
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class ElementModel {
-    
+public class Coords {
+    public float x;
+    public float y;
 }

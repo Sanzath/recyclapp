@@ -4,12 +4,14 @@
  * Alexandre Poli * Clement Sanquier * Gabriel Grenon * Martin Boisvert
  */
 
-package recyclapp.model;
+package recyclapp.transport;
+
+import java.util.ArrayList;
 
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class ElementModel {
-    
+public class MaterialFlowTable {
+    public ArrayList<MaterialFlow> flows;
 }
