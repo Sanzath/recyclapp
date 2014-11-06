@@ -5,11 +5,17 @@
  */
 
 package recyclapp.model;
-
+import recyclapp.transport.MaterialFlowTable;
 /**
  *
  * @author Martin Boisvert
  */
 public class TransformStationModel extends ElementModel {
     
+    
+    private int _inputMaterial;
+    private MaterialFlowTable _transformTable;
+    // private StationType _type;
+    
 }
+

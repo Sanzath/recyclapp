@@ -5,11 +5,13 @@
  */
 
 package recyclapp.model;
-
+import recyclapp.transport.MaterialFlowMatrix;
 /**
  *
  * @author Martin Boisvert
  */
 public class SortingStationModel extends ElementModel {
     
+    private MaterialFlowMatrix _sortingMatrix;
+    //private StationType _type;
 }

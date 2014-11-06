@@ -5,11 +5,13 @@
  */
 
 package recyclapp.model;
-
+import recyclapp.transport.MaterialFlowTable;
 /**
  *
  * @author Martin Boisvert
  */
 public class EntryPointModel extends ElementModel {
+    
+    private MaterialFlowTable _entryMaterials;
     
 }
