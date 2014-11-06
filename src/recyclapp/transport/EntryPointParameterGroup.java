@@ -5,8 +5,11 @@
  */
 
 package recyclapp.transport;
-
+import recyclapp.transport.MaterialFlowTable;
 
 public class EntryPointParameterGroup implements ParameterGroup {
+    
+    public MaterialFlowTable _entryMaterials;
+    
     
 }

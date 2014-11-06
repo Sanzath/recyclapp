@@ -13,4 +13,16 @@ package recyclapp.transport;
 public class Coords {
     public float x;
     public float y;
+    
+    public Coords()
+    {
+        x = 0;
+        y = 0;
+    }
+    
+    public Coords(int _x, int _y)
+    {
+        x = _x;
+        y = _y;
+    }
 }
