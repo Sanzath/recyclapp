@@ -6,10 +6,28 @@
 
 package recyclapp.controller;
 
+import recyclapp.model.HistoryModel;
+
 /**
  *
  * @author Martin Boisvert
  */
 public class HistoryController {
     
+    private HistoryModel model;
+    
+    public String getOptions()
+    {
+        return "placeholder";
+    }
+    
+    public void undo()
+    {
+        
+    }
+    
+    public void redo()
+    {
+        
+    }
 }

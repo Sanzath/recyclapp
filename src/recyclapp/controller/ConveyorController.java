@@ -6,10 +6,69 @@
 
 package recyclapp.controller;
 
+import recyclapp.model.ConveyorModel;
+
 /**
  *
  * @author Martin Boisvert
  */
 public class ConveyorController {
+    
+    private ConveyorModel model;
+    
+    public void select()
+    {
+        
+    }
+    
+    public void deselect()
+    {
+        
+    }
+    
+    public void remove()
+    {
+        
+    }
+    
+    public void addIntermediatePosition()
+    {
+        
+    }
+    
+    public void startMovingIntermediatePosition()
+    {
+        
+    }
+    
+    public void stopMovingIntermediatePosition()
+    {
+        
+    }
+    
+    public void removeIntermediatePosition(int index)
+    {
+        
+    }
+    
+    public String getBrief()
+    {
+        return "placeholder";
+    }
+    
+    public String getFull()
+    {
+        return "placeholder";
+    }
+    
+    public void updateName(String name)
+    {
+        //model.setName(name);
+    }
+    
+    public void updateMaxThroughput(float throughput)
+    {
+        //model.setMaxThroughput(throughput);
+    }
     
 }
