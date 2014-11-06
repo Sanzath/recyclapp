@@ -6,12 +6,10 @@
 
 package recyclapp.view;
 
-import javax.swing.JComponent;
-
 /**
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public class EntryPointView extends ElementView {
     
 }

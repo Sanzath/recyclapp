@@ -6,10 +6,12 @@
 
 package recyclapp.view;
 
+import javax.swing.JPanel;
+
 /**
  *
  * @author Martin Boisvert
  */
-public class DiagramView {
+public class DiagramView extends JPanel {
     
 }

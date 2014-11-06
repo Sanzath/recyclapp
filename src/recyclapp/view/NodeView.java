@@ -12,6 +12,6 @@ import javax.swing.JComponent;
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public class NodeView extends JComponent {
     
 }

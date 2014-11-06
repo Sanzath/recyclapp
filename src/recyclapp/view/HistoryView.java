@@ -6,12 +6,12 @@
 
 package recyclapp.view;
 
-import javax.swing.JComponent;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public class HistoryView extends JPanel {
     
 }

@@ -6,12 +6,12 @@
 
 package recyclapp.view;
 
-import javax.swing.JComponent;
+import javax.swing.JMenu;
 
 /**
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public class MenuView extends JMenu {
     
 }

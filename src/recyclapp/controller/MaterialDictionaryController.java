@@ -4,14 +4,12 @@
  * Alexandre Poli * Clement Sanquier * Gabriel Grenon * Martin Boisvert
  */
 
-package recyclapp.view;
-
-import javax.swing.JComponent;
+package recyclapp.controller;
 
 /**
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public class MaterialDictionaryController {
     
 }
