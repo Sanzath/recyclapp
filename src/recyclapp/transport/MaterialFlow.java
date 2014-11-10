@@ -11,12 +11,18 @@ package recyclapp.transport;
  * @author Martin Boisvert
  */
 public class MaterialFlow {
-    public int _id;
-    public float _flow;
+    public int aId;
+    public float aFlow;
     
     public MaterialFlow(int id, float flow)
     {
-        _id = id;
-        _flow = flow;
+        aId = id;
+        aFlow = flow;
+    }
+    
+    public MaterialFlow(MaterialFlow other)
+    {
+        aId = other.aId;
+        aFlow = other.aFlow;
     }
 }

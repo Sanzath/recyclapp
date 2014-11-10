@@ -13,5 +13,18 @@ import java.util.ArrayList;
  * @author Martin Boisvert
  */
 public class MaterialFlowTable {
-    public ArrayList<MaterialFlow> flows;
+    
+    final public ArrayList<MaterialFlow> aFlowTable = new ArrayList<>();
+    
+    public MaterialFlowTable()
+    {
+    }
+    
+    public MaterialFlowTable(MaterialFlowTable other)
+    {
+        for (MaterialFlow flow : other.aFlowTable)
+        {
+            aFlowTable.add(new MaterialFlow(flow));
+        }
+    }
 }

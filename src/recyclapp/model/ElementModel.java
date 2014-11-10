@@ -7,173 +7,183 @@
 package recyclapp.model;
 
 import java.awt.Color;
+import java.util.ArrayList;
+
 import recyclapp.transport.Coords;
-import recyclapp.transport.MaterialFlowMatrix;
 import recyclapp.transport.ParameterGroup;
-import recyclapp.transport.MaterialFlow;
-import recyclapp.transport.MaterialFlowTable;
 
 /**
  *
  * @author Martin Boisvert
  */
 public abstract class ElementModel {
-    private String _name;
-    private String _description;
-    private Float _maxInput;
-    private Color _color;
-    private Coords _coords;
-    private Coords _size;
+    private String aName;
+    private String aDescription;
+    private Float aMaxInput;
+    private Color aColor;
+    private final Coords aPosition;
+    private final Coords aSize;
+    
+    final private ArrayList<EntryNodeModel> aEntryNodes = new ArrayList<>();
+    final private ArrayList<ExitNodeModel> aExitNodes = new ArrayList<>();
     
     public ElementModel()
     {
-        _name = "no name";
-        _description = "no description";
-        _maxInput = 0.F;
-        this._color = Color.BLACK;
-        this._coords = new Coords();
-        this._size = new Coords();
-
-    }
-      
-    public void calculateExits()
-    {
-            
+        aName = "no name";
+        aDescription = "no description";
+        aMaxInput = 0.F;
+        aColor = Color.BLACK;
+        aPosition = new Coords();
+        aSize = new Coords(1, 1);
     }
     
-    public int getMinEntryNodes()
+    public ElementModel(ElementModel other)
     {
-        return 0;
+        aName = other.aName;
+        aDescription = other.aDescription;
+        aMaxInput = other.aMaxInput;
+        aColor = other.aColor;
+        aPosition = new Coords(other.aPosition);
+        aSize = new Coords(other.aSize);
+        
+        for (EntryNodeModel node : other.aEntryNodes)
+        {
+            aEntryNodes.add(new EntryNodeModel(this, node));
+        }
+        for (ExitNodeModel node : other.aExitNodes)
+        {
+            aExitNodes.add(new ExitNodeModel(this, node));
+        }
     }
     
-    public int getMinExitNodes()
+    public abstract void calculateExits();
+    
+    public abstract int getMinEntryNodes();
+    public abstract int getMinExitNodes();
+    
+    public abstract ParameterGroup getParameters();
+    public abstract void setParameters(ParameterGroup parameters);
+    
+    final public int getEntryNodesCount()
     {
-        return 0;
+        return aEntryNodes.size();
     }
     
-    public int getEntryNodesCount()
+    final public int getExitNodesCount()
     {
-        return 0;
-    }
-    
-    public int getExitNodesCount()
-    {
-        return 0;
+        return aExitNodes.size();
     }
     
     public void addEntryNode()
     {
-
+        aEntryNodes.add(new EntryNodeModel(this));
     }
     
     public void addExitNode()
     {
-
+        aExitNodes.add(new ExitNodeModel(this));
     }
     
-    public void removeEntryNode(int index)
+    final public void removeEntryNode(int index)
     {
-
+        if (getEntryNodesCount() > getMinEntryNodes())
+        {
+            aEntryNodes.remove(index);
+        }
     }
     
-    public void removeExitNode(int index)
+    final public void removeExitNode(int index)
     {
-
+        if (getExitNodesCount() > getMinExitNodes())
+        {
+            aExitNodes.remove(index);
+        }
     }
     
-    /*
-    public ParameterGroup getParameters()
-    {
-        return 0;
-    }
-    */
-    
-    public void setParameters(ParameterGroup parameters)
-    {
-        
-    }
 
     /**
-     * @return the _name
+     * @return the aName
      */
-    public String getName() {
-        return _name;
+    final public String getName() {
+        return aName;
     }
 
     /**
-     * @param _name the _name to set
+     * @param name the aName to set
      */
-    public void setName(String _name) {
-        this._name = _name;
+    final public void setName(String name) {
+        aName = name;
     }
 
     /**
-     * @return the _description
+     * @return the aDescription
      */
-    public String getDescription() {
-        return _description;
+    final public String getDescription() {
+        return aDescription;
     }
 
     /**
-     * @param _description the _description to set
+     * @param description the aDescription to set
      */
-    public void setDescription(String _description) {
-        this._description = _description;
+    final public void setDescription(String description) {
+        aDescription = description;
     }
 
     /**
-     * @return the _maxInput
+     * @return the aMaxInput
      */
     public Float getMaxInput() {
-        return _maxInput;
+        return aMaxInput;
     }
 
     /**
-     * @param _maxInput the _maxInput to set
+     * @param maxInput the aMaxInput to set
      */
-    public void setMaxInput(Float _maxInput) {
-        this._maxInput = _maxInput;
+    final public void setMaxInput(Float maxInput) {
+        aMaxInput = maxInput;
     }
 
     /**
-     * @return the _color
+     * @return the aColor
      */
-    public Color getColor() {
-        return _color;
+    final public Color getColor() {
+        return aColor;
     }
 
     /**
-     * @param _color the _color to set
+     * @param color the aColor to set
      */
-    public void setColor(Color _color) {
-        this._color = _color;
+    final public void setColor(Color color) {
+        aColor = color;
     }
 
     /**
-     * @return the _coords
+     * @return the aPosition
      */
-    public Coords getCoords() {
-        return _coords;
+    final public Coords getPosition() {
+        return new Coords(aPosition);
     }
 
     /**
-     * @param _coords the _coords to set
+     * @param position the aPosition to set
      */
-    public void setCoords(Coords _coords) {
-        this._coords = _coords;
+    public final void setPosition(Coords position) {
+        aPosition.x = position.x;
+        aPosition.y = position.y;
     }
 
     /**
-     * @return the _size
+     * @return the aSize
      */
-    public Coords getSize() {
-        return _size;
+    final public Coords getSize() {
+        return new Coords(aSize);
     }
 
     /**
-     * @param _size the _size to set
+     * @param size the aSize to set
      */
-    public void setSize(Coords _size) {
-        this._size = _size;
+    public final void setSize(Coords size) {
+        aSize.x = size.x;
+        aSize.y = size.y;
     }
 }

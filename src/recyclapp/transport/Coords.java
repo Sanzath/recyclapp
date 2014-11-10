@@ -25,4 +25,10 @@ public class Coords {
         x = _x;
         y = _y;
     }
+    
+    public Coords(Coords other)
+    {
+        x = other.x;
+        y = other.y;
+    }
 }

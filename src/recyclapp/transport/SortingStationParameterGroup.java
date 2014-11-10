@@ -5,8 +5,9 @@
  */
 
 package recyclapp.transport;
-import recyclapp.transport.MaterialFlowMatrix;
 
-public class SortingStationParameterGroup implements ParameterGroup {
+public class SortingStationParameterGroup implements ParameterGroup
+{
+    
     
 }
