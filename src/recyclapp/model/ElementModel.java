@@ -36,6 +36,15 @@ public abstract class ElementModel {
         aColor = Color.BLACK;
         aPosition = new Coords();
         aSize = new Coords(1, 1);
+        
+        for (int i = 0; i < getMinEntryNodes(); i++)
+        {
+            aEntryNodes.add(new EntryNodeModel(this));
+        }
+        for (int i = 0; i < getMinExitNodes(); i++)
+        {
+            aExitNodes.add(new ExitNodeModel(this));
+        }
     }
     
     public ElementModel(ElementModel other)
@@ -62,6 +71,9 @@ public abstract class ElementModel {
     public abstract int getMinEntryNodes();
     public abstract int getMinExitNodes();
     
+    public abstract int getMaxEntryNodes();
+    public abstract int getMaxExitNodes();
+    
     public abstract ParameterGroup getParameters();
     public abstract void setParameters(ParameterGroup parameters);
     
@@ -77,12 +89,18 @@ public abstract class ElementModel {
     
     public void addEntryNode()
     {
-        aEntryNodes.add(new EntryNodeModel(this));
+        if (getEntryNodesCount() < getMaxEntryNodes())
+        {
+            aEntryNodes.add(new EntryNodeModel(this));
+        }
     }
     
     public void addExitNode()
     {
-        aExitNodes.add(new ExitNodeModel(this));
+        if (getExitNodesCount() < getMaxExitNodes())
+        {
+            aExitNodes.add(new ExitNodeModel(this));
+        }
     }
     
     final public void removeEntryNode(int index)
