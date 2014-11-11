@@ -23,6 +23,7 @@ public abstract class ElementModel {
     private Color aColor;
     private final Coords aPosition;
     private final Coords aSize;
+    private String aTEst;
     
     final private ArrayList<EntryNodeModel> aEntryNodes = new ArrayList<>();
     final private ArrayList<ExitNodeModel> aExitNodes = new ArrayList<>();
