@@ -38,5 +38,15 @@ public class ExitPointModel extends ElementModel {
     public void setParameters(ParameterGroup parameters) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
+
+    @Override
+    public int getMaxEntryNodes() {
+        return 1;
+    }
+
+    @Override
+    public int getMaxExitNodes() {
+        return 0;
+    }
     
 }
