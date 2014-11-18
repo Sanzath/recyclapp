@@ -43,16 +43,18 @@ public class MainView extends javax.swing.JFrame {
         jSeparator7 = new javax.swing.JToolBar.Separator();
         ButtonOutilsZoom = new javax.swing.JButton();
         jSeparator8 = new javax.swing.JToolBar.Separator();
-        jToggleButton1 = new javax.swing.JToggleButton();
+        ButtonGrille = new javax.swing.JToggleButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         ButtonOutilsExport = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        PanelPosition = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
-        jPanel2 = new javax.swing.JPanel();
+        PanelToolBox = new javax.swing.JPanel();
+        jScrollPanelTree = new javax.swing.JScrollPane();
+        Tree = new javax.swing.JTree();
+        PanelEntreeSortie = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        JTree = new javax.swing.JTree();
-        jPanel3 = new javax.swing.JPanel();
-        jPanel4 = new javax.swing.JPanel();
+        TextEntreeSortie = new javax.swing.JTextArea();
+        PanelGraph = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jEditorPane1 = new javax.swing.JEditorPane();
         MenuBar = new javax.swing.JMenuBar();
@@ -111,6 +113,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsStart.setFocusable(false);
         ButtonOutilsStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsStart.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsStartActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsStart);
         OutilsBar.add(jSeparator3);
 
@@ -134,17 +141,17 @@ public class MainView extends javax.swing.JFrame {
         OutilsBar.add(ButtonOutilsZoom);
         OutilsBar.add(jSeparator8);
 
-        jToggleButton1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/table41.png"))); // NOI18N
-        jToggleButton1.setBorder(null);
-        jToggleButton1.setFocusable(false);
-        jToggleButton1.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        jToggleButton1.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+        ButtonGrille.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/table41.png"))); // NOI18N
+        ButtonGrille.setBorder(null);
+        ButtonGrille.setFocusable(false);
+        ButtonGrille.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        ButtonGrille.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonGrille.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
+                ButtonGrilleActionPerformed(evt);
             }
         });
-        OutilsBar.add(jToggleButton1);
+        OutilsBar.add(ButtonGrille);
         OutilsBar.add(jSeparator4);
 
         ButtonOutilsExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/export2.png"))); // NOI18N
@@ -156,54 +163,59 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         OutilsBar.add(ButtonOutilsExport);
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelPosition.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel1.setText("Position : 253,25m");
-        jPanel1.add(jLabel1);
+        PanelPosition.add(jLabel1);
 
-        jPanel2.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelToolBox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jScrollPane1.setViewportView(JTree);
+        jScrollPanelTree.setViewportView(Tree);
 
-        javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
-        jPanel2.setLayout(jPanel2Layout);
-        jPanel2Layout.setHorizontalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 153, javax.swing.GroupLayout.PREFERRED_SIZE)
+        javax.swing.GroupLayout PanelToolBoxLayout = new javax.swing.GroupLayout(PanelToolBox);
+        PanelToolBox.setLayout(PanelToolBoxLayout);
+        PanelToolBoxLayout.setHorizontalGroup(
+            PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPanelTree, javax.swing.GroupLayout.DEFAULT_SIZE, 153, Short.MAX_VALUE)
+        );
+        PanelToolBoxLayout.setVerticalGroup(
+            PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPanelTree, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+
+        PanelEntreeSortie.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+
+        TextEntreeSortie.setEditable(false);
+        TextEntreeSortie.setColumns(20);
+        TextEntreeSortie.setRows(5);
+        jScrollPane1.setViewportView(TextEntreeSortie);
+
+        javax.swing.GroupLayout PanelEntreeSortieLayout = new javax.swing.GroupLayout(PanelEntreeSortie);
+        PanelEntreeSortie.setLayout(PanelEntreeSortieLayout);
+        PanelEntreeSortieLayout.setHorizontalGroup(
+            PanelEntreeSortieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(PanelEntreeSortieLayout.createSequentialGroup()
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
-        jPanel2Layout.setVerticalGroup(
-            jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        PanelEntreeSortieLayout.setVerticalGroup(
+            PanelEntreeSortieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane1)
         );
 
-        jPanel3.setBorder(javax.swing.BorderFactory.createEtchedBorder());
-
-        javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
-        jPanel3.setLayout(jPanel3Layout);
-        jPanel3Layout.setHorizontalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 140, Short.MAX_VALUE)
-        );
-        jPanel3Layout.setVerticalGroup(
-            jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 0, Short.MAX_VALUE)
-        );
-
-        jPanel4.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        PanelGraph.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jScrollPane2.setViewportView(jEditorPane1);
 
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+        javax.swing.GroupLayout PanelGraphLayout = new javax.swing.GroupLayout(PanelGraph);
+        PanelGraph.setLayout(PanelGraphLayout);
+        PanelGraphLayout.setHorizontalGroup(
+            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 352, Short.MAX_VALUE)
         );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 319, Short.MAX_VALUE)
+        PanelGraphLayout.setVerticalGroup(
+            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -218,14 +230,14 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(OutilsBar, javax.swing.GroupLayout.DEFAULT_SIZE, 613, Short.MAX_VALUE)
-            .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addComponent(OutilsBar, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+            .addComponent(PanelPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(PanelToolBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(PanelGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(PanelEntreeSortie, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -233,19 +245,24 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(OutilsBar, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(PanelToolBox, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelEntreeSortie, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PanelGraph, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(PanelPosition, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+    private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    }//GEN-LAST:event_ButtonGrilleActionPerformed
+
+    private void ButtonOutilsStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsStartActionPerformed
+        // TODO add your handling code here:
+        TextEntreeSortie.setText("Entree = fsoiefsefh");
+    }//GEN-LAST:event_ButtonOutilsStartActionPerformed
 
     /**
      * @param args the command line arguments
@@ -278,12 +295,14 @@ public class MainView extends javax.swing.JFrame {
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
                 new MainView().setVisible(true);
+                
             }
         });
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton BouttonOutilsOuvir;
+    private javax.swing.JToggleButton ButtonGrille;
     private javax.swing.JButton ButtonOutilsExport;
     private javax.swing.JButton ButtonOutilsNouveau;
     private javax.swing.JButton ButtonOutilsRedo;
@@ -291,19 +310,21 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton ButtonOutilsStart;
     private javax.swing.JButton ButtonOutilsUndo;
     private javax.swing.JButton ButtonOutilsZoom;
-    private javax.swing.JTree JTree;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JToolBar OutilsBar;
+    private javax.swing.JPanel PanelEntreeSortie;
+    private javax.swing.JPanel PanelGraph;
+    private javax.swing.JPanel PanelPosition;
+    private javax.swing.JPanel PanelToolBox;
+    private javax.swing.JTextArea TextEntreeSortie;
+    private javax.swing.JTree Tree;
     private javax.swing.JEditorPane jEditorPane1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
-    private javax.swing.JPanel jPanel1;
-    private javax.swing.JPanel jPanel2;
-    private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane jScrollPanelTree;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
@@ -312,6 +333,5 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
-    private javax.swing.JToggleButton jToggleButton1;
     // End of variables declaration//GEN-END:variables
 }
