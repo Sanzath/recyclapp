@@ -6,6 +6,10 @@
 
 package recyclapp.view;
 
+import javax.swing.JTree;
+import javax.swing.SwingUtilities;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
 /**
  *
  * @author Sanquer
@@ -15,8 +19,10 @@ public class MainView extends javax.swing.JFrame {
     /**
      * Creates new form MainView
      */
+    
     public MainView() {
         initComponents();
+        buildTree();
     }
 
     /**
@@ -256,7 +262,7 @@ public class MainView extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
-        // TODO add your handling code here:
+        Tree.setEditable(true);
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void ButtonOutilsStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsStartActionPerformed
@@ -264,6 +270,29 @@ public class MainView extends javax.swing.JFrame {
         TextEntreeSortie.setText("Entree = fsoiefsefh");
     }//GEN-LAST:event_ButtonOutilsStartActionPerformed
 
+    private void buildTree(){
+        //Création d'une racine
+        DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Element");
+        DefaultTreeModel x = new DefaultTreeModel(racine);
+        //Nous allons ajouter des des feuilles à notre racine
+        
+         DefaultMutableTreeNode rep = new DefaultMutableTreeNode("Station");
+         racine.add(rep); 
+         DefaultMutableTreeNode rep2 = new DefaultMutableTreeNode("Jonction");
+         racine.add(rep2); 
+         DefaultMutableTreeNode rep3 = new DefaultMutableTreeNode("Convoyeur");
+         racine.add(rep3);
+         
+         DefaultMutableTreeNode rep4 = new DefaultMutableTreeNode("Entrée Usine");
+         racine.add(rep4);
+         
+         DefaultMutableTreeNode rep5 = new DefaultMutableTreeNode("Sortie Usine");
+         racine.add(rep5);
+
+         Tree.setModel(x); 
+    }
+    
+    
     /**
      * @param args the command line arguments
      */
@@ -294,8 +323,7 @@ public class MainView extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new MainView().setVisible(true);
-                
+                new MainView().setVisible(true);  
             }
         });
     }
