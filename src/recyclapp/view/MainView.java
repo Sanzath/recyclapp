@@ -6,8 +6,6 @@
 
 package recyclapp.view;
 
-import javax.swing.JTree;
-import javax.swing.SwingUtilities;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 /**
@@ -152,11 +150,6 @@ public class MainView extends javax.swing.JFrame {
         ButtonGrille.setFocusable(false);
         ButtonGrille.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonGrille.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        ButtonGrille.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                ButtonGrilleActionPerformed(evt);
-            }
-        });
         OutilsBar.add(ButtonGrille);
         OutilsBar.add(jSeparator4);
 
@@ -261,10 +254,6 @@ public class MainView extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
-        Tree.setEditable(true);
-    }//GEN-LAST:event_ButtonGrilleActionPerformed
-
     private void ButtonOutilsStartActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsStartActionPerformed
         // TODO add your handling code here:
         TextEntreeSortie.setText("Entree = fsoiefsefh");
@@ -289,7 +278,8 @@ public class MainView extends javax.swing.JFrame {
          DefaultMutableTreeNode rep5 = new DefaultMutableTreeNode("Sortie Usine");
          racine.add(rep5);
 
-         Tree.setModel(x); 
+         Tree.setModel(x);
+         Tree.setDragEnabled(true);
     }
     
     
