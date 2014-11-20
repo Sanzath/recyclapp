@@ -18,9 +18,12 @@ public class MainView extends javax.swing.JFrame {
      * Creates new form MainView
      */
     
+    boolean aGrille;
+    
     public MainView() {
         initComponents();
         buildTree();
+        aGrille = ButtonGrille.isSelected();
     }
 
     /**
@@ -213,7 +216,7 @@ public class MainView extends javax.swing.JFrame {
         );
         PanelEntreeSortieLayout.setVerticalGroup(
             PanelEntreeSortieLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 261, Short.MAX_VALUE)
+            .addComponent(jScrollPane1)
         );
 
         PanelGraph.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -256,7 +259,7 @@ public class MainView extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(OutilsBar, javax.swing.GroupLayout.DEFAULT_SIZE, 695, Short.MAX_VALUE)
+            .addComponent(OutilsBar, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addComponent(PanelPosition, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(PanelToolBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -287,12 +290,16 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonOutilsStartActionPerformed
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
-        
+        aGrille = ButtonGrille.isSelected();
+        Grille = new DiagramView(SlideZoom.getValue(),aGrille);
+        jScrollPane2.setViewportView(Grille);
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
         // TODO add your handling code here:
         TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
+        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
+        jScrollPane2.setViewportView(Grille);
     }//GEN-LAST:event_SlideZoomMouseDragged
 
     private void buildTree(){

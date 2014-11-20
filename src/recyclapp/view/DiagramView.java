@@ -21,11 +21,19 @@ import javax.swing.JPanel;
   public class DiagramView extends JPanel
   {
        
-      public int taille;
+      public int aTaille;
+      public boolean aGrille;
       
     public DiagramView()
     {
-        taille = 25;
+        aTaille = 50;
+        aGrille = true;
+    }
+    
+    public DiagramView(int taille,boolean grille)
+    {
+        aTaille = taille;
+        aGrille = grille;
     }
  
     @Override
@@ -39,17 +47,23 @@ import javax.swing.JPanel;
         g2.fillRect(0, 0, this.getWidth(), this.getHeight());
         
         g2.setColor(Color.GRAY);
-        g.drawRect(0, 0, this.getWidth(), this.getHeight());
-        
-        g2.setColor(Color.GRAY);
+        g2.drawRect(0, 0, this.getWidth(), this.getHeight());
         
         
+        if(aGrille == true){
+            drawGrille(g);
+        }
         
+    }
+    
+    public void drawGrille(Graphics g)
+    {
         int i ;
-        for(i=1;i<((Math.max(this.getHeight(),this.getWidth()))/this.taille)+1;i++)
+        for(i=1;i<((Math.max(this.getHeight(),this.getWidth()))/this.aTaille)+1;i++)
         {
-            g2.drawLine(i*this.taille, 0, i*this.taille, this.getHeight());
-            g2.drawLine(0, i*this.taille, this.getWidth(), i*this.taille);
+            g.setColor(Color.GRAY);
+            g.drawLine(i*this.aTaille, 0, i*this.aTaille, this.getHeight());
+            g.drawLine(0, i*this.aTaille, this.getWidth(), i*this.aTaille);
         }
     }
   }
