@@ -172,6 +172,9 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         OutilsBar.add(ButtonOutilsExport);
 
+        SlideZoom.setMajorTickSpacing(1);
+        SlideZoom.setMinimum(1);
+        SlideZoom.setMinorTickSpacing(1);
         SlideZoom.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
                 SlideZoomMouseDragged(evt);
