@@ -9,15 +9,39 @@ package recyclapp.model;
 import recyclapp.transport.StationType;
 import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.ParameterGroup;
+import recyclapp.transport.TransformStationParameterGroup;
 /**
  *
  * @author Martin Boisvert
  */
-public class TransformStationModel extends ElementModel {
+public final class TransformStationModel extends ElementModel {
     
-    private int aInputMaterial;
-    private MaterialFlowTable aTransformTable;
+    private final EntryNodeModel aEntryNode;
+    private final ExitNodeModel aExitNode;
+    
+    private int aInputMaterial = -1;
+    private MaterialFlowTable aTransformTable = new MaterialFlowTable();
     private StationType aType;
+
+    public TransformStationModel() {
+        aEntryNode = new EntryNodeModel(this);
+        aExitNode = new ExitNodeModel(this);
+        
+        aEntryNode.setAngle(ENTRY_NODE_DEFAULT_ANGLE);
+        aExitNode.setAngle(EXIT_NODE_DEFAULT_ANGLE);
+    }
+    
+    public TransformStationModel(TransformStationModel other) {
+        aEntryNode = new EntryNodeModel(this, other.aExitNode);
+        aExitNode = new ExitNodeModel(this, other.aExitNode);
+        
+        setParameters(other.getParameters());
+    }
+    
+    @Override
+    protected ElementModel copy() {
+        return new TransformStationModel(this);
+    }
 
     @Override
     public void calculateExits() {
@@ -25,33 +49,47 @@ public class TransformStationModel extends ElementModel {
     }
 
     @Override
-    public int getMinEntryNodes() {
+    public boolean canAddEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canAddExitNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveExitNode() {
+        return false;
+    }
+
+    @Override
+    public int getEntryNodesCount() {
         return 1;
     }
 
     @Override
-    public int getMinExitNodes() {
+    public int getExitNodesCount() {
         return 1;
     }
 
     @Override
     public ParameterGroup getParameters() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        return new TransformStationParameterGroup(aInputMaterial, aTransformTable, aType);
     }
-
+    
     @Override
     public void setParameters(ParameterGroup parameters) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getMaxEntryNodes() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxExitNodes() {
-        return 1;
+        TransformStationParameterGroup transformParameters = (TransformStationParameterGroup) parameters;
+        
+        aInputMaterial = transformParameters.aInputMaterial;
+        aTransformTable = transformParameters.aTransformTable;
+        aType = transformParameters.aType;
     }
     
 }

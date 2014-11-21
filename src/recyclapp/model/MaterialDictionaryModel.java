@@ -13,13 +13,18 @@ import java.util.HashMap;
  *
  * @author Martin Boisvert
  */
-public class MaterialDictionaryModel {
+public final class MaterialDictionaryModel {
     private static MaterialDictionaryModel aInstance;
     
-    private Map<Integer, String> aMaterials = new HashMap<>();
-    private int nextId = 0;
+    private final Map<Integer, String> aMaterials = new HashMap<>();
+    private int aNextId = 0;
     
-    private MaterialDictionaryModel() {}
+    private MaterialDictionaryModel() {
+        // By default, have 3 materials
+        addMaterial("Metal");
+        addMaterial("Bois");
+        addMaterial("Plastique");
+    }
     
     public static MaterialDictionaryModel getInstance() {
         if (aInstance == null) {
@@ -28,5 +33,34 @@ public class MaterialDictionaryModel {
         return aInstance;
     }
     
+    public void addMaterial(String name) {
+        if (!aMaterials.containsValue(name))
+        {
+            aMaterials.put(aNextId, name);
+            aNextId++;
+        }
+    }
     
+    public String getMaterialName(int id) {
+        return aMaterials.get(id);
+    }
+    
+    public int getMaterialId(String name) {
+        for (Map.Entry<Integer, String> entry : aMaterials.entrySet())
+        {
+            if (entry.getValue().equals(name))
+            {
+                return entry.getKey();
+            }
+        }
+        return -1;
+    }
+    
+    public void removeMaterial(int id) {
+        aMaterials.remove(id);
+    }
+    
+    public void removeMaterial(String name) {
+        removeMaterial(getMaterialId(name));
+    }
 }

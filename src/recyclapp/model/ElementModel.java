@@ -7,7 +7,6 @@
 package recyclapp.model;
 
 import java.awt.Color;
-import java.util.ArrayList;
 
 import recyclapp.transport.Coords;
 import recyclapp.transport.ParameterGroup;
@@ -17,16 +16,16 @@ import recyclapp.transport.ParameterGroup;
  * @author Martin Boisvert
  */
 public abstract class ElementModel {
+    protected static final int ENTRY_NODE_DEFAULT_ANGLE = 180;
+    protected static final int EXIT_NODE_DEFAULT_ANGLE = 0;
+    protected static final int NODE_SPACING = 30;
+    
     private String aName;
     private String aDescription;
     private Float aMaxInput;
     private Color aColor;
     private final Coords aPosition;
     private final Coords aSize;
-    private String aTEst;
-    
-    final private ArrayList<EntryNodeModel> aEntryNodes = new ArrayList<>();
-    final private ArrayList<ExitNodeModel> aExitNodes = new ArrayList<>();
     
     public ElementModel()
     {
@@ -36,15 +35,6 @@ public abstract class ElementModel {
         aColor = Color.BLACK;
         aPosition = new Coords();
         aSize = new Coords(1, 1);
-        
-        for (int i = 0; i < getMinEntryNodes(); i++)
-        {
-            aEntryNodes.add(new EntryNodeModel(this));
-        }
-        for (int i = 0; i < getMinExitNodes(); i++)
-        {
-            aExitNodes.add(new ExitNodeModel(this));
-        }
     }
     
     public ElementModel(ElementModel other)
@@ -55,71 +45,28 @@ public abstract class ElementModel {
         aColor = other.aColor;
         aPosition = new Coords(other.aPosition);
         aSize = new Coords(other.aSize);
-        
-        for (EntryNodeModel node : other.aEntryNodes)
-        {
-            aEntryNodes.add(new EntryNodeModel(this, node));
-        }
-        for (ExitNodeModel node : other.aExitNodes)
-        {
-            aExitNodes.add(new ExitNodeModel(this, node));
-        }
     }
+    
+    protected abstract ElementModel copy();
     
     public abstract void calculateExits();
     
-    public abstract int getMinEntryNodes();
-    public abstract int getMinExitNodes();
+    public abstract boolean canAddEntryNode();
+    public abstract boolean canAddExitNode();
+    public abstract boolean canRemoveEntryNode();
+    public abstract boolean canRemoveExitNode();
     
-    public abstract int getMaxEntryNodes();
-    public abstract int getMaxExitNodes();
+    public void addEntryNode() {}
+    public void addExitNode() {}
+    public void removeEntryNode(int index) {}
+    public void removeExitNode(int index) {}
     
-    public abstract ParameterGroup getParameters();
-    public abstract void setParameters(ParameterGroup parameters);
+    public abstract int getEntryNodesCount();
+    public abstract int getExitNodesCount();
     
-    final public int getEntryNodesCount()
-    {
-        return aEntryNodes.size();
-    }
+    public ParameterGroup getParameters() { return null; }
+    public void setParameters(ParameterGroup parameters) {}
     
-    final public int getExitNodesCount()
-    {
-        return aExitNodes.size();
-    }
-    
-    public void addEntryNode()
-    {
-        if (getEntryNodesCount() < getMaxEntryNodes())
-        {
-            aEntryNodes.add(new EntryNodeModel(this));
-        }
-    }
-    
-    public void addExitNode()
-    {
-        if (getExitNodesCount() < getMaxExitNodes())
-        {
-            aExitNodes.add(new ExitNodeModel(this));
-        }
-    }
-    
-    final public void removeEntryNode(int index)
-    {
-        if (getEntryNodesCount() > getMinEntryNodes())
-        {
-            aEntryNodes.remove(index);
-        }
-    }
-    
-    final public void removeExitNode(int index)
-    {
-        if (getExitNodesCount() > getMinExitNodes())
-        {
-            aExitNodes.remove(index);
-        }
-    }
-    
-
     /**
      * @return the aName
      */
@@ -151,7 +98,7 @@ public abstract class ElementModel {
     /**
      * @return the aMaxInput
      */
-    public Float getMaxInput() {
+    final public Float getMaxInput() {
         return aMaxInput;
     }
 
@@ -186,7 +133,7 @@ public abstract class ElementModel {
     /**
      * @param position the aPosition to set
      */
-    public final void setPosition(Coords position) {
+    final public void setPosition(Coords position) {
         aPosition.x = position.x;
         aPosition.y = position.y;
     }
@@ -201,8 +148,9 @@ public abstract class ElementModel {
     /**
      * @param size the aSize to set
      */
-    public final void setSize(Coords size) {
+    final public void setSize(Coords size) {
         aSize.x = size.x;
         aSize.y = size.y;
     }
+    
 }

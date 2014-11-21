@@ -8,6 +8,13 @@ package recyclapp.transport;
 
 public class SortingStationParameterGroup implements ParameterGroup
 {
+    public MaterialFlowMatrix aSortingMatrix;
+    public StationType aType;
     
+    public SortingStationParameterGroup(
+            MaterialFlowMatrix sortingMatrix, StationType stationType) {
+        aSortingMatrix = new MaterialFlowMatrix(sortingMatrix);
+        aType = stationType;
+    }
     
 }

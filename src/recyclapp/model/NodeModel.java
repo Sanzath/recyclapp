@@ -76,7 +76,7 @@ public abstract class NodeModel {
     }
     
     /**
-     * Calculates and returns middle position of the Node. Bases calculation
+     * Calculates and returns top-left position of the Node. Bases calculation
      * on the parent element's middle position, its size, and the node's angle.
      * @return the middle position of the Node.
      */
@@ -86,7 +86,7 @@ public abstract class NodeModel {
         Coords parentSize = aElement.getSize();
         Coords offset = new Coords();
         
-        // Get center position -- assuming pos is bottom left
+        // Get center position -- assuming pos is top left
         position.x += parentSize.x / 2;
         position.y += parentSize.y / 2;
         
@@ -99,7 +99,7 @@ public abstract class NodeModel {
             offset.x = (parentSize.x + SIZE) / 2;
             offset.y = (float) (offset.x * Math.tan(Math.toRadians(aAngle)));
         }
-        // Stuck to top
+        // Stuck to bottom
         else if (aAngle < (180 - borderAngle))
         {
             offset.y = (parentSize.y + SIZE) / 2;
@@ -111,18 +111,26 @@ public abstract class NodeModel {
             offset.x = - (parentSize.x + SIZE) / 2;
             offset.y = (float) (offset.x * Math.tan(Math.toRadians(aAngle)));
         }
-        // Stuck to bottom
+        // Stuck to top
         else
         {
             offset.y = - (parentSize.y + SIZE) / 2;
             offset.x = (float) (offset.y / Math.tan(Math.toRadians(aAngle)));
         }
         
-        // Finally offset the position
+        // Offset the position to get the middle position of the node
         position.x += offset.x;
         position.y += offset.y;
         
+        // And offset to get the topleft position
+        position.x -= SIZE / 2;
+        position.y -= SIZE / 2;
+        
         return position;
+    }
+    
+    public final Coords getSize() {
+        return new Coords(SIZE, SIZE);
     }
     
 }

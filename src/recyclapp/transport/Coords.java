@@ -20,7 +20,7 @@ public class Coords {
         y = 0;
     }
     
-    public Coords(int _x, int _y)
+    public Coords(float _x, float _y)
     {
         x = _x;
         y = _y;

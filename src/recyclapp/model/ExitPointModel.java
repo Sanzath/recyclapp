@@ -6,47 +6,61 @@
 
 package recyclapp.model;
 
-import recyclapp.transport.ParameterGroup;
-
 /**
  *
  * @author Martin Boisvert
  */
 public class ExitPointModel extends ElementModel {
 
-    @Override
-    public void calculateExits() {
-        // No exits to calculate
-    }
-
-    @Override
-    public int getMinEntryNodes() {
-        return 1;
-    }
-
-    @Override
-    public int getMinExitNodes() {
-        return 0;
-    }
-
-    @Override
-    public ParameterGroup getParameters() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public void setParameters(ParameterGroup parameters) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getMaxEntryNodes() {
-        return 1;
-    }
-
-    @Override
-    public int getMaxExitNodes() {
-        return 0;
+    private final EntryNodeModel aEntryNode;
+    
+    public ExitPointModel() {
+        aEntryNode = new EntryNodeModel(this);
     }
     
+    public ExitPointModel(ExitPointModel other) {
+        super(other);
+        aEntryNode = new EntryNodeModel(this, other.aEntryNode);
+    }
+    
+    @Override
+    protected ElementModel copy() {
+        return new ExitPointModel(this);
+    }
+
+    @Override
+    public void calculateExits() {
+        // Nothing left to do!
+    }
+
+    @Override
+    public boolean canAddEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canAddExitNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveExitNode() {
+        return false;
+    }
+
+    @Override
+    public int getEntryNodesCount() {
+        return 1;
+    }
+
+    @Override
+    public int getExitNodesCount() {
+        return 0;
+    }
+
 }

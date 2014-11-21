@@ -14,24 +14,30 @@ import recyclapp.transport.EntryPointParameterGroup;
  *
  * @author Martin Boisvert
  */
-public class EntryPointModel extends ElementModel {
+public final class EntryPointModel extends ElementModel {
     
-    private MaterialFlowTable aEntryMaterials;
-
+    private MaterialFlowTable aEntryMaterials = new MaterialFlowTable();
+    private final ExitNodeModel aExitNode;
+    
+    public EntryPointModel() {
+        aExitNode = new ExitNodeModel(this);
+        aExitNode.setAngle(EXIT_NODE_DEFAULT_ANGLE);
+    }
+    
+    public EntryPointModel(EntryPointModel other) {
+        super(other);
+        aExitNode = new ExitNodeModel(this, other.aExitNode);
+        setParameters(other.getParameters());
+    }
+    
+    @Override
+    protected ElementModel copy() {
+        return new EntryPointModel(this);
+    }
 
     @Override
     public void calculateExits() {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
-    }
-
-    @Override
-    public int getMinEntryNodes() {
-        return 0;
-    }
-
-    @Override
-    public int getMinExitNodes() {
-        return 1;
     }
 
     @Override
@@ -41,17 +47,38 @@ public class EntryPointModel extends ElementModel {
 
     @Override
     public void setParameters(ParameterGroup parameters) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        EntryPointParameterGroup entryParameters = (EntryPointParameterGroup) parameters;
+        aEntryMaterials = entryParameters.aEntryMaterials;
     }
 
     @Override
-    public int getMaxEntryNodes() {
+    public int getEntryNodesCount() {
         return 0;
     }
 
     @Override
-    public int getMaxExitNodes() {
+    public int getExitNodesCount() {
         return 1;
+    }
+
+    @Override
+    public boolean canAddEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canAddExitNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveEntryNode() {
+        return false;
+    }
+
+    @Override
+    public boolean canRemoveExitNode() {
+        return false;
     }
     
 }
