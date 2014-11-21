@@ -11,5 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class MenuModel {
+    private static MenuModel aInstance;
+    
+    private MenuModel() {}
+    
+    public MenuModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new MenuModel();
+        }
+        return aInstance;
+    }
     
 }

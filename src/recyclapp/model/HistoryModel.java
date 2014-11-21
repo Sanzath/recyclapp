@@ -11,5 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class HistoryModel {
+    private static HistoryModel aInstance;
+    
+    private HistoryModel() {}
+    
+    public HistoryModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new HistoryModel();
+        }
+        return aInstance;
+    }
     
 }

@@ -11,5 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class ToolBoxModel {
+    private static ToolBoxModel aInstance;
+    
+    private ToolBoxModel() {}
+    
+    public ToolBoxModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new ToolBoxModel();
+        }
+        return aInstance;
+    }
     
 }
