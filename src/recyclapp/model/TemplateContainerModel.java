@@ -11,5 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class TemplateContainerModel {
+    private static TemplateContainerModel aInstance;
+    
+    private TemplateContainerModel() {}
+    
+    public static TemplateContainerModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new TemplateContainerModel();
+        }
+        return aInstance;
+    }
     
 }

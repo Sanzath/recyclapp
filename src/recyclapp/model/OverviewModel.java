@@ -11,5 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class OverviewModel {
+    private static OverviewModel aInstance;
+    
+    private OverviewModel() {}
+    
+    public static OverviewModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new OverviewModel();
+        }
+        return aInstance;
+    }
     
 }

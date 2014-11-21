@@ -15,7 +15,7 @@ import recyclapp.transport.Coords;
  * @author Martin Boisvert
  */
 public final class DiagramModel {
-    private final static DiagramModel INSTANCE = new DiagramModel();
+    private static DiagramModel aInstance;
     
     private final static float ZOOM_DELTA = 1.1F;
     
@@ -28,8 +28,11 @@ public final class DiagramModel {
     
     private DiagramModel() { }
     
-    public DiagramModel getInstance() {
-        return INSTANCE;
+    public static DiagramModel getInstance() {
+        if (aInstance == null) {
+            aInstance = new DiagramModel();
+        }
+        return aInstance;
     }
     
     public void zoomIn() {
