@@ -28,7 +28,7 @@ public final class DiagramModel {
     
     private DiagramModel() { }
     
-    public DiagramModel getInstance() {
+    public static DiagramModel getInstance() {
         if (aInstance == null) {
             aInstance = new DiagramModel();
         }

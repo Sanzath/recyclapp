@@ -21,7 +21,7 @@ public class MaterialDictionaryModel {
     
     private MaterialDictionaryModel() {}
     
-    public MaterialDictionaryModel getInstance() {
+    public static MaterialDictionaryModel getInstance() {
         if (aInstance == null) {
             aInstance = new MaterialDictionaryModel();
         }

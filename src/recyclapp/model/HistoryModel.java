@@ -15,7 +15,7 @@ public class HistoryModel {
     
     private HistoryModel() {}
     
-    public HistoryModel getInstance() {
+    public static HistoryModel getInstance() {
         if (aInstance == null) {
             aInstance = new HistoryModel();
         }

@@ -15,7 +15,7 @@ public class TemplateContainerModel {
     
     private TemplateContainerModel() {}
     
-    public TemplateContainerModel getInstance() {
+    public static TemplateContainerModel getInstance() {
         if (aInstance == null) {
             aInstance = new TemplateContainerModel();
         }

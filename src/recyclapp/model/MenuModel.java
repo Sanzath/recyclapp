@@ -15,7 +15,7 @@ public class MenuModel {
     
     private MenuModel() {}
     
-    public MenuModel getInstance() {
+    public static MenuModel getInstance() {
         if (aInstance == null) {
             aInstance = new MenuModel();
         }

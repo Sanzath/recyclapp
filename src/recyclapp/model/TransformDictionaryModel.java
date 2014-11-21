@@ -15,7 +15,7 @@ public class TransformDictionaryModel {
     
     private TransformDictionaryModel() {}
     
-    public TransformDictionaryModel getInstance() {
+    public static TransformDictionaryModel getInstance() {
         if (aInstance == null) {
             aInstance = new TransformDictionaryModel();
         }

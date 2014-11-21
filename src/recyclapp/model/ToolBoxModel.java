@@ -15,7 +15,7 @@ public class ToolBoxModel {
     
     private ToolBoxModel() {}
     
-    public ToolBoxModel getInstance() {
+    public static ToolBoxModel getInstance() {
         if (aInstance == null) {
             aInstance = new ToolBoxModel();
         }

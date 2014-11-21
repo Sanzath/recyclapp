@@ -15,7 +15,7 @@ public class OverviewModel {
     
     private OverviewModel() {}
     
-    public OverviewModel getInstance() {
+    public static OverviewModel getInstance() {
         if (aInstance == null) {
             aInstance = new OverviewModel();
         }
