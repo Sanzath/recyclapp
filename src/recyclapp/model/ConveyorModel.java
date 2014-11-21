@@ -16,31 +16,19 @@ import recyclapp.transport.MaterialFlowTable;
  */
 public class ConveyorModel {
     
-    private String aName;
-    private Float aMaxThroughput;
-    private ArrayList<Coords> aIntermediatePositions;
-    private EntryNodeModel aEntryNode;
-    private ExitNodeModel aExitNode;
+    private String aName = "";
+    private Float aMaxThroughput = 0.0F;
+    private final List<Coords> aIntermediatePositions = new ArrayList<>();
+    private final EntryNodeModel aEntryNode;
+    private final ExitNodeModel aExitNode;
     
     public MaterialFlowTable getThroughput ()
     {
         return aExitNode.getThroughput();
     }
     
-    public ConveyorModel ()
-    {
-        aName = "";
-        aMaxThroughput = 0.0f;
-        aIntermediatePositions = new ArrayList<> ();
-        aEntryNode = null;
-        aExitNode = null;
-    }
-    
     public ConveyorModel (EntryNodeModel entryNode, ExitNodeModel exitNode)
     {
-        aName = "";
-        aMaxThroughput = 0.0f;
-        aIntermediatePositions = new ArrayList<> ();
         aEntryNode = entryNode;
         aExitNode = exitNode;
     } 
@@ -55,24 +43,22 @@ public class ConveyorModel {
         return aExitNode;
     }
     
+    public String getName() {
+        return aName;
+    }
+    
     public void setName (String name)
     {
         aName = name;
     }
     
+    public float getMaxThroughput() {
+        return aMaxThroughput;
+    }
+    
     public void setMaxThroughput(Float MaxThroughput)
     {
         aMaxThroughput = MaxThroughput;
-    }
-    
-    public void setEntryNode (EntryNodeModel EntryNode)
-    {
-        aEntryNode = EntryNode;
-    }
-    
-    public void setExitNode (ExitNodeModel ExitNode)
-    {
-        aExitNode = ExitNode;
     }
     
     public void removeIntermediatePosition (int index)
@@ -88,5 +74,9 @@ public class ConveyorModel {
     public void moveIntermediatePosition (Coords position, int index)
     {
         aIntermediatePositions.set(index, position);
+    }
+    
+    public List<Coords> getIntermediatePositions() {
+        return aIntermediatePositions;
     }
 }

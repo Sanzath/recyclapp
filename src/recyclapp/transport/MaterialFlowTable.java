@@ -12,19 +12,16 @@ import java.util.ArrayList;
  *
  * @author Martin Boisvert
  */
-public class MaterialFlowTable {
+public class MaterialFlowTable extends ArrayList<MaterialFlow> {
     
-    final public ArrayList<MaterialFlow> aFlowTable = new ArrayList<>();
     
-    public MaterialFlowTable()
-    {
-    }
+    public MaterialFlowTable() {}
     
     public MaterialFlowTable(MaterialFlowTable other)
     {
-        for (MaterialFlow flow : other.aFlowTable)
+        for (MaterialFlow flow : other)
         {
-            aFlowTable.add(new MaterialFlow(flow));
+            add(new MaterialFlow(flow));
         }
     }
 }

@@ -16,6 +16,7 @@ import recyclapp.transport.ParameterGroup;
  * @author Martin Boisvert
  */
 public abstract class ElementModel {
+    // Node angles rotate clockwise. 0 = right, 90 = down, etc
     protected static final int ENTRY_NODE_DEFAULT_ANGLE = 180;
     protected static final int EXIT_NODE_DEFAULT_ANGLE = 0;
     protected static final int NODE_SPACING = 30;
