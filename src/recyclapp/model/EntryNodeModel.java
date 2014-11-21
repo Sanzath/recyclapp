@@ -7,7 +7,7 @@
 package recyclapp.model;
 
 /**
- *
+ * Alexandre
  * @author Martin Boisvert
  */
 public class EntryNodeModel extends NodeModel
@@ -23,5 +23,32 @@ public class EntryNodeModel extends NodeModel
     public EntryNodeModel(ElementModel element, NodeModel other)
     {
         super(element, other);
+    }
+    
+    public void setConveyor(ConveyorModel conveyor)
+    {
+        aConveyor = conveyor;
+    }
+    
+    public ExitNodeModel getPreviousNode()
+    {
+        return aExitNode;
+    }
+    
+    public void createLink (ExitNodeModel other)
+    {
+        if (aExitNode != other)
+        {
+            if (aExitNode != null)
+            {
+                aExitNode.setEntryNode(null);
+                aExitNode.setConveyor(null);
+            }
+            
+            aConveyor = new ConveyorModel (this, other);
+            other.setConveyor(aConveyor);
+            other.setEntryNode(this);
+            aExitNode = other;
+        }
     }
 }

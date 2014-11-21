@@ -7,7 +7,7 @@
 package recyclapp.model;
 
 /**
- *
+ * Alexandre
  * @author Martin Boisvert
  */
 public class ExitNodeModel extends NodeModel
@@ -25,4 +25,22 @@ public class ExitNodeModel extends NodeModel
         super(element, other);
     }
     
+    public void setEntryNode(EntryNodeModel entryNode)
+    {
+        aEntryNode = entryNode;
+    }
+    public void setConveyor(ConveyorModel conveyor)
+    {
+        aConveyor = conveyor;
+    }
+    
+    public EntryNodeModel getPreviousNode()
+    {
+        return aEntryNode;
+    }
+    
+    public void createLink (EntryNodeModel other)
+    {
+        other.createLink(this);
+    }
 }
