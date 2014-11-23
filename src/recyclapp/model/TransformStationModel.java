@@ -6,8 +6,10 @@
 
 package recyclapp.model;
 
+import recyclapp.transport.MaterialFlowMatrix;
 import recyclapp.transport.StationType;
 import recyclapp.transport.MaterialFlowTable;
+import recyclapp.transport.MaterialFlow;
 import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.TransformStationParameterGroup;
 /**
@@ -22,6 +24,9 @@ public final class TransformStationModel extends ElementModel {
     private int aInputMaterial = -1;
     private MaterialFlowTable aTransformTable = new MaterialFlowTable();
     private StationType aType;
+    
+    private MaterialFlowTable aInput;
+    private MaterialFlowTable aOutput;
 
     public TransformStationModel() {
         aEntryNode = new EntryNodeModel(this);
@@ -44,8 +49,19 @@ public final class TransformStationModel extends ElementModel {
     }
 
     @Override
-    public void calculateExits() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateExits() {
+        aOutput = new MaterialFlowTable();
+        
+        for (MaterialFlow input : aInput) {
+            if (input.aId == aInputMaterial) {
+                aOutput.addAll(MaterialFlowTable.multiply(input.aFlow, aTransformTable));
+            }
+            else {
+                aOutput.add(input);
+            }
+        }
+        
+        aExitNode.updateThroughput(aOutput);
     }
 
     @Override
@@ -90,6 +106,37 @@ public final class TransformStationModel extends ElementModel {
         aInputMaterial = transformParameters.aInputMaterial;
         aTransformTable = transformParameters.aTransformTable;
         aType = transformParameters.aType;
+    }
+
+    @Override
+    public void updateInput(EntryNodeModel node, MaterialFlowTable throughput) {
+        if (DiagramModel.getInstance().checkRecursion(node)) {
+            return; // Recursion detected
+        }
+        
+        aInput = throughput;
+        
+        updateExits();
+        
+    }
+
+    @Override
+    public MaterialFlowMatrix getEntryMaterials() {
+        MaterialFlowMatrix entry = new MaterialFlowMatrix();
+        entry.add(aInput);
+        return entry;
+    }
+
+    @Override
+    public MaterialFlowMatrix getExitMaterials() {
+        MaterialFlowMatrix exit = new MaterialFlowMatrix();
+        exit.add(aOutput);
+        return exit;
+    }
+
+    @Override
+    public MaterialFlowTable getThroughput() {
+        return aInput;
     }
     
 }

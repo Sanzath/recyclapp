@@ -24,8 +24,10 @@ public final class DiagramModel {
     private Coords aCenterPosition = new Coords(0, 0);
     private boolean aGridActive = false;
     private float aGridSpacing = 1.0F;
+    private boolean aRecursionDetected = false;
     
     private final List<ElementModel> aElements = new ArrayList<>();
+    private final List<EntryNodeModel> aRecursionNodes = new ArrayList<>();
     
     private DiagramModel() {
         aElements.add(new EntryPointModel());
@@ -89,4 +91,22 @@ public final class DiagramModel {
     public void simulate() {
         
     }
+    
+    protected void resetRecursionCheck() {
+        aRecursionNodes.clear();
+        aRecursionDetected = false;
+    }
+    
+    protected boolean checkRecursion(EntryNodeModel node) {
+        if (aRecursionNodes.contains(node)) {
+            aRecursionDetected = true;
+        }
+        aRecursionNodes.add(node);
+        return aRecursionDetected;
+    }
+    
+    public boolean checkRecursion() {
+        return aRecursionDetected;
+    }
+    
 }

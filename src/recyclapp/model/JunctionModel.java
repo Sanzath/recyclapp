@@ -8,6 +8,8 @@ package recyclapp.model;
 
 import java.util.List;
 import java.util.ArrayList;
+import recyclapp.transport.MaterialFlowMatrix;
+import recyclapp.transport.MaterialFlowTable;
 
 /**
  *
@@ -18,6 +20,9 @@ public final class JunctionModel extends ElementModel {
     
     private final List<EntryNodeModel> aEntryNodes = new ArrayList<>(MINIMUM_ENTRY_NODE_COUNT);
     private final ExitNodeModel aExitNode;
+    
+    private final MaterialFlowMatrix aEntries = new MaterialFlowMatrix();
+    private MaterialFlowTable aExit;
     
     public JunctionModel() {
         this(MINIMUM_ENTRY_NODE_COUNT);
@@ -53,11 +58,13 @@ public final class JunctionModel extends ElementModel {
     }
 
     @Override
-    public void calculateExits() {
-        // Wait for all entries to be received...
-        // If an entry is received more than once for the same recursion flag (to be implemented), stop.
+    public void updateExits() {
+        aExit = new MaterialFlowTable();
+        for (MaterialFlowTable entry : aEntries) {
+            aExit = MaterialFlowTable.add(aExit, entry);
+        }
         
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        aExitNode.updateThroughput(aExit);
     }
     
     @Override
@@ -103,6 +110,34 @@ public final class JunctionModel extends ElementModel {
     @Override
     public int getExitNodesCount() {
         return 1;
+    }
+
+    @Override
+    public void updateInput(EntryNodeModel node, MaterialFlowTable throughput) {
+        if (DiagramModel.getInstance().checkRecursion(node)) {
+            return; // Recursion detected
+        }
+        
+        aEntries.set(aEntryNodes.indexOf(node), throughput);
+        
+        updateExits();
+    }
+
+    @Override
+    public MaterialFlowMatrix getEntryMaterials() {
+        return aEntries;
+    }
+
+    @Override
+    public MaterialFlowMatrix getExitMaterials() {
+        MaterialFlowMatrix exits = new MaterialFlowMatrix();
+        exits.add(aExit);
+        return exits;
+    }
+
+    @Override
+    public MaterialFlowTable getThroughput() {
+        return aExit;
     }
 
 }

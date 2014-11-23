@@ -9,6 +9,7 @@ package recyclapp.model;
 import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.EntryPointParameterGroup;
+import recyclapp.transport.MaterialFlowMatrix;
 
 /**
  *
@@ -36,8 +37,13 @@ public final class EntryPointModel extends ElementModel {
     }
 
     @Override
-    public void calculateExits() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    public void updateExits() {
+        aExitNode.updateThroughput(aEntryMaterials);
+    }
+    
+    @Override
+    public void updateInput(EntryNodeModel node, MaterialFlowTable throughput) {
+        // Should never happen for this type of element.
     }
 
     @Override
@@ -49,6 +55,9 @@ public final class EntryPointModel extends ElementModel {
     public void setParameters(ParameterGroup parameters) {
         EntryPointParameterGroup entryParameters = (EntryPointParameterGroup) parameters;
         aEntryMaterials = entryParameters.aEntryMaterials;
+        
+        DiagramModel.getInstance().resetRecursionCheck();
+        updateExits();
     }
 
     @Override
@@ -79,6 +88,23 @@ public final class EntryPointModel extends ElementModel {
     @Override
     public boolean canRemoveExitNode() {
         return false;
+    }
+
+    @Override
+    public MaterialFlowMatrix getEntryMaterials() {
+        return new MaterialFlowMatrix();
+    }
+
+    @Override
+    public MaterialFlowMatrix getExitMaterials() {
+        MaterialFlowMatrix exitMaterials = new MaterialFlowMatrix();
+        exitMaterials.add(aEntryMaterials);
+        return exitMaterials;
+    }
+
+    @Override
+    public MaterialFlowTable getThroughput() {
+        return aEntryMaterials;
     }
     
 }

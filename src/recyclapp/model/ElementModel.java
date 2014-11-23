@@ -10,6 +10,8 @@ import java.awt.Color;
 
 import recyclapp.transport.Coords;
 import recyclapp.transport.ParameterGroup;
+import recyclapp.transport.MaterialFlowTable;
+import recyclapp.transport.MaterialFlowMatrix;
 
 /**
  *
@@ -50,7 +52,8 @@ public abstract class ElementModel {
     
     protected abstract ElementModel copy();
     
-    public abstract void calculateExits();
+    public abstract void updateExits();
+    public abstract void updateInput(EntryNodeModel node, MaterialFlowTable throughput);
     
     public abstract boolean canAddEntryNode();
     public abstract boolean canAddExitNode();
@@ -153,5 +156,9 @@ public abstract class ElementModel {
         aSize.x = size.x;
         aSize.y = size.y;
     }
+    
+    public abstract MaterialFlowMatrix getEntryMaterials(); 
+    public abstract MaterialFlowMatrix getExitMaterials();
+    public abstract MaterialFlowTable getThroughput();
     
 }

@@ -17,17 +17,15 @@ public abstract class NodeModel {
     private final static float SIZE = 0.1F;
     
     private String aName;
-    private MaterialFlowTable aThroughput;
     private int aAngle;
     
-    private final ElementModel aElement;
+    protected final ElementModel aElement;
     
     public NodeModel(ElementModel element)
     {
         aElement = element;
         
         aName = "no name";
-        aThroughput = new MaterialFlowTable();
         aAngle = 0;
     }
     
@@ -36,7 +34,6 @@ public abstract class NodeModel {
         aElement = element;
         
         aName = other.aName;
-        aThroughput = new MaterialFlowTable(other.aThroughput);
         aAngle = other.aAngle;
     }
     
@@ -45,15 +42,7 @@ public abstract class NodeModel {
         return aElement;
     }
     
-    protected final void setThroughput(MaterialFlowTable throughput)
-    {
-        aThroughput = new MaterialFlowTable(throughput);
-    }
-    
-    public final MaterialFlowTable getThroughput()
-    {
-        return aThroughput;
-    }
+    public abstract MaterialFlowTable getThroughput();
     
     public final String getName()
     {

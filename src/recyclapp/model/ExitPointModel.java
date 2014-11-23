@@ -6,6 +6,9 @@
 
 package recyclapp.model;
 
+import recyclapp.transport.MaterialFlowMatrix;
+import recyclapp.transport.MaterialFlowTable;
+
 /**
  *
  * @author Martin Boisvert
@@ -13,6 +16,8 @@ package recyclapp.model;
 public class ExitPointModel extends ElementModel {
 
     private final EntryNodeModel aEntryNode;
+    
+    private MaterialFlowTable aThroughput;
     
     public ExitPointModel() {
         aEntryNode = new EntryNodeModel(this);
@@ -29,7 +34,7 @@ public class ExitPointModel extends ElementModel {
     }
 
     @Override
-    public void calculateExits() {
+    public void updateExits() {
         // Nothing left to do!
     }
 
@@ -61,6 +66,29 @@ public class ExitPointModel extends ElementModel {
     @Override
     public int getExitNodesCount() {
         return 0;
+    }
+
+    @Override
+    public void updateInput(EntryNodeModel node, MaterialFlowTable throughput) {
+        // Recursions can't happen here, don't bother checking
+        aThroughput = throughput;
+    }
+
+    @Override
+    public MaterialFlowMatrix getEntryMaterials() {
+        MaterialFlowMatrix entries = new MaterialFlowMatrix();
+        entries.add(aThroughput);
+        return entries;
+    }
+
+    @Override
+    public MaterialFlowMatrix getExitMaterials() {
+        return new MaterialFlowMatrix();
+    }
+
+    @Override
+    public MaterialFlowTable getThroughput() {
+        return aThroughput;
     }
 
 }

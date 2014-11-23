@@ -6,12 +6,16 @@
 
 package recyclapp.model;
 
+import recyclapp.transport.MaterialFlowTable;
+
 /**
  * Alexandre
  * @author Martin Boisvert
  */
 public class ExitNodeModel extends NodeModel
 {
+    private MaterialFlowTable aThroughput;
+    
     private EntryNodeModel aEntryNode;
     private ConveyorModel aConveyor;
     
@@ -43,4 +47,22 @@ public class ExitNodeModel extends NodeModel
     {
         other.createLink(this);
     }
+    
+    public void removeLink() {
+        aEntryNode.removeLink();
+    }
+    
+    public void updateThroughput(MaterialFlowTable throughput) {
+        aThroughput = throughput;
+        
+        if (aEntryNode != null) {
+            aEntryNode.updateThroughput(throughput);
+        }
+    }
+    
+    @Override
+    public MaterialFlowTable getThroughput() {
+        return aThroughput;
+    }
+    
 }
