@@ -173,7 +173,7 @@ public class MainView extends javax.swing.JFrame {
         OutilsBar.add(ButtonOutilsExport);
 
         SlideZoom.setMajorTickSpacing(1);
-        SlideZoom.setMinimum(1);
+        SlideZoom.setMinimum(10);
         SlideZoom.setMinorTickSpacing(1);
         SlideZoom.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseDragged(java.awt.event.MouseEvent evt) {
@@ -294,14 +294,46 @@ public class MainView extends javax.swing.JFrame {
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
         aGrille = ButtonGrille.isSelected();
-        Grille = new DiagramView(SlideZoom.getValue(),aGrille);
+        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
+        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
+        
+        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
+
+        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
+        Grille.setLayout(GrilleLayout);
+        GrilleLayout.setHorizontalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        GrilleLayout.setVerticalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        
+        
         jScrollPane2.setViewportView(Grille);
+        
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
         // TODO add your handling code here:
         TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
         Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
+        
+        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
+
+        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
+        Grille.setLayout(GrilleLayout);
+        GrilleLayout.setHorizontalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        GrilleLayout.setVerticalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        
+        
         jScrollPane2.setViewportView(Grille);
     }//GEN-LAST:event_SlideZoomMouseDragged
 
