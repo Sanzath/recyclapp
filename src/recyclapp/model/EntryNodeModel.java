@@ -53,6 +53,7 @@ public class EntryNodeModel extends NodeModel {
             other.setConveyor(aConveyor);
             other.setEntryNode(this);
             
+            DiagramModel.getInstance().resetRecursionCheck();
             updateThroughput(other.getThroughput());
         }
     }
@@ -64,6 +65,7 @@ public class EntryNodeModel extends NodeModel {
         aConveyor = null;
         aExitNode = null;
         
+        DiagramModel.getInstance().resetRecursionCheck();
         updateThroughput(null);
     }
     
