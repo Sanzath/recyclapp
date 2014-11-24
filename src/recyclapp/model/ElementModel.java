@@ -12,6 +12,7 @@ import recyclapp.transport.Coords;
 import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.MaterialFlowMatrix;
+import recyclapp.transport.ElementProperties;
 
 /**
  *
@@ -23,6 +24,9 @@ public abstract class ElementModel {
     protected static final int EXIT_NODE_DEFAULT_ANGLE = 0;
     protected static final int NODE_SPACING = 30;
     
+    private static int sNextId = 0;
+    
+    private final int aId;
     private String aName;
     private String aDescription;
     private Float aMaxInput;
@@ -32,6 +36,7 @@ public abstract class ElementModel {
     
     public ElementModel()
     {
+        aId = sNextId++;
         aName = "no name";
         aDescription = "no description";
         aMaxInput = 0.F;
@@ -42,6 +47,7 @@ public abstract class ElementModel {
     
     public ElementModel(ElementModel other)
     {
+        aId = sNextId++;
         aName = other.aName;
         aDescription = other.aDescription;
         aMaxInput = other.aMaxInput;
@@ -52,8 +58,8 @@ public abstract class ElementModel {
     
     protected abstract ElementModel copy();
     
-    public abstract void updateExits();
-    public abstract void updateInput(EntryNodeModel node, MaterialFlowTable throughput);
+    protected abstract void updateExits();
+    protected abstract void updateInput(EntryNodeModel node, MaterialFlowTable throughput);
     
     public abstract boolean canAddEntryNode();
     public abstract boolean canAddExitNode();
@@ -155,6 +161,30 @@ public abstract class ElementModel {
     final public void setSize(Coords size) {
         aSize.x = size.x;
         aSize.y = size.y;
+    }
+    
+    @Override
+    public boolean equals(Object other) {
+        if (other instanceof Integer) {
+            return aId == (Integer)other;
+        }
+        else {
+            return super.equals(other);
+        }
+    }
+    
+    public ElementProperties toProperties() {
+        ElementProperties properties = new ElementProperties();
+        
+        properties.aId = aId;
+        properties.aName = aName;
+        properties.aDescription = aDescription;
+        properties.aPosition = aPosition;
+        properties.aSize = aSize;
+        properties.aColor = aColor;
+        properties.aMaxInput = aMaxInput;
+        
+        return properties;
     }
     
     public abstract MaterialFlowMatrix getEntryMaterials(); 

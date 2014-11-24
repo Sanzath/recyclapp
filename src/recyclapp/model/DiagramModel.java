@@ -10,6 +10,8 @@ import java.util.List;
 import java.util.ArrayList;
 
 import recyclapp.transport.Coords;
+import recyclapp.transport.ParameterGroup;
+import recyclapp.transport.ElementProperties;
 
 /**
  *
@@ -46,6 +48,14 @@ public final class DiagramModel {
     
     public void zoomOut() {
         aZoom /= ZOOM_DELTA;
+    }
+    
+    public boolean getGridActive() {
+        return aGridActive;
+    }
+    
+    public void setGridActive(boolean active) {
+        aGridActive = active;
     }
     
     public void saveDiagram(String filename) {
@@ -109,4 +119,52 @@ public final class DiagramModel {
         return aRecursionDetected;
     }
     
+    protected ElementModel getElementFromId(int id) {
+        return aElements.get(aElements.indexOf(id));
+    }
+    
+    public ParameterGroup getParameters(int id) {
+        return getElementFromId(id).getParameters();
+    }
+    public void setParameters(int id, ParameterGroup parameters) {
+        getElementFromId(id).setParameters(parameters);
+    }
+    
+    public boolean canAddEntryNode(int id) {
+        return getElementFromId(id).canAddEntryNode();
+    }
+    public boolean canAddExitNode(int id) {
+        return getElementFromId(id).canAddExitNode();
+    }
+    public boolean canRemoveEntryNode(int id) {
+        return getElementFromId(id).canRemoveEntryNode();
+    }
+    public boolean canRemoveExitNode(int id) {
+        return getElementFromId(id).canRemoveExitNode();
+    }
+    
+    public void addEntryNode(int id) {
+        getElementFromId(id).addEntryNode();
+    }
+    public void addExitNode(int id) {
+        getElementFromId(id).canAddExitNode();
+    }
+    public void removeEntryNode(int id, int index) {
+        getElementFromId(id).removeEntryNode(index);
+    }
+    public void removeExitNode(int id, int index) {
+        getElementFromId(id).removeExitNode(index);
+    }
+    
+    public List<ElementProperties> getAllElements() {
+        List<ElementProperties> elements = new ArrayList<>();
+        for (ElementModel model : aElements) {
+            elements.add(model.toProperties());
+        }
+        return elements;
+    }
+    
+    //public ElementProperties getElement(int id) {
+    //    return 
+    //}
 }
