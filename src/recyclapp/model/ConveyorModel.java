@@ -18,7 +18,7 @@ public class ConveyorModel {
     
     private String aName = "";
     private Float aMaxThroughput = 0.0F;
-    private final List<Coords> aIntermediatePositions = new ArrayList<>();
+    private final List<Coords> aIntermediatePositions;
     private final EntryNodeModel aEntryNode;
     private final ExitNodeModel aExitNode;
     
@@ -29,9 +29,16 @@ public class ConveyorModel {
     
     public ConveyorModel (EntryNodeModel entryNode, ExitNodeModel exitNode)
     {
+        aIntermediatePositions = new ArrayList<>();
         aEntryNode = entryNode;
         aExitNode = exitNode;
-    } 
+    }
+    
+    public ConveyorModel(EntryNodeModel entryNode, ExitNodeModel exitNode, List<Coords> positions) {
+        aIntermediatePositions = positions;
+        aEntryNode = entryNode;
+        aExitNode = exitNode;
+    }
     
     public EntryNodeModel getEntryNode ()
     {

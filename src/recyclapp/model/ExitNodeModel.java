@@ -17,7 +17,6 @@ public class ExitNodeModel extends NodeModel
     private MaterialFlowTable aThroughput;
     
     private EntryNodeModel aEntryNode;
-    private ConveyorModel aConveyor;
     
     public ExitNodeModel(ElementModel element)
     {

@@ -6,9 +6,10 @@
 
 package recyclapp.view;
 
+import recyclapp.transport.NodeProperties;
+
 import javax.swing.JComponent;
-import recyclapp.transport.Coords;
-import java.awt.Color;
+import java.awt.event.*;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 
@@ -16,17 +17,13 @@ import java.awt.Graphics2D;
  *
  * @author Martin Boisvert
  */
-public class NodeView extends JComponent {
+public class NodeView extends JComponent implements MouseListener {
     
-    private Coords p;
-    private Color c;
-    private String t;
+    private final int aParentId;
+    private int aIndex;
+    private NodeProperties aProperties;
     
-    public NodeView()
-    {
-        t = "sans nom";
-        c = Color.BLACK;
-        p = new Coords(1,1);
+    public NodeView(int parentId, int index, NodeProperties properties) {
         
     }
     
@@ -36,29 +33,32 @@ public class NodeView extends JComponent {
         super.paintComponent(g); 
         Graphics2D g2 = (Graphics2D) g;
         
-        drawNode(g2,p,t,c);
         
         
     }
-    
-    
-    public void drawNode(Graphics g, Coords p, String name, Color c)
-    {
-        int ax = metreToPixel(p.x);
-        int ay = metreToPixel(p.y);
-        
-        g.setColor(c);
-        g.fillOval(ax, ay, (50)/7, (50)/7);
-        g.setColor(Color.BLACK);
-        g.drawString(name, ax, ay);
-        
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
-    public int metreToPixel(double a)
-    {
-        int px;
-        a = a*50;
-        px = (int)a;      
-        return px;
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }
