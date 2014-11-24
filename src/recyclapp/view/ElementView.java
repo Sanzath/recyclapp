@@ -6,12 +6,59 @@
 
 package recyclapp.view;
 
-import javax.swing.JComponent;
-
+import java.awt.*;
+import java.awt.event.*;
+import javax.swing.*;
+import java.lang.System;
+import recyclapp.transport.ElementProperties;
+import recyclapp.model.Controller;
 /**
  *
  * @author Martin Boisvert
  */
-public class ElementView extends JComponent {
+public abstract class ElementView extends JComponent implements MouseListener {
+    private long aClickTime1;
+    private int aID;
     
+    public ElementView(int id){
+        aID = id;
+        addMouseListener(this); 
+    }
+    
+    protected void drawView(Graphics g, Color c){
+        g.setColor(c);
+        g.fillRect()
+    }
+            
+    protected abstract void createPropertiesWindow(ElementProperties properties);
+    
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        this.requestFocus();
+        if (e.getClickCount() % 2 == 1){
+        aClickTime1 = System.currentTimeMillis();
+        }
+        else if (e.getClickCount() % 2 == 0 && System.currentTimeMillis() - aClickTime1 <= 500)
+            createPropertiesWindow(Controller.getInstance().getElementProperties(aID));
+    }
+     
+    @Override
+    public void mouseReleased(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
 }
