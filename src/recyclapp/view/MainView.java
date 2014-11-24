@@ -9,6 +9,7 @@ package recyclapp.view;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
+import java.text.DecimalFormat;
 /**
  *
  * @author Sanquer
@@ -336,7 +337,10 @@ public class MainView extends javax.swing.JFrame {
        double a = SlideZoom.getValue();
        double x = p.x/a, y= p.y/a;
        
-       String chaine = x +"m", chaine2 = y + "m";
+       DecimalFormat df = new DecimalFormat("0.00");
+       
+       String chaine = df.format(x) +"m", chaine2 = df.format(y) + "m";
+      
        
        textPosX.setText(chaine);
        textPosY.setText(chaine2);
