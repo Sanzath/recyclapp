@@ -17,6 +17,7 @@ import javax.swing.JPanel;
   import java.awt.Graphics;
   import java.awt.Graphics2D;
   import java.awt.BasicStroke;
+  import recyclapp.transport.Coords;
  
   public class DiagramView extends JPanel
   {
@@ -63,9 +64,12 @@ import javax.swing.JPanel;
         if(aGrille == true){
             drawGrille(g,aIndiceZoom);
         }
-      
-        drawNode(g2,1,1,"noeud 1",Color.BLACK);
-        drawNode(g2,1,2,"noeud 2",Color.BLACK);
+        
+        Coords p = new Coords(1,1);
+        Coords p2 = new Coords(1,2);
+        
+        drawNode(g2,p,"noeud 1",Color.BLACK);
+        drawNode(g2,p2,"noeud 2",Color.BLACK);
         
         
         
@@ -97,10 +101,10 @@ import javax.swing.JPanel;
         
     }
     
-    public void drawNode(Graphics g, double x, double y, String name, Color c)
+    public void drawNode(Graphics g, Coords p, String name, Color c)
     {
-        int ax = mettreToPixel(x);
-        int ay = mettreToPixel(y);
+        int ax = metreToPixel(p.x);
+        int ay = metreToPixel(p.y);
         
         g.setColor(c);
         g.fillOval(ax, ay, (1*this.aTaille)/7, (1*this.aTaille)/7);
@@ -109,13 +113,13 @@ import javax.swing.JPanel;
         
     }
     
-    public void drawConvoyeur(Graphics g, int x1, int y1, int x2, int y2, String name, Color c)
+    public void drawConvoyeur(Graphics g, double x1, double y1, double x2, double y2, String name, Color c)
     {
-        int ax1 = mettreToPixel(x1);
-        int ay1 = mettreToPixel(y1);
+        int ax1 = metreToPixel(x1);
+        int ay1 = metreToPixel(y1);
         
-        int ax2 = mettreToPixel(x2);
-        int ay2 = mettreToPixel(y2);
+        int ax2 = metreToPixel(x2);
+        int ay2 = metreToPixel(y2);
         
         
         int xpoints[] = {ax2-(this.aTaille/10),ax2,ax2-(this.aTaille/10)};
@@ -136,8 +140,8 @@ import javax.swing.JPanel;
     
     public void drawEntreNode(Graphics g, double x, double y, String name, Color c)
     {
-        int ax = mettreToPixel(x);
-        int ay = mettreToPixel(y);
+        int ax = metreToPixel(x);
+        int ay = metreToPixel(y);
         
         g.setColor(c);
         g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
@@ -148,8 +152,8 @@ import javax.swing.JPanel;
     
     public void drawSortieNode(Graphics g, double x, double y, String name, Color c)
     {
-        int ax = mettreToPixel(x);
-        int ay = mettreToPixel(y);
+        int ax = metreToPixel(x);
+        int ay = metreToPixel(y);
         
         g.setColor(c);
         g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
@@ -159,10 +163,10 @@ import javax.swing.JPanel;
     
     public void drawStation(Graphics g, double x, double y, double z1, double z2,  String name, Color c)
     {
-        int ax = mettreToPixel(x);
-        int ay = mettreToPixel(y);
-        int az1 = mettreToPixel(z1);
-        int az2 = mettreToPixel(z2);
+        int ax = metreToPixel(x);
+        int ay = metreToPixel(y);
+        int az1 = metreToPixel(z1);
+        int az2 = metreToPixel(z2);
         
         g.setColor(c);
         g.fillRect(ax, ay,az1, az2);
@@ -170,7 +174,7 @@ import javax.swing.JPanel;
         g.drawString(name, ax, ay);   
     }
     
-    public int mettreToPixel(double a)
+    public int metreToPixel(double a)
     {
         int px;
         a = a*aTaille;
