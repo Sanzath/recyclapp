@@ -28,13 +28,21 @@ public abstract class ElementView extends JComponent implements MouseListener {
     }
     public void updateElementProperties(ElementProperties newProp){
         aProperties = newProp;
+        repaint();
     }
     
-    protected void drawView(Graphics g, ElementProperties aProperties){
-        
+    @Override
+    public void paint(Graphics g){
         g.setColor(aProperties.aColor);
-        //Args de fillRect: pos X, pos Y, width, height
-        g.fillRect(DiagramView.)
+        //Args de fillRect(Remplie un rectangle de couleur): pos X, pos Y, width, height
+        g.fillRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+        g.setColor(Color.BLACK);
+        //Args de drawRect(bordure du rectangle): pos X, pos Y, width, height
+        g.drawRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+        g.setClip(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
     }
             
     protected abstract void createPropertiesWindow(ElementProperties properties);

@@ -14,13 +14,8 @@ import recyclapp.transport.ElementProperties;
  */
 public class EntryPointView extends ElementView {
 
-    EntryPointView(int id){
-        super(id);
-        J
-    }
-    @Override
-    protected void createView() {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    EntryPointView(ElementProperties properties){
+        super(properties);
     }
 
     @Override
