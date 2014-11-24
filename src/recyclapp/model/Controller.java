@@ -264,6 +264,16 @@ public class Controller {
         return getElement(id).getExitNodesCount();
     }
     
+    public MaterialFlowMatrix getInputMaterials(int id) {
+        return getElement(id).getInputMaterials();
+    }
+    public MaterialFlowMatrix getOutputMaterials(int id) {
+        return getElement(id).getOutputMaterials();
+    }
+    public MaterialFlowTable getThroughput(int id) {
+        return getElement(id).getThroughput();
+    }
+    
     // Node
     private NodeModel getEntryNode(int parentId, int index) {
         return getElement(parentId).getEntryNode(index);
@@ -285,4 +295,6 @@ public class Controller {
     public MaterialFlowTable getExitNodeThroughput(int parentId, int index) {
         return getExitNode(parentId, index).getThroughput();
     }
+    
+    
 }

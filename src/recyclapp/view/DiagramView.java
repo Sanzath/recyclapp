@@ -7,6 +7,8 @@
 package recyclapp.view;
 
 import javax.swing.JPanel;
+import recyclapp.transport.Coords;
+import java.awt.Point;
 
 /**
  *
@@ -22,7 +24,7 @@ import javax.swing.JPanel;
   public class DiagramView extends JPanel
   {
        
-      public int aTaille;
+      public static int aTaille;
       public boolean aGrille;
       public int aIndiceZoom;
       
@@ -84,19 +86,19 @@ import javax.swing.JPanel;
         
     }
     
-    public void drawGrille(Graphics g,int a)
+    public void drawGrille(Graphics g,int zoom)
     {
         int i ;
         //for(i=1;i<(((Math.max(this.getHeight(),this.getWidth()))/(this.aTaille)+1)*a);i++)
         for(i=1;i<70;i++)    
         {
             g.setColor(Color.LIGHT_GRAY);
-            g.drawLine(i*this.aTaille/a, 0, i*this.aTaille/a, 50*aTaille);
+            g.drawLine(i*this.aTaille/zoom, 0, i*this.aTaille/zoom, 50*aTaille);
         }
         
         for(i=1;i<50;i++)    
         {
-            g.drawLine(0, i*this.aTaille/a, 70*aTaille, i*this.aTaille/a);
+            g.drawLine(0, i*this.aTaille/zoom, 70*aTaille, i*this.aTaille/zoom);
         }
         
     }
@@ -174,12 +176,18 @@ import javax.swing.JPanel;
         g.drawString(name, ax, ay);   
     }
     
-    public int metreToPixel(double a)
+    public static int metreToPixel(double a)
     {
         int px;
         a = a*aTaille;
         px = (int)a;      
         return px;
+    }
+    
+    public static Point coordsToPoint(Coords coords) {
+        int x = metreToPixel(coords.x);
+        int y = metreToPixel(coords.y);
+        return new Point(x, y);
     }
    
   }

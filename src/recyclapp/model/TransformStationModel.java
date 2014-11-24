@@ -122,14 +122,14 @@ public final class TransformStationModel extends ElementModel {
     }
 
     @Override
-    public MaterialFlowMatrix getEntryMaterials() {
+    public MaterialFlowMatrix getInputMaterials() {
         MaterialFlowMatrix entry = new MaterialFlowMatrix();
         entry.add(aInput);
         return entry;
     }
 
     @Override
-    public MaterialFlowMatrix getExitMaterials() {
+    public MaterialFlowMatrix getOutputMaterials() {
         MaterialFlowMatrix exit = new MaterialFlowMatrix();
         exit.add(aOutput);
         return exit;
