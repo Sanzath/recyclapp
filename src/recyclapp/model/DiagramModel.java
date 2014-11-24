@@ -75,11 +75,14 @@ public final class DiagramModel {
         }
     }
     
-    public void createFromSelectedToolbox() {
+    public int createFromSelectedToolbox() {
         ElementModel element = ToolBoxModel.getInstance().copySelectedElement();
         if (element != null) {
             addElement(element);
+            
+            return element.getId();
         }
+        return -1;
     }
     
     public void createFromSelectedTemplate() {

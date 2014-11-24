@@ -19,9 +19,10 @@ import recyclapp.view.DiagramView;
 public abstract class ElementView extends JComponent implements MouseListener {
     private long aClickTime1;
     protected ElementProperties aProperties;
+    
     public ElementView(ElementProperties properties){
         aProperties = properties;
-        addMouseListener(this); 
+        addMouseListener(this);
     }
     public int getID() {
             return aProperties.aId;
