@@ -9,25 +9,32 @@ package recyclapp.view;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
-import java.lang.System;
 import recyclapp.transport.ElementProperties;
 import recyclapp.model.Controller;
+import recyclapp.view.DiagramView;
 /**
  *
  * @author Martin Boisvert
  */
 public abstract class ElementView extends JComponent implements MouseListener {
     private long aClickTime1;
-    private int aID;
-    
-    public ElementView(int id){
-        aID = id;
+    protected ElementProperties aProperties;
+    public ElementView(ElementProperties properties){
+        aProperties = properties;
         addMouseListener(this); 
     }
+    public int getID() {
+            return aProperties.aId;
+    }
+    public void updateElementProperties(ElementProperties newProp){
+        aProperties = newProp;
+    }
     
-    protected void drawView(Graphics g, Color c){
-        g.setColor(c);
-        g.fillRect()
+    protected void drawView(Graphics g, ElementProperties aProperties){
+        
+        g.setColor(aProperties.aColor);
+        //Args de fillRect: pos X, pos Y, width, height
+        g.fillRect(DiagramView.)
     }
             
     protected abstract void createPropertiesWindow(ElementProperties properties);

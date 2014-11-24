@@ -8,6 +8,7 @@ package recyclapp.model;
 
 import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.Coords;
+import recyclapp.transport.NodeProperties;
 
 /**
  *
@@ -15,6 +16,8 @@ import recyclapp.transport.Coords;
  */
 public abstract class NodeModel {
     private final static float SIZE = 0.1F;
+    
+    private static int sNextId = 0;
     
     private String aName;
     private int aAngle;
@@ -120,6 +123,18 @@ public abstract class NodeModel {
     
     public final Coords getSize() {
         return new Coords(SIZE, SIZE);
+    }
+    
+    final public NodeProperties toProperties() {
+        NodeProperties properties = new NodeProperties();
+        
+        properties.aParentId = aElement.getId();
+        properties.aName = aName;
+        properties.aAngle = aAngle;
+        properties.aPosition = calculatePosition();
+        properties.aSize = getSize();
+        
+        return properties;
     }
     
 }

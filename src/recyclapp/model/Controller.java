@@ -6,7 +6,7 @@
 
 package recyclapp.model;
 
-import recyclapp.transport.Coords;
+import recyclapp.transport.*;
 
 /**
  *
@@ -215,5 +215,74 @@ public class Controller {
         
     }
     
-    //
+    // Elements
+    private ElementModel getElement(int id) {
+        return DiagramModel.getInstance().getElementFromId(id);
+    }
+    
+    public ElementProperties getElementProperties(int id) {
+        return getElement(id).toProperties();
+    }
+    
+    public ParameterGroup getParameters(int id) {
+        return getElement(id).getParameters();
+    }
+    public void setParameters(int id, ParameterGroup parameters) {
+        getElement(id).setParameters(parameters);
+    }
+    
+    public boolean canAddEntryNode(int id) {
+        return getElement(id).canAddEntryNode();
+    }
+    public boolean canAddExitNode(int id) {
+        return getElement(id).canAddExitNode();
+    }
+    public boolean canRemoveEntryNode(int id) {
+        return getElement(id).canRemoveEntryNode();
+    }
+    public boolean canRemoveExitNode(int id) {
+        return getElement(id).canRemoveExitNode();
+    }
+    
+    public void addEntryNode(int id) {
+        getElement(id).addEntryNode();
+    }
+    public void addExitNode(int id) {
+        getElement(id).canAddExitNode();
+    }
+    public void removeEntryNode(int id, int index) {
+        getElement(id).removeEntryNode(index);
+    }
+    public void removeExitNode(int id, int index) {
+        getElement(id).removeExitNode(index);
+    }
+    
+    public int getEntryNodesCount(int id) {
+        return getElement(id).getEntryNodesCount();
+    }
+    public int getExitNodesCount(int id) {
+        return getElement(id).getExitNodesCount();
+    }
+    
+    // Node
+    private NodeModel getEntryNode(int parentId, int index) {
+        return getElement(parentId).getEntryNode(index);
+    }
+    private NodeModel getExitNode(int parentId, int index) {
+        return getElement(parentId).getExitNode(index);
+    }
+    
+    public NodeProperties getEntryNodeProperties(int parentId, int index) {
+        return getEntryNode(parentId, index).toProperties();
+    }
+    public NodeProperties getExitNodeProperties(int parentId, int index) {
+        return getExitNode(parentId, index).toProperties();
+    }
+    
+    public MaterialFlowTable getEntryNodeThroughput(int parentId, int index) {
+        return getEntryNode(parentId, index).getThroughput();
+    }
+    public MaterialFlowTable getExitNodeThroughput(int parentId, int index) {
+        return getExitNode(parentId, index).getThroughput();
+    }
 }

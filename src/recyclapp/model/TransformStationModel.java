@@ -12,6 +12,7 @@ import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.MaterialFlow;
 import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.TransformStationParameterGroup;
+
 /**
  *
  * @author Martin Boisvert
@@ -137,6 +138,16 @@ public final class TransformStationModel extends ElementModel {
     @Override
     public MaterialFlowTable getThroughput() {
         return aInput;
+    }
+
+    @Override
+    protected EntryNodeModel getEntryNode(int index) {
+        return aEntryNode;
+    }
+
+    @Override
+    protected ExitNodeModel getExitNode(int index) {
+        return aExitNode;
     }
     
 }

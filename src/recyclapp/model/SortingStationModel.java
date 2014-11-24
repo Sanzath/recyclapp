@@ -163,5 +163,15 @@ public final class SortingStationModel extends ElementModel {
     public MaterialFlowTable getThroughput() {
         return aInput;
     }
+
+    @Override
+    protected EntryNodeModel getEntryNode(int index) {
+        return aEntryNode;
+    }
+
+    @Override
+    protected ExitNodeModel getExitNode(int index) {
+        return aExitNodes.get(index);
+    }
     
 }
