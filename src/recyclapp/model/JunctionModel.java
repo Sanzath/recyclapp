@@ -124,12 +124,12 @@ public final class JunctionModel extends ElementModel {
     }
 
     @Override
-    public MaterialFlowMatrix getEntryMaterials() {
+    public MaterialFlowMatrix getInputMaterials() {
         return aInputs;
     }
 
     @Override
-    public MaterialFlowMatrix getExitMaterials() {
+    public MaterialFlowMatrix getOutputMaterials() {
         MaterialFlowMatrix exits = new MaterialFlowMatrix();
         exits.add(aOutput);
         return exits;

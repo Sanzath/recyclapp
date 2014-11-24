@@ -192,8 +192,8 @@ public abstract class ElementModel {
         return properties;
     }
     
-    public abstract MaterialFlowMatrix getEntryMaterials(); 
-    public abstract MaterialFlowMatrix getExitMaterials();
+    public abstract MaterialFlowMatrix getInputMaterials(); 
+    public abstract MaterialFlowMatrix getOutputMaterials();
     public abstract MaterialFlowTable getThroughput();
     
     protected abstract EntryNodeModel getEntryNode(int index);

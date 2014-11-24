@@ -91,12 +91,12 @@ public final class EntryPointModel extends ElementModel {
     }
 
     @Override
-    public MaterialFlowMatrix getEntryMaterials() {
+    public MaterialFlowMatrix getInputMaterials() {
         return new MaterialFlowMatrix();
     }
 
     @Override
-    public MaterialFlowMatrix getExitMaterials() {
+    public MaterialFlowMatrix getOutputMaterials() {
         MaterialFlowMatrix exitMaterials = new MaterialFlowMatrix();
         exitMaterials.add(aEntryMaterials);
         return exitMaterials;

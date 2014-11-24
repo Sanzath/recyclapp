@@ -75,14 +75,14 @@ public class ExitPointModel extends ElementModel {
     }
 
     @Override
-    public MaterialFlowMatrix getEntryMaterials() {
+    public MaterialFlowMatrix getInputMaterials() {
         MaterialFlowMatrix entries = new MaterialFlowMatrix();
         entries.add(aInput);
         return entries;
     }
 
     @Override
-    public MaterialFlowMatrix getExitMaterials() {
+    public MaterialFlowMatrix getOutputMaterials() {
         return new MaterialFlowMatrix();
     }
 
