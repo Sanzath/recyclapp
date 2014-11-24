@@ -96,7 +96,12 @@ public class Controller {
     
     public void selectElement(int index)
     {
-        
+        ToolBoxModel.getInstance().selectElement(index);
+    }
+    
+    public int createElementFromToolBox(){
+        int id = DiagramModel.getInstance().createFromSelectedToolbox();
+        return id;
     }
     
     public void deselectElement()

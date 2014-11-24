@@ -6,10 +6,21 @@
 
 package recyclapp.view;
 
+import recyclapp.transport.ElementProperties;
+
 /**
  *
  * @author Martin Boisvert
  */
 public class EntryPointView extends ElementView {
+
+    EntryPointView(ElementProperties properties){
+        super(properties);
+    }
+
+    @Override
+    protected void createPropertiesWindow(ElementProperties properties) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
     
 }
