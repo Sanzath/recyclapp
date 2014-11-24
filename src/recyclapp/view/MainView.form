@@ -273,7 +273,7 @@
 
       <Layout class="org.netbeans.modules.form.compat2.layouts.DesignFlowLayout"/>
       <SubComponents>
-        <Component class="javax.swing.JLabel" name="jLabel1">
+        <Component class="javax.swing.JLabel" name="LabelPos">
           <Properties>
             <Property name="text" type="java.lang.String" value="Position : 253,25m"/>
           </Properties>
@@ -390,6 +390,9 @@
                   <Dimension value="[50000, 50000]"/>
                 </Property>
               </Properties>
+              <Events>
+                <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="GrilleMouseMoved"/>
+              </Events>
 
               <Layout>
                 <DimensionLayout dim="0">

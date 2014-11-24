@@ -8,6 +8,7 @@ package recyclapp.view;
 
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.tree.DefaultTreeModel;
+import java.awt.Point;
 /**
  *
  * @author Sanquer
@@ -24,6 +25,8 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
         buildTree();
         aGrille = ButtonGrille.isSelected();
+        drawGrille();
+        jScrollPane2.getLocation();
     }
 
     /**
@@ -55,7 +58,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport = new javax.swing.JButton();
         SlideZoom = new javax.swing.JSlider();
         PanelPosition = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        LabelPos = new javax.swing.JLabel();
         PanelToolBox = new javax.swing.JPanel();
         jScrollPanelTree = new javax.swing.JScrollPane();
         Tree = new javax.swing.JTree();
@@ -184,8 +187,8 @@ public class MainView extends javax.swing.JFrame {
 
         PanelPosition.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        jLabel1.setText("Position : 253,25m");
-        PanelPosition.add(jLabel1);
+        LabelPos.setText("Position : 253,25m");
+        PanelPosition.add(LabelPos);
 
         PanelToolBox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -225,6 +228,11 @@ public class MainView extends javax.swing.JFrame {
         PanelGraph.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         Grille.setMaximumSize(new java.awt.Dimension(50000, 50000));
+        Grille.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                GrilleMouseMoved(evt);
+            }
+        });
 
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
@@ -293,49 +301,29 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonOutilsStartActionPerformed
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
-        aGrille = ButtonGrille.isSelected();
-        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
-        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
-        
-        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
-
-        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
-        Grille.setLayout(GrilleLayout);
-        GrilleLayout.setHorizontalGroup(
-            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
-        );
-        GrilleLayout.setVerticalGroup(
-            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
-        );
-        
-        
-        jScrollPane2.setViewportView(Grille);
-        
+        drawGrille();
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
         // TODO add your handling code here:
-        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
-        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
-        
-        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
-
-        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
-        Grille.setLayout(GrilleLayout);
-        GrilleLayout.setHorizontalGroup(
-            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
-        );
-        GrilleLayout.setVerticalGroup(
-            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
-        );
+        drawGrille();
         
         
-        jScrollPane2.setViewportView(Grille);
     }//GEN-LAST:event_SlideZoomMouseDragged
+
+    private void GrilleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseMoved
+       System.out.println(Grille.getMousePosition());
+       Point p = Grille.getMousePosition();
+       
+       String chaine = "Position X = " + p.x/SlideZoom.getValue() + "m , Y = " + p.y/SlideZoom.getValue() +"m";
+       
+       LabelPos.setText(chaine);
+       
+       //Point a = jScrollPane2.getLocation();
+       // String chaine2 = "Position X = " + a.x + ", Y = " + a.y ;
+        
+       // TextEntreeSortie.setText(chaine2);
+    }//GEN-LAST:event_GrilleMouseMoved
 
     private void buildTree(){
         //Création d'une racine
@@ -360,7 +348,42 @@ public class MainView extends javax.swing.JFrame {
          Tree.setDragEnabled(true);
     }
     
-    
+    private void drawGrille()
+    {
+        aGrille = ButtonGrille.isSelected();
+        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
+        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
+        
+        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
+        Grille.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
+            public void mouseMoved(java.awt.event.MouseEvent evt) {
+                GrilleMouseMoved(evt);
+            }
+        });
+        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
+        Grille.setLayout(GrilleLayout);
+        GrilleLayout.setHorizontalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        GrilleLayout.setVerticalGroup(
+            GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
+        );
+        
+        
+        jScrollPane2.setViewportView(Grille);
+        javax.swing.GroupLayout PanelGraphLayout = new javax.swing.GroupLayout(PanelGraph);
+        PanelGraph.setLayout(PanelGraphLayout);
+        PanelGraphLayout.setHorizontalGroup(
+            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+        PanelGraphLayout.setVerticalGroup(
+            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(jScrollPane2)
+        );
+    }
     /**
      * @param args the command line arguments
      */
@@ -407,6 +430,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton ButtonOutilsUndo;
     private javax.swing.JButton ButtonOutilsZoom;
     private recyclapp.view.DiagramView Grille;
+    private javax.swing.JLabel LabelPos;
     private javax.swing.JMenuBar MenuBar;
     private javax.swing.JToolBar OutilsBar;
     private javax.swing.JPanel PanelEntreeSortie;
@@ -416,7 +440,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JSlider SlideZoom;
     private javax.swing.JTextArea TextEntreeSortie;
     private javax.swing.JTree Tree;
-    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;

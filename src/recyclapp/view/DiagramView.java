@@ -64,16 +64,18 @@ import javax.swing.JPanel;
             drawGrille(g,aIndiceZoom);
         }
       
-        drawNode(g2,1,1);
-        drawNode(g2,1,2);
-        drawNode(g2,2,1);
-        drawNode(g2,2,2);
+        drawNode(g2,1,1,"noeud 1",Color.BLACK);
+        drawNode(g2,1,2,"noeud 2",Color.BLACK);
         
-        drawNode(g2,69,49);
         
-        g2.setStroke(new BasicStroke(2));
-       // drawConvoyeur(g2, 2,2,4,2);
-        drawArrow(g, 50, 50, 10, 100);
+        
+        g2.setStroke(new BasicStroke((this.aTaille)/20));
+        drawConvoyeur(g2, 3,1,7,2,"Convoyeur 1",Color.DARK_GRAY);
+        drawConvoyeur(g2, 1,1,1,2,"Convoyeur 2",Color.DARK_GRAY);
+        drawEntreNode(g,1,5,"Entrée 1",Color.GREEN);
+        drawSortieNode(g,1,6,"Sortie 1",Color.ORANGE);
+        
+        drawStation(g, 2.5,2.5,"Station 1",Color.CYAN);
     }
     
     public void drawGrille(Graphics g,int a)
@@ -93,62 +95,82 @@ import javax.swing.JPanel;
         
     }
     
-    public void drawNode(Graphics g, double x, double y)
+    public void drawNode(Graphics g, double x, double y, String name, Color c)
     {
         int ax = mettreToPixel(x);
         int ay = mettreToPixel(y);
         
-        g.setColor(Color.BLACK);
+        g.setColor(c);
         g.fillOval(ax, ay, (1*this.aTaille)/7, (1*this.aTaille)/7);
-       
+        g.setColor(Color.BLACK);
+        g.drawString(name, ax, ay);
         
     }
     
-    public void drawConvoyeur(Graphics g, int x1, int y1, int x2, int y2)
+    public void drawConvoyeur(Graphics g, int x1, int y1, int x2, int y2, String name, Color c)
     {
+        int ax1 = mettreToPixel(x1);
+        int ay1 = mettreToPixel(y1);
         
-        int xpoints[] = {};
-        int ypoints[] = {};
-        int npoints = 6;
+        int ax2 = mettreToPixel(x2);
+        int ay2 = mettreToPixel(y2);
         
-        g.setColor(Color.red);
-        g.drawLine(x1*this.aTaille, y1*this.aTaille, x2*this.aTaille, y2*this.aTaille);
+        
+        int xpoints[] = {ax2-(this.aTaille/10),ax2,ax2-(this.aTaille/10)};
+        int ypoints[] = {ay2-(this.aTaille/10),ay2,ay2+(this.aTaille/10)};
+        int npoints = 3;
+        
+        double op = y2-y1;
+        double ad = x2-x1;
+        
+        double Phi = Math.atan((op/ad));
+        
+        g.setColor(c);
+        g.drawLine(ax1, ay1, ax2-(this.aTaille/10), ay2);
         g.fillPolygon(xpoints, ypoints, npoints);
+        g.setColor(Color.BLACK);
+        g.drawString(name, (ax1+ax2)/2, (ay1+ay2)/2);
     }
     
-    public static void drawArrow (Graphics g,
-				  int x,
-				  int y,
-				  int largeur,
-				  int hauteur)
+    public void drawEntreNode(Graphics g, double x, double y, String name, Color c)
     {
- 
-	largeur = largeur / 3;
-	hauteur = hauteur / 3;
- 
-        g.fillRect (x + largeur, y,
-		    largeur, 2 * hauteur);
- 
-	int abcisses[] = new int[] { x,
-				     x + (3 * largeur),
-				     x + (largeur * 3 / 2)};
-	int ordonnes[] = new int[] { y + (2 * hauteur),
-				     y + (2 * hauteur),
-				     y + (3 * hauteur)};
- 
-	g.fillPolygon (abcisses, ordonnes, 3);
- 
-	
+        int ax = mettreToPixel(x);
+        int ay = mettreToPixel(y);
+        
+        g.setColor(c);
+        g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
+        
+        g.setColor(Color.BLACK);
+        g.drawString(name, ax, ay);
+    }
+    
+    public void drawSortieNode(Graphics g, double x, double y, String name, Color c)
+    {
+        int ax = mettreToPixel(x);
+        int ay = mettreToPixel(y);
+        
+        g.setColor(c);
+        g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
+        g.setColor(Color.BLACK);
+        g.drawString(name, ax, ay);
+    }
+    
+    public void drawStation(Graphics g, double x, double y, String name, Color c)
+    {
+        int ax = mettreToPixel(x);
+        int ay = mettreToPixel(y);
+        g.setColor(c);
+        g.fillRect(ax, ay,(this.aTaille), (this.aTaille));
+        g.setColor(Color.BLACK);
+        g.drawString(name, ax, ay);   
     }
     
     public int mettreToPixel(double a)
     {
-        int px = 0;
-        
+        int px;
         a = a*aTaille;
-        
-        px = (int)a;
-        
+        px = (int)a;      
         return px;
     }
+   
   }
