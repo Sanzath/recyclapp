@@ -54,7 +54,7 @@ public abstract class ElementView extends JComponent implements MouseListener {
         aClickTime1 = System.currentTimeMillis();
         }
         else if (e.getClickCount() % 2 == 0 && System.currentTimeMillis() - aClickTime1 <= 500)
-            createPropertiesWindow(Controller.getInstance().getElementProperties(aID));
+            createPropertiesWindow(aProperties);
     }
      
     @Override
