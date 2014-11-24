@@ -75,7 +75,9 @@ import javax.swing.JPanel;
         drawEntreNode(g,1,5,"Entrée 1",Color.GREEN);
         drawSortieNode(g,1,6,"Sortie 1",Color.ORANGE);
         
-        drawStation(g, 2.5,2.5,"Station 1",Color.CYAN);
+        drawStation(g, 2.5,2.5,3,1,"Station 1",Color.CYAN);
+        
+        
     }
     
     public void drawGrille(Graphics g,int a)
@@ -155,12 +157,15 @@ import javax.swing.JPanel;
         g.drawString(name, ax, ay);
     }
     
-    public void drawStation(Graphics g, double x, double y, String name, Color c)
+    public void drawStation(Graphics g, double x, double y, double z1, double z2,  String name, Color c)
     {
         int ax = mettreToPixel(x);
         int ay = mettreToPixel(y);
+        int az1 = mettreToPixel(z1);
+        int az2 = mettreToPixel(z2);
+        
         g.setColor(c);
-        g.fillRect(ax, ay,(this.aTaille), (this.aTaille));
+        g.fillRect(ax, ay,az1, az2);
         g.setColor(Color.BLACK);
         g.drawString(name, ax, ay);   
     }

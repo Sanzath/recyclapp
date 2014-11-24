@@ -59,6 +59,9 @@ public class MainView extends javax.swing.JFrame {
         SlideZoom = new javax.swing.JSlider();
         PanelPosition = new javax.swing.JPanel();
         LabelPos = new javax.swing.JLabel();
+        textPosX = new javax.swing.JTextField();
+        jLabel1 = new javax.swing.JLabel();
+        textPosY = new javax.swing.JTextField();
         PanelToolBox = new javax.swing.JPanel();
         jScrollPanelTree = new javax.swing.JScrollPane();
         Tree = new javax.swing.JTree();
@@ -187,8 +190,23 @@ public class MainView extends javax.swing.JFrame {
 
         PanelPosition.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
-        LabelPos.setText("Position : 253,25m");
+        LabelPos.setText("Position : X=");
         PanelPosition.add(LabelPos);
+
+        textPosX.setEditable(false);
+        textPosX.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        textPosX.setText("0.00m");
+        textPosX.setPreferredSize(new java.awt.Dimension(61, 20));
+        PanelPosition.add(textPosX);
+
+        jLabel1.setText("Y=");
+        PanelPosition.add(jLabel1);
+
+        textPosY.setEditable(false);
+        textPosY.setHorizontalAlignment(javax.swing.JTextField.RIGHT);
+        textPosY.setText("0.00m");
+        textPosY.setPreferredSize(new java.awt.Dimension(61, 20));
+        PanelPosition.add(textPosY);
 
         PanelToolBox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -238,11 +256,11 @@ public class MainView extends javax.swing.JFrame {
         Grille.setLayout(GrilleLayout);
         GrilleLayout.setHorizontalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 350, Short.MAX_VALUE)
+            .addGap(0, 655, Short.MAX_VALUE)
         );
         GrilleLayout.setVerticalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 259, Short.MAX_VALUE)
+            .addGap(0, 493, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(Grille);
@@ -255,7 +273,7 @@ public class MainView extends javax.swing.JFrame {
         );
         PanelGraphLayout.setVerticalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
         );
 
         jMenu1.setText("File");
@@ -312,12 +330,16 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_SlideZoomMouseDragged
 
     private void GrilleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseMoved
-       System.out.println(Grille.getMousePosition());
+       
        Point p = Grille.getMousePosition();
        
-       String chaine = "Position X = " + p.x/SlideZoom.getValue() + "m , Y = " + p.y/SlideZoom.getValue() +"m";
+       double a = SlideZoom.getValue();
+       double x = p.x/a, y= p.y/a;
        
-       LabelPos.setText(chaine);
+       String chaine = x +"m", chaine2 = y + "m";
+       
+       textPosX.setText(chaine);
+       textPosY.setText(chaine2);
        
        //Point a = jScrollPane2.getLocation();
        // String chaine2 = "Position X = " + a.x + ", Y = " + a.y ;
@@ -440,6 +462,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JSlider SlideZoom;
     private javax.swing.JTextArea TextEntreeSortie;
     private javax.swing.JTree Tree;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
@@ -453,5 +476,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JTextField textPosX;
+    private javax.swing.JTextField textPosY;
     // End of variables declaration//GEN-END:variables
 }
