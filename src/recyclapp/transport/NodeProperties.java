@@ -6,19 +6,14 @@
 
 package recyclapp.transport;
 
-import java.awt.Color;
-
 /**
  *
  * @author Martin Boisvert
  */
-public final class ElementProperties {
-    public int aId;
+public class NodeProperties {
+    public int aParentId;
     public String aName;
-    public String aDescription;
+    public int aAngle;
     public Coords aPosition;
     public Coords aSize;
-    public Color aColor;
-    public float aMaxInput;
-    public ParameterGroup aParameters;
 }

@@ -17,7 +17,7 @@ public class ExitPointModel extends ElementModel {
 
     private final EntryNodeModel aEntryNode;
     
-    private MaterialFlowTable aThroughput;
+    private MaterialFlowTable aInput;
     
     public ExitPointModel() {
         aEntryNode = new EntryNodeModel(this);
@@ -71,13 +71,13 @@ public class ExitPointModel extends ElementModel {
     @Override
     public void updateInput(EntryNodeModel node, MaterialFlowTable throughput) {
         // Recursions can't happen here, don't bother checking
-        aThroughput = throughput;
+        aInput = throughput;
     }
 
     @Override
     public MaterialFlowMatrix getEntryMaterials() {
         MaterialFlowMatrix entries = new MaterialFlowMatrix();
-        entries.add(aThroughput);
+        entries.add(aInput);
         return entries;
     }
 
@@ -88,7 +88,17 @@ public class ExitPointModel extends ElementModel {
 
     @Override
     public MaterialFlowTable getThroughput() {
-        return aThroughput;
+        return aInput;
+    }
+
+    @Override
+    protected EntryNodeModel getEntryNode(int index) {
+        return aEntryNode;
+    }
+
+    @Override
+    protected ExitNodeModel getExitNode(int index) {
+        return null;
     }
 
 }

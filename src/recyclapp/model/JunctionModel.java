@@ -21,8 +21,8 @@ public final class JunctionModel extends ElementModel {
     private final List<EntryNodeModel> aEntryNodes = new ArrayList<>(MINIMUM_ENTRY_NODE_COUNT);
     private final ExitNodeModel aExitNode;
     
-    private final MaterialFlowMatrix aEntries = new MaterialFlowMatrix();
-    private MaterialFlowTable aExit;
+    private final MaterialFlowMatrix aInputs = new MaterialFlowMatrix();
+    private MaterialFlowTable aOutput;
     
     public JunctionModel() {
         this(MINIMUM_ENTRY_NODE_COUNT);
@@ -59,12 +59,12 @@ public final class JunctionModel extends ElementModel {
 
     @Override
     public void updateExits() {
-        aExit = new MaterialFlowTable();
-        for (MaterialFlowTable entry : aEntries) {
-            aExit = MaterialFlowTable.add(aExit, entry);
+        aOutput = new MaterialFlowTable();
+        for (MaterialFlowTable entry : aInputs) {
+            aOutput = MaterialFlowTable.add(aOutput, entry);
         }
         
-        aExitNode.updateThroughput(aExit);
+        aExitNode.updateThroughput(aOutput);
     }
     
     @Override
@@ -118,26 +118,36 @@ public final class JunctionModel extends ElementModel {
             return; // Recursion detected
         }
         
-        aEntries.set(aEntryNodes.indexOf(node), throughput);
+        aInputs.set(aEntryNodes.indexOf(node), throughput);
         
         updateExits();
     }
 
     @Override
     public MaterialFlowMatrix getEntryMaterials() {
-        return aEntries;
+        return aInputs;
     }
 
     @Override
     public MaterialFlowMatrix getExitMaterials() {
         MaterialFlowMatrix exits = new MaterialFlowMatrix();
-        exits.add(aExit);
+        exits.add(aOutput);
         return exits;
     }
 
     @Override
     public MaterialFlowTable getThroughput() {
-        return aExit;
+        return aOutput;
+    }
+
+    @Override
+    protected EntryNodeModel getEntryNode(int index) {
+        return aEntryNodes.get(index);
+    }
+
+    @Override
+    protected ExitNodeModel getExitNode(int index) {
+        return aExitNode;
     }
 
 }

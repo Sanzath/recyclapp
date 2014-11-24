@@ -77,6 +77,10 @@ public abstract class ElementModel {
     public ParameterGroup getParameters() { return null; }
     public void setParameters(ParameterGroup parameters) {}
     
+    public final int getId() {
+        return aId;
+    }
+    
     /**
      * @return the aName
      */
@@ -183,6 +187,7 @@ public abstract class ElementModel {
         properties.aSize = aSize;
         properties.aColor = aColor;
         properties.aMaxInput = aMaxInput;
+        properties.aParameters = getParameters();
         
         return properties;
     }
@@ -190,5 +195,8 @@ public abstract class ElementModel {
     public abstract MaterialFlowMatrix getEntryMaterials(); 
     public abstract MaterialFlowMatrix getExitMaterials();
     public abstract MaterialFlowTable getThroughput();
+    
+    protected abstract EntryNodeModel getEntryNode(int index);
+    protected abstract ExitNodeModel getExitNode(int index);
     
 }

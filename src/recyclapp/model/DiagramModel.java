@@ -123,39 +123,6 @@ public final class DiagramModel {
         return aElements.get(aElements.indexOf(id));
     }
     
-    public ParameterGroup getParameters(int id) {
-        return getElementFromId(id).getParameters();
-    }
-    public void setParameters(int id, ParameterGroup parameters) {
-        getElementFromId(id).setParameters(parameters);
-    }
-    
-    public boolean canAddEntryNode(int id) {
-        return getElementFromId(id).canAddEntryNode();
-    }
-    public boolean canAddExitNode(int id) {
-        return getElementFromId(id).canAddExitNode();
-    }
-    public boolean canRemoveEntryNode(int id) {
-        return getElementFromId(id).canRemoveEntryNode();
-    }
-    public boolean canRemoveExitNode(int id) {
-        return getElementFromId(id).canRemoveExitNode();
-    }
-    
-    public void addEntryNode(int id) {
-        getElementFromId(id).addEntryNode();
-    }
-    public void addExitNode(int id) {
-        getElementFromId(id).canAddExitNode();
-    }
-    public void removeEntryNode(int id, int index) {
-        getElementFromId(id).removeEntryNode(index);
-    }
-    public void removeExitNode(int id, int index) {
-        getElementFromId(id).removeExitNode(index);
-    }
-    
     public List<ElementProperties> getAllElements() {
         List<ElementProperties> elements = new ArrayList<>();
         for (ElementModel model : aElements) {
@@ -163,8 +130,4 @@ public final class DiagramModel {
         }
         return elements;
     }
-    
-    //public ElementProperties getElement(int id) {
-    //    return 
-    //}
 }

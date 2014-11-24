@@ -106,5 +106,15 @@ public final class EntryPointModel extends ElementModel {
     public MaterialFlowTable getThroughput() {
         return aEntryMaterials;
     }
+
+    @Override
+    protected EntryNodeModel getEntryNode(int index) {
+        return null;
+    }
+
+    @Override
+    protected ExitNodeModel getExitNode(int index) {
+        return aExitNode;
+    }
     
 }
