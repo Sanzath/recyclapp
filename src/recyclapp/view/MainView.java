@@ -80,7 +80,7 @@ public class MainView extends javax.swing.JFrame {
         TextEntreeSortie = new javax.swing.JTextArea();
         PanelGraph = new javax.swing.JPanel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        Grille = new recyclapp.view.DiagramView();
+        Grille = DiagramView.getInstance();
         MenuBar = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         jMenu2 = new javax.swing.JMenu();
@@ -92,7 +92,7 @@ public class MainView extends javax.swing.JFrame {
         BouttonOutilsOuvir.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/folder31.png"))); // NOI18N
         BouttonOutilsOuvir.setBorder(null);
         BouttonOutilsOuvir.setContentAreaFilled(false);
-        BouttonOutilsOuvir.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        BouttonOutilsOuvir.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         BouttonOutilsOuvir.setFocusable(false);
         BouttonOutilsOuvir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BouttonOutilsOuvir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -102,7 +102,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsSave.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/floppy1.png"))); // NOI18N
         ButtonOutilsSave.setBorder(null);
         ButtonOutilsSave.setContentAreaFilled(false);
-        ButtonOutilsSave.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsSave.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsSave.setFocusable(false);
         ButtonOutilsSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -112,7 +112,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsUndo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/undo16.png"))); // NOI18N
         ButtonOutilsUndo.setBorder(null);
         ButtonOutilsUndo.setContentAreaFilled(false);
-        ButtonOutilsUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsUndo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsUndo.setFocusable(false);
         ButtonOutilsUndo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsUndo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -122,7 +122,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsRedo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/redo13.png"))); // NOI18N
         ButtonOutilsRedo.setBorder(null);
         ButtonOutilsRedo.setContentAreaFilled(false);
-        ButtonOutilsRedo.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsRedo.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsRedo.setFocusable(false);
         ButtonOutilsRedo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsRedo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -132,7 +132,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsStart.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/play43.png"))); // NOI18N
         ButtonOutilsStart.setBorder(null);
         ButtonOutilsStart.setContentAreaFilled(false);
-        ButtonOutilsStart.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsStart.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsStart.setFocusable(false);
         ButtonOutilsStart.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsStart.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -147,7 +147,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/add11.png"))); // NOI18N
         ButtonOutilsNouveau.setBorder(null);
         ButtonOutilsNouveau.setContentAreaFilled(false);
-        ButtonOutilsNouveau.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsNouveau.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsNouveau.setFocusable(false);
         ButtonOutilsNouveau.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsNouveau.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -157,7 +157,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/magnifier13.png"))); // NOI18N
         ButtonOutilsZoom.setBorder(null);
         ButtonOutilsZoom.setContentAreaFilled(false);
-        ButtonOutilsZoom.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsZoom.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsZoom.setFocusable(false);
         ButtonOutilsZoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsZoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -181,7 +181,7 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/export2.png"))); // NOI18N
         ButtonOutilsExport.setBorder(null);
         ButtonOutilsExport.setContentAreaFilled(false);
-        ButtonOutilsExport.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        ButtonOutilsExport.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         ButtonOutilsExport.setFocusable(false);
         ButtonOutilsExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
@@ -223,22 +223,22 @@ public class MainView extends javax.swing.JFrame {
 
         jButton1.setText("Station");
         jButton1.setContentAreaFilled(false);
-        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton1.setFocusPainted(false);
 
         jButton3.setText("Jonction");
         jButton3.setContentAreaFilled(false);
-        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton3.setFocusPainted(false);
 
         jButton4.setText("Entrée Usine");
         jButton4.setContentAreaFilled(false);
-        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton4.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton4.setFocusPainted(false);
 
         jButton5.setText("Sortie Usine");
         jButton5.setContentAreaFilled(false);
-        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
         jButton5.setFocusPainted(false);
 
         jToggleButton1.setText("Convoyeur");
@@ -387,14 +387,14 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_ButtonOutilsStartActionPerformed
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
-        drawGrille();
+        aGrille = ButtonGrille.isSelected();
+        Grille.setGridActive(aGrille);
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
-        // TODO add your handling code here:
-        drawGrille();
-        
-        
+        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
+        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
+        Grille.setPxPerMeter(SlideZoom.getValue());
     }//GEN-LAST:event_SlideZoomMouseDragged
 
     private void GrilleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseMoved
@@ -478,17 +478,7 @@ public class MainView extends javax.swing.JFrame {
     }
     */
     private void drawGrille()
-    {
-        aGrille = ButtonGrille.isSelected();
-        TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
-        Grille = new recyclapp.view.DiagramView(SlideZoom.getValue(),aGrille);
-        
-        Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
-        Grille.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
-            public void mouseMoved(java.awt.event.MouseEvent evt) {
-                GrilleMouseMoved(evt);
-            }
-        });
+    {/*
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
         GrilleLayout.setHorizontalGroup(
@@ -511,7 +501,7 @@ public class MainView extends javax.swing.JFrame {
         PanelGraphLayout.setVerticalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jScrollPane2)
-        );
+        );*/
     }
     /**
      * @param args the command line arguments

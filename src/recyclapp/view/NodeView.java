@@ -19,19 +19,18 @@ import java.awt.Graphics2D;
  */
 public class NodeView extends JComponent implements MouseListener {
     
-    private final int aParentId;
+    private int aParentId;
     private int aIndex;
     private NodeProperties aProperties;
     
-    public NodeView(int parentId, int index, NodeProperties properties) {
+    /*public NodeView(int parentId, int index, NodeProperties properties) {
         
-    }
+    }*/
     
     @Override
     protected void paintComponent( Graphics g )
     {
         super.paintComponent(g); 
-        Graphics2D g2 = (Graphics2D) g;
         
         
         

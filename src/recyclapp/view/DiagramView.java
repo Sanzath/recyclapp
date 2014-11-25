@@ -6,99 +6,92 @@
 
 package recyclapp.view;
 
-import javax.swing.JPanel;
-import recyclapp.transport.Coords;
-import java.awt.Point;
+import recyclapp.model.Controller;
+
+import javax.swing.*;
+import java.awt.*;
+import recyclapp.transport.*;
 
 /**
  *
  * @author Martin Boisvert / Clement Sanquer
  */
 
-  import java.awt.Color;
-  import java.awt.Graphics;
-  import java.awt.Graphics2D;
-  import java.awt.BasicStroke;
-  import recyclapp.transport.Coords;
- 
-  public class DiagramView extends JPanel
-  {
-       
-      public static int aTaille;
-      public boolean aGrille;
-      public int aIndiceZoom;
-      
-    public DiagramView()
-    {
-        aTaille = 50;
-        aGrille = true;
-        aIndiceZoom = 3;
+public final class DiagramView extends JPanel
+{
+    private static DiagramView aInstance;
+    
+    private static final int GRID_WIDTH = 70;
+    private static final int GRID_HEIGHT = 50;
+    
+    private int aTaille = 50;
+    private boolean aGridActive = true;
+    
+    private DiagramView() {
+        setLayout(null);
+        setBackground(Color.WHITE);
+        setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        
+        ElementProperties props = new ElementProperties();
+        props.aColor = Color.RED;
+        add(new JunctionView(new ElementProperties()));
+        invalidate();
     }
     
-    public DiagramView(int taille,boolean grille)
-    {
-        aTaille = taille;
-        aGrille = grille;
-        aIndiceZoom = 1;
-        /*
-        if(this.aTaille > 25) aIndiceZoom = 2;
-        if(this.aTaille > 50) aIndiceZoom = 3;
-        if(this.aTaille > 75) aIndiceZoom = 4;  
-        if(this.aTaille > 90) aIndiceZoom = 5;
-                */
+    public static DiagramView getInstance() {
+        if (aInstance == null) {
+            aInstance = new DiagramView();
+        }
+        return aInstance;
     }
  
+    protected void setPxPerMeter(int px) {
+        aTaille = px;
+        repaint();
+    }
+    
+    protected void setGridActive(boolean active) {
+        aGridActive = active;
+        repaint();
+    }
+    
     @Override
     protected void paintComponent( Graphics g )
     {
-
         super.paintComponent(g); 
-        Graphics2D g2 = (Graphics2D) g;
-
-        g2.setColor(Color.white);
-        //On le dessine de sorte qu'il occupe toute la surface
-        g2.fillRect(0, 0, 70*aTaille, 50*aTaille);
         
-        g2.setColor(Color.GRAY);
-        //g2.drawRect(0, 0, this.getWidth(), this.getHeight());
-        g2.drawRect(0, 0, 70*aTaille, 50*aTaille);
-        
-        if(aGrille == true){
-            drawGrille(g,aIndiceZoom);
+        if(aGridActive == true){
+            drawGrille(g);
         }
         
-        Coords p = new Coords(1,1);
-        Coords p2 = new Coords(1,2);
+        //Coords p = new Coords(1,1);
+        //Coords p2 = new Coords(1,2);
         
-        drawNode(g2,p,"noeud 1",Color.BLACK);
-        drawNode(g2,p2,"noeud 2",Color.BLACK);
+        //drawNode(g,p,"noeud 1",Color.BLACK);
+        //drawNode(g,p2,"noeud 2",Color.BLACK);
         
+        //g.setStroke(new BasicStroke((this.aTaille)/20));
+        //drawConvoyeur(g, 3,1,7,2,"Convoyeur 1",Color.DARK_GRAY);
+        //drawConvoyeur(g, 1,1,1,2,"Convoyeur 2",Color.DARK_GRAY);
+        //drawEntreNode(g,1,5,"Entrée 1",Color.GREEN);
+        //drawSortieNode(g,1,6,"Sortie 1",Color.ORANGE);
         
-        
-        g2.setStroke(new BasicStroke((this.aTaille)/20));
-        drawConvoyeur(g2, 3,1,7,2,"Convoyeur 1",Color.DARK_GRAY);
-        drawConvoyeur(g2, 1,1,1,2,"Convoyeur 2",Color.DARK_GRAY);
-        drawEntreNode(g,1,5,"Entrée 1",Color.GREEN);
-        drawSortieNode(g,1,6,"Sortie 1",Color.ORANGE);
-        
-        drawStation(g, 2.5,2.5,3,1,"Station 1",Color.CYAN);
-        
+        //drawStation(g, 2.5,2.5,3,1,"Station 1",Color.CYAN);
         
     }
     
-    public void drawGrille(Graphics g,int zoom)
+    public void drawGrille(Graphics g)
     {
-        int i ;
-        //for(i=1;i<(((Math.max(this.getHeight(),this.getWidth()))/(this.aTaille)+1)*a);i++)
-        for(i=1;i<70;i++)    
+        int i;
+        g.setColor(Color.LIGHT_GRAY);
+        for(i = 1; i < GRID_WIDTH; i++)    
         {
-            g.setColor(Color.LIGHT_GRAY);
-            g.drawLine(i*this.aTaille/zoom, 0, i*this.aTaille/zoom, 50*aTaille);
+            g.drawLine(i * aTaille, 0, i * aTaille, GRID_HEIGHT * aTaille);
         }
         
-        for(i=1;i<50;i++)    
+        for(i = 1; i < GRID_HEIGHT; i++)    
         {
-            g.drawLine(0, i*this.aTaille/zoom, 70*aTaille, i*this.aTaille/zoom);
+            g.drawLine(0, i * aTaille, GRID_WIDTH * aTaille, i * aTaille);
         }
         
     }
@@ -176,7 +169,7 @@ import java.awt.Point;
         g.drawString(name, ax, ay);   
     }
     
-    public static int metreToPixel(double a)
+    public int metreToPixel(double a)
     {
         int px;
         a = a*aTaille;
@@ -184,7 +177,7 @@ import java.awt.Point;
         return px;
     }
     
-    public static Point coordsToPoint(Coords coords) {
+    public Point coordsToPoint(Coords coords) {
         int x = metreToPixel(coords.x);
         int y = metreToPixel(coords.y);
         return new Point(x, y);

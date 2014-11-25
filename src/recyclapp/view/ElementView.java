@@ -16,12 +16,15 @@ import recyclapp.view.DiagramView;
  *
  * @author Martin Boisvert
  */
-public abstract class ElementView extends JComponent implements MouseListener {
+public abstract class ElementView extends JPanel implements MouseListener {
     private long aClickTime1;
     protected ElementProperties aProperties;
     
     public ElementView(ElementProperties properties){
         aProperties = properties;
+        setBackground(Color.RED);
+        setSize(100, 100);
+        
         addMouseListener(this);
     }
     public int getID() {
@@ -33,17 +36,18 @@ public abstract class ElementView extends JComponent implements MouseListener {
     }
     
     @Override
-    public void paint(Graphics g){
+    public void paintComponent(Graphics g){
+        super.paintComponent(g);
         g.setColor(aProperties.aColor);
         //Args de fillRect(Remplie un rectangle de couleur): pos X, pos Y, width, height
-        g.fillRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+        //g.fillRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+        //        DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
         g.setColor(Color.BLACK);
         //Args de drawRect(bordure du rectangle): pos X, pos Y, width, height
-        g.drawRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
-        g.setClip(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+        //g.drawRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+        //        DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+        //g.setClip(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
+        //        DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
     }
             
     protected abstract void createPropertiesWindow(ElementProperties properties);
