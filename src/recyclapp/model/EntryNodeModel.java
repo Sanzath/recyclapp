@@ -15,7 +15,6 @@ import recyclapp.transport.MaterialFlowTable;
 public class EntryNodeModel extends NodeModel {
     
     private ExitNodeModel aExitNode;
-    private ConveyorModel aConveyor;
     
     public EntryNodeModel(ElementModel element)
     {

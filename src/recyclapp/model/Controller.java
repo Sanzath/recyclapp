@@ -16,14 +16,6 @@ public class Controller {
     // Singleton
     private static Controller aInstance;
     
-    /*
-    To get references, use:
-    HistoryModel.getInstance()
-    DiagramModel.getInstance()
-    MaterialDictionaryModel.getInstance()
-    ...
-     */
-    
     private Controller() {}
         
     public static Controller getInstance() {
@@ -35,16 +27,6 @@ public class Controller {
     }
     
     // Diagram
-    public void zoomIn()
-    {
-        
-    }
-    
-    public void zoomOut()
-    {
-        
-    }
-    
     public void toggleGrid(boolean active)
     {
         
@@ -60,17 +42,9 @@ public class Controller {
         
     }
     
-    public void startMovingView()
-    {
-        
+    public boolean checkRecursion() {
+        return DiagramModel.getInstance().checkRecursion();
     }
-    
-    public void stopMovingView()
-    {
-        
-    }
-    
-    
     
     // Menu
     public void save()
@@ -122,7 +96,12 @@ public class Controller {
     
     public void selectElement(int index)
     {
-        
+        ToolBoxModel.getInstance().selectElement(index);
+    }
+    
+    public int createElementFromToolBox(){
+        int id = DiagramModel.getInstance().createFromSelectedToolbox();
+        return id;
     }
     
     public void deselectElement()

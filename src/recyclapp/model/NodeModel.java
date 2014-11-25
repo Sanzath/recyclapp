@@ -23,6 +23,7 @@ public abstract class NodeModel {
     private int aAngle;
     
     protected final ElementModel aElement;
+    protected ConveyorModel aConveyor;
     
     public NodeModel(ElementModel element)
     {
@@ -135,6 +136,10 @@ public abstract class NodeModel {
         properties.aSize = getSize();
         
         return properties;
+    }
+    
+    protected final ConveyorModel getConveyor() {
+        return aConveyor;
     }
     
 }

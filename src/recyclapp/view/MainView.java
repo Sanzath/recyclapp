@@ -7,9 +7,14 @@
 package recyclapp.view;
 
 import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.*;
 import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
+import java.util.ArrayList;
+import recyclapp.model.DiagramModel;
+import recyclapp.transport.Coords;
+import recyclapp.transport.ElementProperties;
 /**
  *
  * @author Sanquer
@@ -66,10 +71,10 @@ public class MainView extends javax.swing.JFrame {
         PanelToolBox = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jButton4 = new javax.swing.JButton();
         jButton5 = new javax.swing.JButton();
+        jToggleButton1 = new javax.swing.JToggleButton();
         PanelEntreeSortie = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextEntreeSortie = new javax.swing.JTextArea();
@@ -221,11 +226,6 @@ public class MainView extends javax.swing.JFrame {
         jButton1.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton1.setFocusPainted(false);
 
-        jButton2.setText("Convoyeur");
-        jButton2.setContentAreaFilled(false);
-        jButton2.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        jButton2.setFocusPainted(false);
-
         jButton3.setText("Jonction");
         jButton3.setContentAreaFilled(false);
         jButton3.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -241,6 +241,13 @@ public class MainView extends javax.swing.JFrame {
         jButton5.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jButton5.setFocusPainted(false);
 
+        jToggleButton1.setText("Convoyeur");
+        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jToggleButton1ActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout PanelToolBoxLayout = new javax.swing.GroupLayout(PanelToolBox);
         PanelToolBox.setLayout(PanelToolBoxLayout);
         PanelToolBoxLayout.setHorizontalGroup(
@@ -252,11 +259,14 @@ public class MainView extends javax.swing.JFrame {
                     .addGroup(PanelToolBoxLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(jButton2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 133, Short.MAX_VALUE)
+                    .addComponent(jButton4, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                     .addComponent(jButton5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
+            .addGroup(PanelToolBoxLayout.createSequentialGroup()
+                .addGap(63, 63, 63)
+                .addComponent(jToggleButton1)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelToolBoxLayout.setVerticalGroup(
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -266,14 +276,14 @@ public class MainView extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jButton2)
+                .addComponent(jToggleButton1)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton3)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton4)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jButton5)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addContainerGap(318, Short.MAX_VALUE))
         );
 
         PanelEntreeSortie.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -304,6 +314,11 @@ public class MainView extends javax.swing.JFrame {
                 GrilleMouseMoved(evt);
             }
         });
+        Grille.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseReleased(java.awt.event.MouseEvent evt) {
+                GrilleMouseReleased(evt);
+            }
+        });
 
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
@@ -322,7 +337,7 @@ public class MainView extends javax.swing.JFrame {
         PanelGraph.setLayout(PanelGraphLayout);
         PanelGraphLayout.setHorizontalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
+            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
         );
         PanelGraphLayout.setVerticalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -403,6 +418,41 @@ public class MainView extends javax.swing.JFrame {
        // TextEntreeSortie.setText(chaine2);
     }//GEN-LAST:event_GrilleMouseMoved
 
+    private void GrilleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseReleased
+        float x = evt.getX();
+        float y = evt.getY();
+        if (evt.getSource() == jButton1)
+        {
+            //appeler la méthode de draw de station + créer la station + ouvrir fenètre édition station
+            
+            recyclapp.model.Controller.getInstance().selectElement(2);
+            int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();
+            recyclapp.transport.ElementProperties elem = new ElementProperties();
+            recyclapp.transport.Coords cor = new Coords(x,y);
+            elem.aPosition = cor;
+            SortingStationView station = new SortingStationView(elem);
+        }
+        else if (evt.getSource() == jButton3)
+        {
+            //appeler la méthode de draw de jonction + créer la jonction + ouvrir fenètre édition jonction
+            //JuntionView junction = new JunctionView(x,y);
+        }
+        else if (evt.getSource() == jButton4)
+        {
+            //appeler la méthode de draw d'entré d'usine + créer l'entré usine + ouvrir fenètre édition entré usine
+            //EntryPointView entry = new EntryPointView(x,y);
+        }
+        else if (evt.getSource() == jButton5)
+        {
+            //appeler la méthode de draw de sortie d'usine + créer une sortie usine + ouvrir fenètre édition sortie usine
+            //ExitPointView exit = new ExitPointView(x,y);
+        }
+    }//GEN-LAST:event_GrilleMouseReleased
+
+    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
+
+    }//GEN-LAST:event_jToggleButton1ActionPerformed
+    
     /*
     private void buildTree(){
         //Création d'une racine
@@ -519,7 +569,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JSlider SlideZoom;
     private javax.swing.JTextArea TextEntreeSortie;
     private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -537,6 +586,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;
     // End of variables declaration//GEN-END:variables

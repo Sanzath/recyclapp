@@ -10,7 +10,6 @@ import java.util.List;
 import java.util.ArrayList;
 
 import recyclapp.transport.Coords;
-import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.ElementProperties;
 
 /**
@@ -20,10 +19,6 @@ import recyclapp.transport.ElementProperties;
 public final class DiagramModel {
     private static DiagramModel aInstance;
     
-    private final static float ZOOM_DELTA = 1.1F;
-    
-    private float aZoom = 1.0F;
-    private Coords aCenterPosition = new Coords(0, 0);
     private boolean aGridActive = false;
     private float aGridSpacing = 1.0F;
     private boolean aRecursionDetected = false;
@@ -42,20 +37,18 @@ public final class DiagramModel {
         return aInstance;
     }
     
-    public void zoomIn() {
-        aZoom *= ZOOM_DELTA;
-    }
-    
-    public void zoomOut() {
-        aZoom /= ZOOM_DELTA;
-    }
-    
     public boolean getGridActive() {
         return aGridActive;
     }
-    
     public void setGridActive(boolean active) {
         aGridActive = active;
+    }
+    
+    public float getGridSpacing() {
+        return aGridSpacing;
+    }
+    public void setGridSpacing(float gridSpacing) {
+        aGridSpacing = gridSpacing;
     }
     
     public void saveDiagram(String filename) {
@@ -75,11 +68,13 @@ public final class DiagramModel {
         }
     }
     
-    public void createFromSelectedToolbox() {
+    public int createFromSelectedToolbox() {
         ElementModel element = ToolBoxModel.getInstance().copySelectedElement();
         if (element != null) {
             addElement(element);
+            return element.getId();
         }
+        return -1;
     }
     
     public void createFromSelectedTemplate() {
@@ -95,10 +90,6 @@ public final class DiagramModel {
     }
     
     public void clear() {
-        
-    }
-    
-    public void simulate() {
         
     }
     
