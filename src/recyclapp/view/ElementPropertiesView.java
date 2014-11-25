@@ -19,7 +19,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     }
     
     public ElementPropertiesView(ElementProperties properties){
-        
+        initComponents();
     }
 
     /**
@@ -41,7 +41,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         QtyInputTxtBox = new javax.swing.JTextField();
 
-        setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+        setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Édition de paramêtres");
 
         jLabel1.setText("Nom de l'élément:");
