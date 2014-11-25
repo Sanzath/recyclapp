@@ -422,18 +422,17 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_GrilleMouseMoved
 
     private void GrilleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseReleased
-        float x = evt.getX();
-        float y = evt.getY();
+        int x = evt.getX();
+        int y = evt.getY();
         if (evt.getSource() == jButton1)
         {
             //appeler la méthode de draw de station + créer la station + ouvrir fenètre édition station
             
-            recyclapp.model.Controller.getInstance().selectElement(2);
-            int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();
-            recyclapp.transport.ElementProperties elem = new ElementProperties();
-            recyclapp.transport.Coords cor = new Coords(x,y);
-            elem.aPosition = cor;
-            elem.aId = id;
+            Controller.getInstance().selectElement(2);
+            int id = Controller.getInstance().createElementFromToolBox();
+            ElementProperties elem = Controller.getInstance().getElementProperties(id);
+            elem.aPosition = Grille.pointToCoords(new Point(x, y));
+            Controller.getInstance().setElementProperties(elem);
             SortingStationView station = new SortingStationView(elem);
             Grille.add(station);
         }

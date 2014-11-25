@@ -170,11 +170,21 @@ public final class DiagramView extends JPanel
     {
         return (int)(a * aTaille);
     }
+    public float pixelToMetre(int a)
+    {
+        return ((float)a) / aTaille;
+    }
     
     public Point coordsToPoint(Coords coords) {
         int x = metreToPixel(coords.x);
         int y = metreToPixel(coords.y);
         return new Point(x, y);
+    }
+    
+    public Coords pointToCoords(Point p) {
+        float x = pixelToMetre(p.x);
+        float y = pixelToMetre(p.y);
+        return new Coords(x, y);
     }
    
   }
