@@ -30,6 +30,7 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener {
         updatePosition();
         setBackground(properties.aColor);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        add(new JTextField(properties.aName));
         
         addMouseListener(this); 
     }

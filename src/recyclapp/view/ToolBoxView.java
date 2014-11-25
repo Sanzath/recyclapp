@@ -22,15 +22,11 @@ public class ToolBoxView extends JPanel {
     public ToolBoxView() {
         List<String> elementNames = Controller.getInstance().getToolBoxElements();
         setLayout(new GridLayout(elementNames.size(), 1));
+        
         for (int i = 0; i < elementNames.size(); i++) {
             JToggleButton newButton = new ToolBoxButton(i, elementNames.get(i));
             add(newButton);
-            newButton.addActionListener(new ActionListener() {
-                @Override
-                public void actionPerformed(ActionEvent e) {
-                    elementPressed(e);
-                }
-            });
+            newButton.addActionListener(this::elementPressed);
         }
     }
     
