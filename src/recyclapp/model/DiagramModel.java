@@ -6,6 +6,7 @@
 
 package recyclapp.model;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -27,7 +28,11 @@ public final class DiagramModel {
     private final List<EntryNodeModel> aRecursionNodes = new ArrayList<>();
     
     private DiagramModel() {
-        aElements.add(new EntryPointModel());
+        EntryPointModel entry = new EntryPointModel();
+        entry.setSize(new Coords(2, 2));
+        entry.setPosition(new Coords(5.5F, 5.5F));
+        entry.setColor(Color.GREEN);
+        aElements.add(entry);
     }
     
     public static DiagramModel getInstance() {
