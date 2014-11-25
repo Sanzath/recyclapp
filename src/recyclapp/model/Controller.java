@@ -203,6 +203,10 @@ public class Controller {
         return getElement(id).toProperties();
     }
     
+    public void setElementProperties(ElementProperties properties) {
+        getElement(properties.aId).fromProperties(properties);
+    }
+    
     public ParameterGroup getParameters(int id) {
         return getElement(id).getParameters();
     }
