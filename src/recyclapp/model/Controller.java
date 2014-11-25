@@ -263,11 +263,17 @@ public class Controller {
         getElement(id).removeExitNode(index);
     }
     
-    public int getEntryNodesCount(int id) {
-        return getElement(id).getEntryNodesCount();
+    public int getEntryNodeCount(int id) {
+        return getElement(id).getEntryNodeCount();
     }
-    public int getExitNodesCount(int id) {
-        return getElement(id).getExitNodesCount();
+    public int getExitNodeCount(int id) {
+        return getElement(id).getExitNodeCount();
+    }
+    public List<String> getEntryNodeNames(int id) {
+        return getElement(id).getEntryNodeNames();
+    }
+    public List<String> getExitNodeNames(int id) {
+        return getElement(id).getExitNodeNames();
     }
     
     public MaterialFlowMatrix getInputMaterials(int id) {

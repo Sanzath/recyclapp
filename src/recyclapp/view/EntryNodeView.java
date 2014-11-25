@@ -8,24 +8,33 @@ package recyclapp.view;
 
 import recyclapp.transport.NodeProperties;
 
-import javax.swing.JComponent;
+import javax.swing.*;
 import java.awt.event.*;
-import java.awt.Graphics;
-import java.awt.Graphics2D;
+import java.awt.*;
 
 /**
  *
  * @author Martin Boisvert
  */
-public class NodeView extends JComponent implements MouseListener {
+public final class EntryNodeView extends JPanel implements MouseListener, MouseMotionListener {
     
-    private int aParentId;
+    private final ElementView aParent;
     private int aIndex;
-    private NodeProperties aProperties;
     
-    /*public NodeView(int parentId, int index, NodeProperties properties) {
+    public EntryNodeView(ElementView parent, int index, NodeProperties properties) {
+        aParent = parent;
+        aIndex = index;
         
-    }*/
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        setBackground(Color.GRAY);
+        
+        addMouseListener(this);
+        addMouseMotionListener(this);
+    }
+    
+    public void updateIndex(int newIndex) {
+        aIndex = newIndex;
+    }
     
     @Override
     protected void paintComponent( Graphics g )
@@ -38,7 +47,7 @@ public class NodeView extends JComponent implements MouseListener {
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+        //throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 
     @Override
@@ -58,6 +67,16 @@ public class NodeView extends JComponent implements MouseListener {
 
     @Override
     public void mouseExited(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+        throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
 }

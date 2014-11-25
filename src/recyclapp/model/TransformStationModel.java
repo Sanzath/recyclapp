@@ -90,12 +90,12 @@ public final class TransformStationModel extends ElementModel {
     }
 
     @Override
-    public int getEntryNodesCount() {
+    public int getEntryNodeCount() {
         return 1;
     }
 
     @Override
-    public int getExitNodesCount() {
+    public int getExitNodeCount() {
         return 1;
     }
 

@@ -7,6 +7,8 @@
 package recyclapp.model;
 
 import java.awt.Color;
+import java.util.List;
+import java.util.ArrayList;
 
 import recyclapp.transport.Coords;
 import recyclapp.transport.ParameterGroup;
@@ -71,8 +73,8 @@ public abstract class ElementModel {
     public void removeEntryNode(int index) {}
     public void removeExitNode(int index) {}
     
-    public abstract int getEntryNodesCount();
-    public abstract int getExitNodesCount();
+    public abstract int getEntryNodeCount();
+    public abstract int getExitNodeCount();
     
     public ParameterGroup getParameters() { return null; }
     public void setParameters(ParameterGroup parameters) {}
@@ -197,5 +199,21 @@ public abstract class ElementModel {
     
     protected abstract EntryNodeModel getEntryNode(int index);
     protected abstract ExitNodeModel getExitNode(int index);
+    
+    protected List<String> getEntryNodeNames() {
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < getEntryNodeCount(); ++i) {
+            names.add(getEntryNode(i).getName());
+        }
+        return names;
+    }
+    
+    protected List<String> getExitNodeNames() {
+        List<String> names = new ArrayList<>();
+        for (int i = 0; i < getExitNodeCount(); ++i) {
+            names.add(getExitNode(i).getName());
+        }
+        return names;
+    }
     
 }
