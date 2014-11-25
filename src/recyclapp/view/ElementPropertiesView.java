@@ -9,6 +9,7 @@ import recyclapp.transport.ElementProperties;
 import java.util.*;
 import javax.swing.*;
 import recyclapp.model.Controller;
+import recyclapp.transport.*;
 /**
  *
  * @author Gabriel Grenon <your.name at your.org>
@@ -70,23 +71,54 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aExitNodeListModel.addElement(aExitNodeList.get(i));
         }    
     }
-    //À Enlever quand la matrice de récup va avoir de l'allure
     private void initListeSorties(){
-        listeSorties.add(Sortie1Panel);
-        listeSorties.add(Sortie2Panel);
-        listeSorties.add(Sortie3Panel);
-        listeSorties.add(Sortie4Panel);
-        listeSorties.add(Sortie5Panel);
+        if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
+            listeSorties.add(Sortie1Panel);
+            listeSorties.add(Sortie2Panel);
+            listeSorties.add(Sortie3Panel);
+            listeSorties.add(Sortie4Panel);
+            listeSorties.add(Sortie5Panel);
+        }
+        else RecuMatrixPanel.setVisible(false);
     }
     
     private void updateMatrixVisibility(){
-        for (int i = 0; i < listeSorties.size(); i++){
-            if (i < aExitNodeList.size()){
-                listeSorties.get(i).setVisible(true);
+        if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
+            for (int i = 0; i < listeSorties.size(); i++){
+                if (i < aExitNodeList.size()){
+                    listeSorties.get(i).setVisible(true);
+                }
+                else
+                    listeSorties.get(i).setVisible(false);
             }
-            else
-                listeSorties.get(i).setVisible(false);
         }
+    }
+    
+    private List<Float> getFlow(){
+        List<Float> listeFlow = new ArrayList<>();
+        listeFlow.add(Float.parseFloat(FlowMatrix00.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix01.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix10.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix11.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix20.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix21.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix30.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix31.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix40.getText()));
+        listeFlow.add(Float.parseFloat(FlowMatrix41.getText()));
+        return listeFlow;
+    }
+    private MaterialFlowMatrix getMatrix(){
+        List<Float> listeFlow = getFlow();
+        MaterialFlowMatrix flowMatrix = new MaterialFlowMatrix();
+        for (int i = 0; i < aExitNodeList.size(); i++){
+            MaterialFlowTable table = new MaterialFlowTable();
+            for (int j = 0; j < 2; j++){
+                table.add(new MaterialFlow(j, listeFlow.get(i+j)));
+            }
+            flowMatrix.add(table);
+        }
+        return flowMatrix;
     }
     
     /**
@@ -122,30 +154,30 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         ExitNodeAddBtn = new javax.swing.JButton();
         ExitNodeDelBtn = new javax.swing.JButton();
-        jPanel1 = new javax.swing.JPanel();
+        RecuMatrixPanel = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jLabel9 = new javax.swing.JLabel();
         Sortie2Panel = new javax.swing.JPanel();
         jLabel11 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
-        jTextField4 = new javax.swing.JTextField();
+        FlowMatrix10 = new javax.swing.JTextField();
+        FlowMatrix11 = new javax.swing.JTextField();
         Sortie3Panel = new javax.swing.JPanel();
         jLabel12 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
-        jTextField6 = new javax.swing.JTextField();
+        FlowMatrix20 = new javax.swing.JTextField();
+        FlowMatrix21 = new javax.swing.JTextField();
         Sortie1Panel = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
-        jTextField8 = new javax.swing.JTextField();
+        FlowMatrix00 = new javax.swing.JTextField();
+        FlowMatrix01 = new javax.swing.JTextField();
         Sortie4Panel = new javax.swing.JPanel();
         jLabel14 = new javax.swing.JLabel();
-        jTextField9 = new javax.swing.JTextField();
-        jTextField10 = new javax.swing.JTextField();
+        FlowMatrix30 = new javax.swing.JTextField();
+        FlowMatrix31 = new javax.swing.JTextField();
         Sortie5Panel = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jTextField12 = new javax.swing.JTextField();
+        FlowMatrix40 = new javax.swing.JTextField();
+        FlowMatrix41 = new javax.swing.JTextField();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -254,7 +286,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             }
         });
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createEtchedBorder());
+        RecuMatrixPanel.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel7.setText("Matrice de récupération (champs en %)");
 
@@ -264,20 +296,20 @@ public class ElementPropertiesView extends javax.swing.JFrame {
 
         jLabel11.setText("Sortie2");
 
-        jTextField3.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField3.setText("0");
+        FlowMatrix10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix10.setText("0");
 
-        jTextField4.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField4.setText("0");
+        FlowMatrix11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix11.setText("0");
 
         javax.swing.GroupLayout Sortie2PanelLayout = new javax.swing.GroupLayout(Sortie2Panel);
         Sortie2Panel.setLayout(Sortie2PanelLayout);
         Sortie2PanelLayout.setHorizontalGroup(
             Sortie2PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel11, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(Sortie2PanelLayout.createSequentialGroup()
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         Sortie2PanelLayout.setVerticalGroup(
@@ -285,79 +317,79 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             .addGroup(Sortie2PanelLayout.createSequentialGroup()
                 .addComponent(jLabel11)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(FlowMatrix11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel12.setText("Sortie3");
 
-        jTextField5.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField5.setText("0");
+        FlowMatrix20.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix20.setText("0");
 
-        jTextField6.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField6.setText("0");
+        FlowMatrix21.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix21.setText("0");
 
         javax.swing.GroupLayout Sortie3PanelLayout = new javax.swing.GroupLayout(Sortie3Panel);
         Sortie3Panel.setLayout(Sortie3PanelLayout);
         Sortie3PanelLayout.setHorizontalGroup(
             Sortie3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel12, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix20, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix21, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         Sortie3PanelLayout.setVerticalGroup(
             Sortie3PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Sortie3PanelLayout.createSequentialGroup()
                 .addComponent(jLabel12)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix20, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(FlowMatrix21, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel13.setText("Sortie1");
 
-        jTextField7.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField7.setText("0");
+        FlowMatrix00.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix00.setText("0");
 
-        jTextField8.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField8.setText("0");
+        FlowMatrix01.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix01.setText("0");
 
         javax.swing.GroupLayout Sortie1PanelLayout = new javax.swing.GroupLayout(Sortie1Panel);
         Sortie1Panel.setLayout(Sortie1PanelLayout);
         Sortie1PanelLayout.setHorizontalGroup(
             Sortie1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel13, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix00, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix01, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         Sortie1PanelLayout.setVerticalGroup(
             Sortie1PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Sortie1PanelLayout.createSequentialGroup()
                 .addComponent(jLabel13)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix00, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(FlowMatrix01, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel14.setText("Sortie4");
 
-        jTextField9.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField9.setText("0");
+        FlowMatrix30.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix30.setText("0");
 
-        jTextField10.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField10.setText("0");
+        FlowMatrix31.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix31.setText("0");
 
         javax.swing.GroupLayout Sortie4PanelLayout = new javax.swing.GroupLayout(Sortie4Panel);
         Sortie4Panel.setLayout(Sortie4PanelLayout);
         Sortie4PanelLayout.setHorizontalGroup(
             Sortie4PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix30, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
             .addComponent(jLabel14, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(Sortie4PanelLayout.createSequentialGroup()
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix31, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(0, 0, Short.MAX_VALUE))
         );
         Sortie4PanelLayout.setVerticalGroup(
@@ -365,47 +397,47 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             .addGroup(Sortie4PanelLayout.createSequentialGroup()
                 .addComponent(jLabel14)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField9, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix30, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 7, Short.MAX_VALUE)
-                .addComponent(jTextField10, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(FlowMatrix31, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         jLabel15.setText("Sortie5");
 
-        jTextField11.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField11.setText("0");
+        FlowMatrix40.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix40.setText("0");
 
-        jTextField12.setHorizontalAlignment(javax.swing.JTextField.CENTER);
-        jTextField12.setText("0");
+        FlowMatrix41.setHorizontalAlignment(javax.swing.JTextField.CENTER);
+        FlowMatrix41.setText("0");
 
         javax.swing.GroupLayout Sortie5PanelLayout = new javax.swing.GroupLayout(Sortie5Panel);
         Sortie5Panel.setLayout(Sortie5PanelLayout);
         Sortie5PanelLayout.setHorizontalGroup(
             Sortie5PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jLabel15, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-            .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
-            .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix40, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(FlowMatrix41, javax.swing.GroupLayout.PREFERRED_SIZE, 36, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         Sortie5PanelLayout.setVerticalGroup(
             Sortie5PanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(Sortie5PanelLayout.createSequentialGroup()
                 .addComponent(jLabel15)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(FlowMatrix40, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(FlowMatrix41, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
-        jPanel1.setLayout(jPanel1Layout);
-        jPanel1Layout.setHorizontalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+        javax.swing.GroupLayout RecuMatrixPanelLayout = new javax.swing.GroupLayout(RecuMatrixPanel);
+        RecuMatrixPanel.setLayout(RecuMatrixPanelLayout);
+        RecuMatrixPanelLayout.setHorizontalGroup(
+            RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(RecuMatrixPanelLayout.createSequentialGroup()
+                .addGroup(RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
+                    .addGroup(RecuMatrixPanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel9)
                             .addComponent(jLabel8))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -420,14 +452,14 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                         .addComponent(Sortie5Panel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
-        jPanel1Layout.setVerticalGroup(
-            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+        RecuMatrixPanelLayout.setVerticalGroup(
+            RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RecuMatrixPanelLayout.createSequentialGroup()
                 .addComponent(jLabel7)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(RecuMatrixPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, RecuMatrixPanelLayout.createSequentialGroup()
                             .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 20, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                             .addComponent(jLabel9)
@@ -449,7 +481,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addContainerGap()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jPanel1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(RecuMatrixPanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jScrollPane1)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -534,7 +566,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
                             .addComponent(EntryNodeDelBtn))
                         .addGap(18, 18, 18)
-                        .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(RecuMatrixPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(AcceptButton)
@@ -569,6 +601,10 @@ public class ElementPropertiesView extends javax.swing.JFrame {
 
     private void AcceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcceptButtonMouseClicked
         AcceptButton.requestFocusInWindow();
+        if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
+            SortingStationParameterGroup params = (SortingStationParameterGroup) aPropInitial.aParameters;
+            aPropFinal.aParameters = new SortingStationParameterGroup(getMatrix(), params.aType);
+        }
         aElemView.updateProperties(aPropFinal);
         this.dispose();
         
@@ -628,8 +664,19 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     private javax.swing.JTextField ExitNodeAddTxtBox;
     private javax.swing.JButton ExitNodeDelBtn;
     private javax.swing.JList ExitNodeList;
+    private javax.swing.JTextField FlowMatrix00;
+    private javax.swing.JTextField FlowMatrix01;
+    private javax.swing.JTextField FlowMatrix10;
+    private javax.swing.JTextField FlowMatrix11;
+    private javax.swing.JTextField FlowMatrix20;
+    private javax.swing.JTextField FlowMatrix21;
+    private javax.swing.JTextField FlowMatrix30;
+    private javax.swing.JTextField FlowMatrix31;
+    private javax.swing.JTextField FlowMatrix40;
+    private javax.swing.JTextField FlowMatrix41;
     private javax.swing.JTextField InputTxtBox;
     private javax.swing.JTextField NameTxtBox;
+    private javax.swing.JPanel RecuMatrixPanel;
     private javax.swing.JPanel Sortie1Panel;
     private javax.swing.JPanel Sortie2Panel;
     private javax.swing.JPanel Sortie3Panel;
@@ -649,20 +696,9 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
-    private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
-    private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
-    private javax.swing.JTextField jTextField12;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
-    private javax.swing.JTextField jTextField9;
     // End of variables declaration//GEN-END:variables
 }
