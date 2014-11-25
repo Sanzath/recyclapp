@@ -58,14 +58,16 @@ public class EntryNodeModel extends NodeModel {
     }
     
     public void removeLink() {
-        aExitNode.setConveyor(null);
-        aExitNode.setEntryNode(null);
-        
-        aConveyor = null;
-        aExitNode = null;
-        
-        DiagramModel.getInstance().resetRecursionCheck();
-        updateThroughput(null);
+        if (aExitNode != null) {
+            aExitNode.setConveyor(null);
+            aExitNode.setEntryNode(null);
+
+            aConveyor = null;
+            aExitNode = null;
+
+            DiagramModel.getInstance().resetRecursionCheck();
+            updateThroughput(new MaterialFlowTable());
+        }
     }
     
     @Override

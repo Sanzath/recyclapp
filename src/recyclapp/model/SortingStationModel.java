@@ -44,6 +44,7 @@ public final class SortingStationModel extends ElementModel {
             
             float angle = EXIT_NODE_DEFAULT_ANGLE + NODE_SPACING * ((float)i - m);
             node.setAngle((int) angle);
+            aSortingMatrix.add(new MaterialFlowTable());
         }
     }
     
@@ -111,11 +112,14 @@ public final class SortingStationModel extends ElementModel {
         ExitNodeModel node = new ExitNodeModel(this);
         aExitNodes.add(node);
         node.setAngle(EXIT_NODE_DEFAULT_ANGLE);
+        aSortingMatrix.add(new MaterialFlowTable());
     }
     
     @Override
     public void removeExitNode(int index) {
         if (canRemoveExitNode()) {
+            aSortingMatrix.remove(index);
+            aExitNodes.get(index).removeLink();
             aExitNodes.remove(index);
         }
     }

@@ -48,7 +48,9 @@ public class ExitNodeModel extends NodeModel
     }
     
     public void removeLink() {
-        aEntryNode.removeLink();
+        if (aEntryNode != null) {
+            aEntryNode.removeLink();
+        }
     }
     
     public void updateThroughput(MaterialFlowTable throughput) {

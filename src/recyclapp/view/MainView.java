@@ -6,6 +6,7 @@
 
 package recyclapp.view;
 
+import recyclapp.model.Controller;
 import java.awt.Color;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.*;
@@ -13,7 +14,6 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import recyclapp.model.DiagramModel;
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
 /**
@@ -32,11 +32,7 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        ElementProperties props = new ElementProperties();
-        props.aColor = Color.RED;
-        props.aPosition = new Coords(4, 3);
-        props.aSize = new Coords(1.5F, 1.7F);
-        Grille.add(new JunctionView(props));
+        Grille.add(new EntryPointView(Controller.getInstance().getElementProperties(0)));
         updateScrollbars();
         jScrollPane2.getLocation();
     }
@@ -437,22 +433,42 @@ public class MainView extends javax.swing.JFrame {
             recyclapp.transport.ElementProperties elem = new ElementProperties();
             recyclapp.transport.Coords cor = new Coords(x,y);
             elem.aPosition = cor;
+            elem.aId = id;
             SortingStationView station = new SortingStationView(elem);
         }
         else if (evt.getSource() == jButton3)
         {
-            //appeler la méthode de draw de jonction + créer la jonction + ouvrir fenètre édition jonction
-            //JuntionView junction = new JunctionView(x,y);
+            recyclapp.model.Controller.getInstance().selectElement(5);
+            int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();
+            recyclapp.transport.ElementProperties elem = new ElementProperties();
+            recyclapp.transport.Coords cor = new Coords(x,y);
+            elem.aPosition = cor;
+            elem.aId = id;
+            JunctionView junction = new JunctionView(elem);
         }
         else if (evt.getSource() == jButton4)
         {
             //appeler la méthode de draw d'entré d'usine + créer l'entré usine + ouvrir fenètre édition entré usine
             //EntryPointView entry = new EntryPointView(x,y);
+            recyclapp.model.Controller.getInstance().selectElement(1);
+            int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();
+            recyclapp.transport.ElementProperties elem = new ElementProperties();
+            recyclapp.transport.Coords cor = new Coords(x,y);
+            elem.aPosition = cor;
+            elem.aId = id;
+            EntryPointView entry = new EntryPointView(elem);
         }
         else if (evt.getSource() == jButton5)
         {
             //appeler la méthode de draw de sortie d'usine + créer une sortie usine + ouvrir fenètre édition sortie usine
             //ExitPointView exit = new ExitPointView(x,y);
+            recyclapp.model.Controller.getInstance().selectElement(3);
+            int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();
+            recyclapp.transport.ElementProperties elem = new ElementProperties();
+            recyclapp.transport.Coords cor = new Coords(x,y);
+            elem.aPosition = cor;
+            elem.aId = id; 
+            ExitPointView exit = new ExitPointView(elem);
         }
     }//GEN-LAST:event_GrilleMouseReleased
 
@@ -494,7 +510,7 @@ public class MainView extends javax.swing.JFrame {
         );
         GrilleLayout.setVerticalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
+            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE) 
         );
     }
     /**
