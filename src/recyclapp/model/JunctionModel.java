@@ -31,7 +31,7 @@ public final class JunctionModel extends ElementModel {
     
     public JunctionModel(int entryNodeCount) {
         setColor(Color.ORANGE);
-        final float m = (entryNodeCount - 1) / 2;
+        final float m = (float)(entryNodeCount - 1) / 2;
         
         for (int i = 0; i < entryNodeCount; ++i) {
             // Entry nodes on the left side (180 degrees) spaced by 30 degrees each

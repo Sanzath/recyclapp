@@ -10,8 +10,11 @@ import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 
+import recyclapp.transport.*;
+
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
+import recyclapp.transport.EntryPointParameterGroup;
 
 /**
  *
@@ -27,18 +30,30 @@ public final class DiagramModel {
     private final List<ElementModel> aElements = new ArrayList<>();
     private final List<EntryNodeModel> aRecursionNodes = new ArrayList<>();
     
-    private DiagramModel() {
+    private DiagramModel() {}
+    
+    public static DiagramModel getInstance() {
+        boolean wasNull = false;
+        if (aInstance == null) {
+            wasNull = true;
+            aInstance = new DiagramModel();
+        }
+        if (wasNull) {
+            initEntryNode();
+        }
+        return aInstance;
+    }
+    
+    private static void initEntryNode() {
+        // Pour la démo
         EntryPointModel entry = new EntryPointModel();
         entry.setSize(new Coords(2, 2));
         entry.setPosition(new Coords(5.5F, 5.5F));
-        aElements.add(entry);
-    }
-    
-    public static DiagramModel getInstance() {
-        if (aInstance == null) {
-            aInstance = new DiagramModel();
-        }
-        return aInstance;
+        MaterialFlowTable entryMats = new MaterialFlowTable();
+        entryMats.add(new MaterialFlow(0, 1000));
+        entryMats.add(new MaterialFlow(1, 1000));
+        entry.setParameters(new EntryPointParameterGroup(entryMats));
+        aInstance.aElements.add(entry);
     }
     
     public boolean getGridActive() {

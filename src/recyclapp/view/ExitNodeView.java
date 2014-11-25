@@ -12,9 +12,9 @@ import recyclapp.transport.NodeProperties;
  *
  * @author Martin Boisvert
  */
-public final class EntryNodeView extends NodeView {
+public final class ExitNodeView extends NodeView {
 
-    public EntryNodeView(ElementView parent, int index, NodeProperties properties) {
+    public ExitNodeView(ElementView parent, int index, NodeProperties properties) {
         super(parent, index, properties);
     }
     

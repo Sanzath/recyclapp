@@ -14,6 +14,5 @@ public class NodeProperties {
     public int aParentId;
     public String aName;
     public int aAngle;
-    public Coords aPosition;
     public Coords aSize;
 }
