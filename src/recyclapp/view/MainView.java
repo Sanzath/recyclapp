@@ -31,7 +31,7 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        drawGrille();
+        updateScrollbars();
         jScrollPane2.getLocation();
     }
 
@@ -394,6 +394,7 @@ public class MainView extends javax.swing.JFrame {
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
         TextEntreeSortie.setText(Integer.toString(SlideZoom.getValue()));
         Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
+        updateScrollbars();
         Grille.setPxPerMeter(SlideZoom.getValue());
     }//GEN-LAST:event_SlideZoomMouseDragged
 
@@ -477,8 +478,8 @@ public class MainView extends javax.swing.JFrame {
          Tree.setDragEnabled(true);
     }
     */
-    private void drawGrille()
-    {/*
+    private void updateScrollbars()
+    {
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
         GrilleLayout.setHorizontalGroup(
@@ -489,19 +490,6 @@ public class MainView extends javax.swing.JFrame {
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
         );
-        
-        
-        jScrollPane2.setViewportView(Grille);
-        javax.swing.GroupLayout PanelGraphLayout = new javax.swing.GroupLayout(PanelGraph);
-        PanelGraph.setLayout(PanelGraphLayout);
-        PanelGraphLayout.setHorizontalGroup(
-            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );
-        PanelGraphLayout.setVerticalGroup(
-            PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2)
-        );*/
     }
     /**
      * @param args the command line arguments
