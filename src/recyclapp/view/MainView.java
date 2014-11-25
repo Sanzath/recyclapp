@@ -514,7 +514,7 @@ public class MainView extends javax.swing.JFrame {
         );
         GrilleLayout.setVerticalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE)
+            .addGap(0, 50*SlideZoom.getValue(), Short.MAX_VALUE) 
         );
     }
     /**
