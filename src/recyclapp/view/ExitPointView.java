@@ -17,9 +17,10 @@ public class ExitPointView extends ElementView {
     public ExitPointView(ElementProperties properties){
         super(properties);
     }
+    /*
     @Override
     protected void createPropertiesWindow(ElementProperties properties) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+   */ 
 }

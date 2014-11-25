@@ -18,34 +18,23 @@ import recyclapp.view.DiagramView;
  */
 public abstract class ElementView extends JComponent implements MouseListener {
     private long aClickTime1;
-    protected ElementProperties aProperties;
+    private int aId;
     public ElementView(ElementProperties properties){
-        aProperties = properties;
+        aId = properties.aId;
+        setLocation(DiagramView.coordsToPoint(properties.aPosition));
+        setSize(DiagramView.coordsToPoint(properties.aSize).x, DiagramView.coordsToPoint(properties.aSize).y);
+        setBackground(properties.aColor);
+        setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+        
         addMouseListener(this); 
     }
     public int getID() {
-            return aProperties.aId;
-    }
-    public void updateElementProperties(ElementProperties newProp){
-        aProperties = newProp;
-        repaint();
-    }
-    
-    @Override
-    public void paint(Graphics g){
-        g.setColor(aProperties.aColor);
-        //Args de fillRect(Remplie un rectangle de couleur): pos X, pos Y, width, height
-        g.fillRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
-        g.setColor(Color.BLACK);
-        //Args de drawRect(bordure du rectangle): pos X, pos Y, width, height
-        g.drawRect(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
-        g.setClip(DiagramView.coordsToPoint(aProperties.aPosition).x, DiagramView.coordsToPoint(aProperties.aPosition).y,
-                DiagramView.coordsToPoint(aProperties.aSize).x, DiagramView.coordsToPoint(aProperties.aSize).y);
+            return aId;
     }
             
-    protected abstract void createPropertiesWindow(ElementProperties properties);
+    protected void createPropertiesWindow(ElementProperties properties){
+        ElementPropertiesView propertiesWindow = new ElementPropertiesView(properties);
+    }
     
     @Override
     public void mouseClicked(MouseEvent e) {
@@ -54,7 +43,7 @@ public abstract class ElementView extends JComponent implements MouseListener {
         aClickTime1 = System.currentTimeMillis();
         }
         else if (e.getClickCount() % 2 == 0 && System.currentTimeMillis() - aClickTime1 <= 500)
-            createPropertiesWindow(aProperties);
+            createPropertiesWindow(Controller.getInstance().getElementProperties(aId));
     }
      
     @Override
