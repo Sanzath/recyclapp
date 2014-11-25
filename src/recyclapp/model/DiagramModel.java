@@ -31,7 +31,6 @@ public final class DiagramModel {
         EntryPointModel entry = new EntryPointModel();
         entry.setSize(new Coords(2, 2));
         entry.setPosition(new Coords(5.5F, 5.5F));
-        entry.setColor(Color.GREEN);
         aElements.add(entry);
     }
     

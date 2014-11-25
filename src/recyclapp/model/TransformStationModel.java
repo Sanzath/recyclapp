@@ -6,6 +6,7 @@
 
 package recyclapp.model;
 
+import java.awt.Color;
 import recyclapp.transport.MaterialFlowMatrix;
 import recyclapp.transport.StationType;
 import recyclapp.transport.MaterialFlowTable;
@@ -30,6 +31,7 @@ public final class TransformStationModel extends ElementModel {
     private MaterialFlowTable aOutput;
 
     public TransformStationModel() {
+        setColor(Color.RED);
         aEntryNode = new EntryNodeModel(this);
         aExitNode = new ExitNodeModel(this);
         
@@ -38,6 +40,8 @@ public final class TransformStationModel extends ElementModel {
     }
     
     public TransformStationModel(TransformStationModel other) {
+        super(other);
+        
         aEntryNode = new EntryNodeModel(this, other.aExitNode);
         aExitNode = new ExitNodeModel(this, other.aExitNode);
         

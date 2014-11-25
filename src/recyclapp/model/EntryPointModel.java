@@ -6,6 +6,7 @@
 
 package recyclapp.model;
 
+import java.awt.Color;
 import recyclapp.transport.MaterialFlowTable;
 import recyclapp.transport.ParameterGroup;
 import recyclapp.transport.EntryPointParameterGroup;
@@ -21,6 +22,7 @@ public final class EntryPointModel extends ElementModel {
     private final ExitNodeModel aExitNode;
     
     public EntryPointModel() {
+        setColor(Color.GREEN);
         aExitNode = new ExitNodeModel(this);
         aExitNode.setAngle(EXIT_NODE_DEFAULT_ANGLE);
     }

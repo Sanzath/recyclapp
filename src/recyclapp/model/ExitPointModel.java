@@ -6,6 +6,7 @@
 
 package recyclapp.model;
 
+import java.awt.Color;
 import recyclapp.transport.MaterialFlowMatrix;
 import recyclapp.transport.MaterialFlowTable;
 
@@ -20,6 +21,7 @@ public class ExitPointModel extends ElementModel {
     private MaterialFlowTable aInput;
     
     public ExitPointModel() {
+        setColor(Color.BLUE);
         aEntryNode = new EntryNodeModel(this);
     }
     

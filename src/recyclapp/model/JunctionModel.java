@@ -6,8 +6,9 @@
 
 package recyclapp.model;
 
-import java.util.List;
+import java.awt.Color;
 import java.util.ArrayList;
+import java.util.List;
 import recyclapp.transport.MaterialFlowMatrix;
 import recyclapp.transport.MaterialFlowTable;
 
@@ -29,6 +30,7 @@ public final class JunctionModel extends ElementModel {
     }
     
     public JunctionModel(int entryNodeCount) {
+        setColor(Color.ORANGE);
         final float m = (entryNodeCount - 1) / 2;
         
         for (int i = 0; i < entryNodeCount; ++i) {

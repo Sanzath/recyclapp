@@ -6,6 +6,7 @@
 
 package recyclapp.model;
 
+import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -35,6 +36,7 @@ public final class SortingStationModel extends ElementModel {
     }
     
     public SortingStationModel(int exitNodeCount) {
+        setColor(Color.MAGENTA);
         aEntryNode = new EntryNodeModel(this);
         aInput = aEntryNode.getThroughput();
         
