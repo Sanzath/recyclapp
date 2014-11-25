@@ -12,17 +12,23 @@ import javax.swing.*;
 import recyclapp.transport.ElementProperties;
 import recyclapp.model.Controller;
 import recyclapp.view.DiagramView;
+import recyclapp.transport.Coords;
 /**
  *
  * @author Martin Boisvert
  */
 public abstract class ElementView extends JPanel implements MouseListener {
     private long aClickTime1;
-    private int aId;
+    private final int aId;
+    
+    private Coords aPosition;
+    private Coords aSize;
+    
     public ElementView(ElementProperties properties){
         aId = properties.aId;
-        setLocation(DiagramView.coordsToPoint(properties.aPosition));
-        setSize(DiagramView.coordsToPoint(properties.aSize).x, DiagramView.coordsToPoint(properties.aSize).y);
+        aPosition = properties.aPosition;
+        aSize = properties.aSize;
+        updatePosition();
         setBackground(properties.aColor);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         
@@ -30,6 +36,18 @@ public abstract class ElementView extends JPanel implements MouseListener {
     }
     public int getID() {
             return aId;
+    }
+    
+    private void updatePosition() {
+        setLocation(DiagramView.getInstance().coordsToPoint(aPosition));
+        Point size = DiagramView.getInstance().coordsToPoint(aSize);
+        setSize(size.x, size.y);
+    }
+    
+    @Override
+    protected void paintComponent(Graphics g) {
+        updatePosition();
+        super.paintComponent(g);
     }
             
     protected void createPropertiesWindow(ElementProperties properties){
