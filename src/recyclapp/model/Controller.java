@@ -229,6 +229,14 @@ public class Controller {
         getElement(id).setParameters(parameters);
     }
     
+    public void setElementPosition(int id, Coords position) {
+        getElement(id).setPosition(position);
+    }
+    
+    public void setElementSize(int id, Coords size) {
+        getElement(id).setSize(size);
+    }
+    
     public boolean canAddEntryNode(int id) {
         return getElement(id).canAddEntryNode();
     }
