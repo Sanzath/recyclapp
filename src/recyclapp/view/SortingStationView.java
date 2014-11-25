@@ -17,9 +17,11 @@ public class SortingStationView extends ElementView {
     public SortingStationView(ElementProperties properties){
         super(properties);
     }
+    
+    /*
     @Override
     protected void createPropertiesWindow(ElementProperties properties) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    */
 }

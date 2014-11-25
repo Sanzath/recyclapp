@@ -18,9 +18,9 @@ public class EntryPointView extends ElementView {
         super(properties);
     }
 
-    @Override
+   /* @Override
     protected void createPropertiesWindow(ElementProperties properties) {
         throw new UnsupportedOperationException("Not supported yet."); //To change body of generated methods, choose Tools | Templates.
     }
-    
+    */
 }
