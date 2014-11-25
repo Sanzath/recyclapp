@@ -6,6 +6,9 @@
 
 package recyclapp.view;
 
+import java.util.List;
+import java.util.ArrayList;
+        
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -29,6 +32,8 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
     
     private JLabel aName;
     
+    private List<NodeView> aNodes = new ArrayList<>();
+    
     public ElementView(ElementProperties properties){
         aId = properties.aId;
         aPosition = properties.aPosition;
@@ -39,6 +44,17 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
         setBackground(properties.aColor);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         add(aName);
+        
+        for (int i = 0; i < Controller.getInstance().getEntryNodeCount(aId); ++i) {
+            NodeView node = new NodeView(this, i, Controller.getInstance().getEntryNodeProperties(aId, i));
+            aNodes.add(node);
+            DiagramView.getInstance().add(node);
+        }
+        for (int i = 0; i < Controller.getInstance().getExitNodeCount(aId); ++i) {
+            NodeView node = new NodeView(this, i, Controller.getInstance().getExitNodeProperties(aId, i));
+            aNodes.add(node);
+            DiagramView.getInstance().add(node);
+        }
         
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -64,6 +80,9 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
         setLocation(DiagramView.getInstance().coordsToPoint(aPosition));
         Point size = DiagramView.getInstance().coordsToPoint(aSize);
         setSize(size.x, size.y);
+        for (NodeView node : aNodes) {
+            node.repaint();
+        }
     }
     
     @Override

@@ -23,6 +23,7 @@ public class ExitPointModel extends ElementModel {
     public ExitPointModel() {
         setColor(Color.BLUE);
         aEntryNode = new EntryNodeModel(this);
+        aEntryNode.setAngle(ENTRY_NODE_DEFAULT_ANGLE);
     }
     
     public ExitPointModel(ExitPointModel other) {
