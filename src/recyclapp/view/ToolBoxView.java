@@ -34,7 +34,7 @@ public class ToolBoxView extends JPanel {
         }
     }
     
-    public ToolBoxView getInstance() {
+    public static ToolBoxView getInstance() {
         if (aInstance == null) {
             aInstance = new ToolBoxView();
         }

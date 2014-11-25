@@ -413,6 +413,9 @@
           </Events>
         </Component>
         <Component class="recyclapp.view.ToolBoxView" name="toolBoxView1">
+          <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="ToolBoxView.getInstance();"/>
+          </AuxValues>
         </Component>
       </SubComponents>
     </Container>
