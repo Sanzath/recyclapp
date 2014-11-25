@@ -111,7 +111,13 @@ public final class DiagramModel {
     }
     
     protected ElementModel getElementFromId(int id) {
-        return aElements.get(aElements.indexOf(id));
+        ElementModel found = null;
+        for (ElementModel element : aElements) {
+            if (id == element.getId()) {
+                found = element;
+            }
+        }
+        return found;
     }
     
     public List<ElementProperties> getAllElements() {
