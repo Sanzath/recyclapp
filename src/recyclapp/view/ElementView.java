@@ -27,14 +27,18 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
     private Coords aPosition;
     private Coords aSize;
     
+    private JLabel aName;
+    
     public ElementView(ElementProperties properties){
         aId = properties.aId;
         aPosition = properties.aPosition;
         aSize = properties.aSize;
+        aName = new JLabel(properties.aName);
+        
         updatePosition();
         setBackground(properties.aColor);
         setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-        add(new JLabel(properties.aName));
+        add(aName);
         
         addMouseListener(this);
         addMouseMotionListener(this);
@@ -48,6 +52,12 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
             sSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
         }
         sSelected = null;
+    }
+    
+    protected void updateParameters(ElementProperties properties) {
+        setBackground(properties.aColor);
+        aName.setText(properties.aName);
+        Controller.getInstance().setElementProperties(properties);
     }
     
     private void updatePosition() {
@@ -88,6 +98,7 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
     @Override
     public void mouseReleased(MouseEvent e) {
         aStartingPosition = null;
+        Controller.getInstance().setElementPosition(aId, aPosition);
     }
 
     @Override
@@ -113,10 +124,6 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
     public void mouseDragged(MouseEvent e) {
         Point newPosition = e.getPoint();
         Point newLocation = getLocation();
-        System.out.println("--");
-        System.out.println("newPos: " + newPosition);
-        System.out.println("curentLoc: " + newLocation);
-        System.out.println("startingPos: " + aStartingPosition);
         newLocation.x += newPosition.x - aStartingPosition.x;
         newLocation.y += newPosition.y - aStartingPosition.y;
         
