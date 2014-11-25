@@ -51,7 +51,7 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener {
     }
             
     protected void createPropertiesWindow(ElementProperties properties){
-        ElementPropertiesView propertiesWindow = new ElementPropertiesView(properties);
+        ElementPropertiesView propertiesWindow = new ElementPropertiesView(properties, this);
         propertiesWindow.setVisible(true);
     }
     

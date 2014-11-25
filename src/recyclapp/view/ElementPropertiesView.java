@@ -4,24 +4,58 @@
  * Alexandre Poli * Clement Sanquier * Gabriel Grenon * Martin Boisvert
  */
 package recyclapp.view;
+import java.awt.Color;
 import recyclapp.transport.ElementProperties;
+import java.util.*;
 /**
  *
  * @author Gabriel Grenon <your.name at your.org>
  */
 public class ElementPropertiesView extends javax.swing.JFrame {
-
+    private final Map<String, Color> aColorMap = new HashMap<>();
+    private final Map<Color, String> aColorStringMap = new HashMap<>();
+    private ElementProperties aPropInitial;
+    private ElementProperties aPropFinal;
+    private ElementView aElemView;
     /**
      * Creates new form ElementProperties
      */
     public ElementPropertiesView() {
         initComponents();
+        initColorMap();
     }
     
-    public ElementPropertiesView(ElementProperties properties){
+    public ElementPropertiesView(ElementProperties properties, ElementView elemView){
         initComponents();
+        initColorMap();
+        aElemView = elemView;
+        aPropInitial = properties;
+        aPropFinal = properties;
+        NameTxtBox.setText(aPropInitial.aName);
+        DescriptionTxtArea.setText(aPropInitial.aDescription);
+        InputTxtBox.setText(Float.toString(aPropInitial.aMaxInput));
+        ColorComboBox.setSelectedItem(aColorStringMap.get(aPropInitial.aColor));
+        
     }
-
+    
+    private void initColorMap(){
+        aColorMap.put("Noir", Color.BLACK);
+        aColorMap.put("Bleu", Color.BLUE);
+        aColorMap.put("Rouge", Color.RED);
+        aColorMap.put("Orange", Color.ORANGE);
+        aColorMap.put("Vert", Color.GREEN);
+        aColorMap.put("Rose", Color.PINK);
+        aColorMap.put("Magenta", Color.MAGENTA);
+        aColorStringMap.put(Color.BLACK, "Noir");
+        aColorStringMap.put(Color.BLUE, "Bleu");
+        aColorStringMap.put(Color.RED, "Rouge");
+        aColorStringMap.put(Color.ORANGE, "Orange");
+        aColorStringMap.put(Color.GREEN, "Vert");
+        aColorStringMap.put(Color.PINK, "Rose");
+        aColorStringMap.put(Color.MAGENTA, "Magenta");
+        
+        
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -39,25 +73,63 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         ColorComboBox = new javax.swing.JComboBox();
         jLabel4 = new javax.swing.JLabel();
-        QtyInputTxtBox = new javax.swing.JTextField();
+        InputTxtBox = new javax.swing.JTextField();
+        AcceptButton = new javax.swing.JButton();
+        CancelButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.DISPOSE_ON_CLOSE);
         setTitle("Édition de paramêtres");
 
         jLabel1.setText("Nom de l'élément:");
 
+        NameTxtBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                NameTxtBoxFocusLost(evt);
+            }
+        });
+
         jLabel2.setText("Description de l'élément:");
 
         DescriptionTxtArea.setColumns(20);
         DescriptionTxtArea.setRows(5);
+        DescriptionTxtArea.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                DescriptionTxtAreaFocusLost(evt);
+            }
+        });
         jScrollPane1.setViewportView(DescriptionTxtArea);
         DescriptionTxtArea.getAccessibleContext().setAccessibleName("DescriptionTxtArea");
 
         jLabel3.setText("Couleur de l'élément:");
 
-        ColorComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Noir", "Rouge", "Bleu", "Vert", "Rose", "Violet", "Orange" }));
+        ColorComboBox.setModel(new javax.swing.DefaultComboBoxModel(new String[] { "Noir", "Rouge", "Bleu", "Vert", "Magenta", "Violet", "Orange" }));
+        ColorComboBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                ColorComboBoxFocusLost(evt);
+            }
+        });
 
-        jLabel4.setText("Nombre max. d'entrées:");
+        jLabel4.setText("Débit d'entrée max. (kg/h):");
+
+        InputTxtBox.addFocusListener(new java.awt.event.FocusAdapter() {
+            public void focusLost(java.awt.event.FocusEvent evt) {
+                InputTxtBoxFocusLost(evt);
+            }
+        });
+
+        AcceptButton.setText("Accepter");
+        AcceptButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                AcceptButtonMouseClicked(evt);
+            }
+        });
+
+        CancelButton.setText("Cancel");
+        CancelButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                CancelButtonMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -70,20 +142,25 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabel2)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(jLabel1)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 50, Short.MAX_VALUE)
-                                .addComponent(jLabel3))
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(NameTxtBox)
-                                .addGap(18, 18, 18)
-                                .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
                         .addGap(18, 18, 18)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 126, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(QtyInputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addComponent(jLabel3)
+                            .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, 139, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(InputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(AcceptButton)
+                        .addGap(5, 5, 5)
+                        .addComponent(CancelButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -98,28 +175,61 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(NameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(QtyInputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(InputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(115, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 81, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(AcceptButton)
+                    .addComponent(CancelButton))
+                .addContainerGap())
         );
 
         jLabel1.getAccessibleContext().setAccessibleName("JLabel1");
         NameTxtBox.getAccessibleContext().setAccessibleName("NameTxtBox");
         ColorComboBox.getAccessibleContext().setAccessibleName("ColorComboBox");
-        QtyInputTxtBox.getAccessibleContext().setAccessibleName("QtyInputTxtBox");
+        InputTxtBox.getAccessibleContext().setAccessibleName("QtyInputTxtBox");
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void NameTxtBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_NameTxtBoxFocusLost
+        aPropFinal.aName = NameTxtBox.getText();
+    }//GEN-LAST:event_NameTxtBoxFocusLost
+
+    private void ColorComboBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_ColorComboBoxFocusLost
+        aPropFinal.aColor = aColorMap.get(ColorComboBox.getSelectedItem().toString());
+    }//GEN-LAST:event_ColorComboBoxFocusLost
+
+    private void InputTxtBoxFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_InputTxtBoxFocusLost
+        aPropFinal.aMaxInput = Float.parseFloat(InputTxtBox.getText());
+    }//GEN-LAST:event_InputTxtBoxFocusLost
+
+    private void DescriptionTxtAreaFocusLost(java.awt.event.FocusEvent evt) {//GEN-FIRST:event_DescriptionTxtAreaFocusLost
+        aPropFinal.aDescription = DescriptionTxtArea.getText();
+    }//GEN-LAST:event_DescriptionTxtAreaFocusLost
+
+    private void AcceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcceptButtonMouseClicked
+        AcceptButton.requestFocusInWindow();
+        aElemView.updateProperties(aPropFinal);
+        this.dispose();
+        
+    }//GEN-LAST:event_AcceptButtonMouseClicked
+
+    private void CancelButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_CancelButtonMouseClicked
+        this.dispose();
+    }//GEN-LAST:event_CancelButtonMouseClicked
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton AcceptButton;
+    private javax.swing.JButton CancelButton;
     private javax.swing.JComboBox ColorComboBox;
     private javax.swing.JTextArea DescriptionTxtArea;
+    private javax.swing.JTextField InputTxtBox;
     private javax.swing.JTextField NameTxtBox;
-    private javax.swing.JTextField QtyInputTxtBox;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
