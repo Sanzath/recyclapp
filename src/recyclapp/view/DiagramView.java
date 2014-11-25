@@ -31,11 +31,6 @@ public final class DiagramView extends JPanel
         setLayout(null);
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.GRAY));
-        
-        ElementProperties props = new ElementProperties();
-        props.aColor = Color.RED;
-        add(new JunctionView(new ElementProperties()));
-        invalidate();
     }
     
     public static DiagramView getInstance() {
@@ -171,10 +166,7 @@ public final class DiagramView extends JPanel
     
     public int metreToPixel(double a)
     {
-        int px;
-        a = a*aTaille;
-        px = (int)a;      
-        return px;
+        return (int)(a * aTaille);
     }
     
     public Point coordsToPoint(Coords coords) {
