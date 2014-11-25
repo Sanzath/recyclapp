@@ -17,7 +17,7 @@ import java.awt.*;
  *
  * @author Martin Boisvert
  */
-public final class NodeView extends JPanel implements MouseListener, MouseMotionListener {
+public abstract class NodeView extends JPanel implements MouseListener, MouseMotionListener {
     
     private final ElementView aParent;
     private int aIndex;
@@ -71,25 +71,25 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         if (aAngle < borderAngle || aAngle >= (360 - borderAngle))
         {
             offset.x = (parentSize.width + size.x) / 2;
-            offset.y = offset.x * (int)Math.tan(Math.toRadians(aAngle));
+            offset.y = (int)((float)offset.x * Math.tan(Math.toRadians(aAngle)));
         }
         // Stuck to bottom
         else if (aAngle < (180 - borderAngle))
         {
             offset.y = (parentSize.height + size.y) / 2;
-            offset.x = offset.y / (int)Math.tan(Math.toRadians(aAngle));
+            offset.x = (int)((float)offset.y / Math.tan(Math.toRadians(aAngle)));
         }
         // Stuck to left
         else if (aAngle < (180 + borderAngle))
         {
             offset.x = - (parentSize.width + size.x) / 2;
-            offset.y = offset.x * (int)Math.tan(Math.toRadians(aAngle));
+            offset.y = (int)(offset.x * Math.tan(Math.toRadians(aAngle)));
         }
         // Stuck to top
         else
         {
             offset.y = - (parentSize.height + size.y) / 2;
-            offset.x = offset.y / (int)Math.tan(Math.toRadians(aAngle));
+            offset.x = (int)((float)offset.y / Math.tan(Math.toRadians(aAngle)));
         }
         
         // Offset the position to get the middle position of the node

@@ -38,9 +38,10 @@ public final class SortingStationModel extends ElementModel {
     public SortingStationModel(int exitNodeCount) {
         setColor(Color.MAGENTA);
         aEntryNode = new EntryNodeModel(this);
+        aEntryNode.setAngle(ENTRY_NODE_DEFAULT_ANGLE);
         aInput = aEntryNode.getThroughput();
         
-        final float m = (exitNodeCount - 1) / 2;
+        final float m = (float)(exitNodeCount - 1) / 2;
         for (int i = 0; i < exitNodeCount; ++i) {
             ExitNodeModel node = new ExitNodeModel(this);
             aExitNodes.add(node);

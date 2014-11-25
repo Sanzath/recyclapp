@@ -42,7 +42,7 @@ public final class TransformStationModel extends ElementModel {
     public TransformStationModel(TransformStationModel other) {
         super(other);
         
-        aEntryNode = new EntryNodeModel(this, other.aExitNode);
+        aEntryNode = new EntryNodeModel(this, other.aEntryNode);
         aExitNode = new ExitNodeModel(this, other.aExitNode);
         
         setParameters(other.getParameters());

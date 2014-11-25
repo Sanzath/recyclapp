@@ -46,12 +46,12 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
         add(aName);
         
         for (int i = 0; i < Controller.getInstance().getEntryNodeCount(aId); ++i) {
-            NodeView node = new NodeView(this, i, Controller.getInstance().getEntryNodeProperties(aId, i));
+            NodeView node = new EntryNodeView(this, i, Controller.getInstance().getEntryNodeProperties(aId, i));
             aNodes.add(node);
             DiagramView.getInstance().add(node);
         }
         for (int i = 0; i < Controller.getInstance().getExitNodeCount(aId); ++i) {
-            NodeView node = new NodeView(this, i, Controller.getInstance().getExitNodeProperties(aId, i));
+            NodeView node = new ExitNodeView(this, i, Controller.getInstance().getExitNodeProperties(aId, i));
             aNodes.add(node);
             DiagramView.getInstance().add(node);
         }
