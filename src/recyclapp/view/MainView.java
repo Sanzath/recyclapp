@@ -471,7 +471,7 @@ public class MainView extends javax.swing.JFrame {
             recyclapp.transport.ElementProperties elem = new ElementProperties();
             recyclapp.transport.Coords cor = new Coords(x,y);
             elem.aPosition = cor;
-            elem.aId = id;
+            elem.aId = id; 
             ExitPointView exit = new ExitPointView(elem);
         }
     }//GEN-LAST:event_GrilleMouseReleased
