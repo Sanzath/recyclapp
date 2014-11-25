@@ -42,11 +42,13 @@ public final class DiagramView extends JPanel
  
     protected void setPxPerMeter(int px) {
         aTaille = px;
+        invalidate();
         repaint();
     }
     
     protected void setGridActive(boolean active) {
         aGridActive = active;
+        invalidate();
         repaint();
     }
     
