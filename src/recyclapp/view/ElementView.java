@@ -16,7 +16,7 @@ import recyclapp.transport.Coords;
  *
  * @author Martin Boisvert
  */
-public /*abstract*/ class ElementView extends JPanel implements MouseListener, MouseMotionListener {
+public class ElementView extends JPanel implements MouseListener, MouseMotionListener {
     static ElementView sSelected = null;
     
     Point aStartingPosition;
@@ -44,7 +44,7 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
         addMouseMotionListener(this);
     }
     public int getID() {
-            return aId;
+        return aId;
     }
     
     public static void deselect() {
@@ -135,4 +135,8 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
     public void mouseMoved(MouseEvent e) {
     }
     
+}
+
+class ElementCornerTab extends JPanel {
+
 }

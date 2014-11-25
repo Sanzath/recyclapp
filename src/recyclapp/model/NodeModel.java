@@ -17,8 +17,6 @@ import recyclapp.transport.NodeProperties;
 public abstract class NodeModel {
     private final static float SIZE = 0.1F;
     
-    private static int sNextId = 0;
-    
     private String aName;
     private int aAngle;
     

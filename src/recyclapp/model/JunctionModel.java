@@ -106,12 +106,12 @@ public final class JunctionModel extends ElementModel {
     }
 
     @Override
-    public int getEntryNodesCount() {
+    public int getEntryNodeCount() {
         return aEntryNodes.size();
     }
 
     @Override
-    public int getExitNodesCount() {
+    public int getExitNodeCount() {
         return 1;
     }
 
