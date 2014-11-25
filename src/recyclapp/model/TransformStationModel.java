@@ -7,12 +7,7 @@
 package recyclapp.model;
 
 import java.awt.Color;
-import recyclapp.transport.MaterialFlowMatrix;
-import recyclapp.transport.StationType;
-import recyclapp.transport.MaterialFlowTable;
-import recyclapp.transport.MaterialFlow;
-import recyclapp.transport.ParameterGroup;
-import recyclapp.transport.TransformStationParameterGroup;
+import recyclapp.transport.*;
 
 /**
  *
