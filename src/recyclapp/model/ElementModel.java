@@ -31,8 +31,8 @@ public abstract class ElementModel {
     private String aDescription;
     private Float aMaxInput;
     private Color aColor;
-    private final Coords aPosition;
-    private final Coords aSize;
+    private Coords aPosition;
+    private Coords aSize;
     
     public ElementModel()
     {
@@ -141,40 +141,28 @@ public abstract class ElementModel {
      * @return the aPosition
      */
     final public Coords getPosition() {
-        return new Coords(aPosition);
+        return aPosition;
     }
 
     /**
      * @param position the aPosition to set
      */
     final public void setPosition(Coords position) {
-        aPosition.x = position.x;
-        aPosition.y = position.y;
+        aPosition = position;
     }
 
     /**
      * @return the aSize
      */
     final public Coords getSize() {
-        return new Coords(aSize);
+        return aSize;
     }
 
     /**
      * @param size the aSize to set
      */
     final public void setSize(Coords size) {
-        aSize.x = size.x;
-        aSize.y = size.y;
-    }
-    
-    @Override
-    public boolean equals(Object other) {
-        if (other instanceof Integer) {
-            return aId == (Integer)other;
-        }
-        else {
-            return super.equals(other);
-        }
+        aSize = size;
     }
     
     public ElementProperties toProperties() {
@@ -190,6 +178,17 @@ public abstract class ElementModel {
         properties.aParameters = getParameters();
         
         return properties;
+    }
+    
+    public void fromProperties(ElementProperties properties) {
+        aName = properties.aName;
+        aDescription = properties.aDescription;
+        aPosition = properties.aPosition;
+        aSize = properties.aSize;
+        aColor = properties.aColor;
+        aMaxInput = properties.aMaxInput;
+        setParameters(properties.aParameters);
+        
     }
     
     public abstract MaterialFlowMatrix getInputMaterials(); 

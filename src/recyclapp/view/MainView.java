@@ -6,6 +6,7 @@
 
 package recyclapp.view;
 
+import recyclapp.model.Controller;
 import java.awt.Color;
 import javax.swing.tree.DefaultMutableTreeNode;
 import javax.swing.*;
@@ -13,7 +14,6 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
-import recyclapp.model.DiagramModel;
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
 /**
@@ -32,11 +32,7 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        ElementProperties props = new ElementProperties();
-        props.aColor = Color.RED;
-        props.aPosition = new Coords(4, 3);
-        props.aSize = new Coords(1.5F, 1.7F);
-        Grille.add(new JunctionView(props));
+        Grille.add(new EntryPointView(Controller.getInstance().getElementProperties(0)));
         updateScrollbars();
         jScrollPane2.getLocation();
     }
