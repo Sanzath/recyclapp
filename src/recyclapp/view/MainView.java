@@ -400,9 +400,14 @@ public class MainView extends javax.swing.JFrame {
             ElementProperties elem = Controller.getInstance().getElementProperties(id);
             elem.aPosition = Grille.pointToCoords(evt.getPoint());
             Controller.getInstance().setElementProperties(elem);
-            Grille.add(new ElementView(elem));
+            ElementView view = new ElementView(elem);
+            Grille.add(view);
+            view.createPropertiesWindow(elem);
             Grille.repaint();
             toolBoxView1.deselect();
+        }
+        else {
+            ElementView.deselect();
         }
     }//GEN-LAST:event_GrilleMouseReleased
 
@@ -436,8 +441,9 @@ public class MainView extends javax.swing.JFrame {
     */
     private void updateScrollbars()
     {
-        javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
-        Grille.setLayout(GrilleLayout);
+        //javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
+        //Grille.setLayout(GrilleLayout);
+        GroupLayout GrilleLayout = (GroupLayout)Grille.getLayout();
         GrilleLayout.setHorizontalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGap(0, 70*SlideZoom.getValue(), Short.MAX_VALUE)
