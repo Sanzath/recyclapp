@@ -439,6 +439,7 @@ public class MainView extends javax.swing.JFrame {
             elem.aPosition = cor;
             elem.aId = id;
             SortingStationView station = new SortingStationView(elem);
+            Grille.add(station);
         }
         else if (evt.getSource() == jButton3)
         {
@@ -449,6 +450,7 @@ public class MainView extends javax.swing.JFrame {
             elem.aPosition = cor;
             elem.aId = id;
             JunctionView junction = new JunctionView(elem);
+            Grille.add(junction);
         }
         else if (evt.getSource() == jButton4)
         {
@@ -461,6 +463,7 @@ public class MainView extends javax.swing.JFrame {
             elem.aPosition = cor;
             elem.aId = id;
             EntryPointView entry = new EntryPointView(elem);
+            Grille.add(entry);
         }
         else if (evt.getSource() == jButton5)
         {
@@ -473,6 +476,7 @@ public class MainView extends javax.swing.JFrame {
             elem.aPosition = cor;
             elem.aId = id; 
             ExitPointView exit = new ExitPointView(elem);
+            Grille.add(exit);
         }
     }//GEN-LAST:event_GrilleMouseReleased
 
