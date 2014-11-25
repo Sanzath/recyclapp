@@ -70,7 +70,7 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
         sSelected = null;
     }
     
-    protected void updateParameters(ElementProperties properties) {
+    protected void updateProperties(ElementProperties properties) {
         setBackground(properties.aColor);
         aName.setText(properties.aName);
         Controller.getInstance().setElementProperties(properties);
@@ -92,7 +92,7 @@ public class ElementView extends JPanel implements MouseListener, MouseMotionLis
     }
             
     protected void createPropertiesWindow(ElementProperties properties){
-        ElementPropertiesView propertiesWindow = new ElementPropertiesView(properties);
+        ElementPropertiesView propertiesWindow = new ElementPropertiesView(properties, this);
         propertiesWindow.setVisible(true);
     }
     
