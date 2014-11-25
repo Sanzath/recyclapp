@@ -54,7 +54,7 @@ public /*abstract*/ class ElementView extends JPanel implements MouseListener, M
         sSelected = null;
     }
     
-    protected void updateParameters(ElementProperties properties) {
+    protected void updateProperties(ElementProperties properties) {
         setBackground(properties.aColor);
         aName.setText(properties.aName);
         Controller.getInstance().setElementProperties(properties);
