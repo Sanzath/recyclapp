@@ -12,7 +12,7 @@ import recyclapp.transport.MaterialFlowTable;
  * Alexandre
  * @author Martin Boisvert
  */
-public class EntryNodeModel extends NodeModel {
+public final class EntryNodeModel extends NodeModel {
     
     private ExitNodeModel aExitNode;
     
@@ -72,6 +72,9 @@ public class EntryNodeModel extends NodeModel {
     
     @Override
     public MaterialFlowTable getThroughput() {
+        if (aExitNode == null) {
+            return new MaterialFlowTable();
+        }
         return aExitNode.getThroughput();
     }
     

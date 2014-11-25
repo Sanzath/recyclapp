@@ -6,8 +6,6 @@
 
 package recyclapp.view;
 
-import recyclapp.model.Controller;
-
 import javax.swing.*;
 import java.awt.*;
 import recyclapp.transport.*;
@@ -27,7 +25,7 @@ public final class DiagramView extends JPanel
     private int aTaille = 50;
     private boolean aGridActive = true;
     
-    private DiagramView() {
+    public DiagramView() {
         setLayout(null);
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.GRAY));
@@ -40,13 +38,13 @@ public final class DiagramView extends JPanel
         return aInstance;
     }
  
-    protected void setPxPerMeter(int px) {
+    public void setPxPerMeter(int px) {
         aTaille = px;
         invalidate();
         repaint();
     }
     
-    protected void setGridActive(boolean active) {
+    public void setGridActive(boolean active) {
         aGridActive = active;
         invalidate();
         repaint();

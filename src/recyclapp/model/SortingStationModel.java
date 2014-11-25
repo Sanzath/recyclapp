@@ -36,6 +36,7 @@ public final class SortingStationModel extends ElementModel {
     
     public SortingStationModel(int exitNodeCount) {
         aEntryNode = new EntryNodeModel(this);
+        aInput = aEntryNode.getThroughput();
         
         final float m = (exitNodeCount - 1) / 2;
         for (int i = 0; i < exitNodeCount; ++i) {
@@ -52,6 +53,7 @@ public final class SortingStationModel extends ElementModel {
         super(other);
         
         aEntryNode = new EntryNodeModel(this, other.aEntryNode);
+        aInput = aEntryNode.getThroughput();
         for (ExitNodeModel node : other.aExitNodes) {
             aExitNodes.add(new ExitNodeModel(this, node));
         }

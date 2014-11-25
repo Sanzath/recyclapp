@@ -32,7 +32,9 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        Grille.add(new EntryPointView(Controller.getInstance().getElementProperties(0)));
+        for (ElementProperties props : Controller.getInstance().getAllElements()) {
+            Grille.add(new ElementView(props));
+        }
         updateScrollbars();
         jScrollPane2.getLocation();
     }
@@ -398,6 +400,7 @@ public class MainView extends javax.swing.JFrame {
         Grille.setMaximumSize(new java.awt.Dimension(70*SlideZoom.getValue(), 50*SlideZoom.getValue()));
         updateScrollbars();
         Grille.setPxPerMeter(SlideZoom.getValue());
+        Grille.invalidate();
     }//GEN-LAST:event_SlideZoomMouseDragged
 
     private void GrilleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseMoved
@@ -424,7 +427,7 @@ public class MainView extends javax.swing.JFrame {
     private void GrilleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseReleased
         int x = evt.getX();
         int y = evt.getY();
-        if (evt.getSource() == jButton1)
+        //if (evt.getSource() == jButton1)
         {
             //appeler la méthode de draw de station + créer la station + ouvrir fenètre édition station
             
@@ -435,8 +438,9 @@ public class MainView extends javax.swing.JFrame {
             Controller.getInstance().setElementProperties(elem);
             SortingStationView station = new SortingStationView(elem);
             Grille.add(station);
+            Grille.repaint();
         }
-        else if (evt.getSource() == jButton3)
+        if (evt.getSource() == jButton3)
         {
             recyclapp.model.Controller.getInstance().selectElement(5);
             int id = recyclapp.model.Controller.getInstance().createElementFromToolBox();

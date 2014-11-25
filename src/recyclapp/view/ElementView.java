@@ -11,13 +11,12 @@ import java.awt.event.*;
 import javax.swing.*;
 import recyclapp.transport.ElementProperties;
 import recyclapp.model.Controller;
-import recyclapp.view.DiagramView;
 import recyclapp.transport.Coords;
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class ElementView extends JPanel implements MouseListener {
+public /*abstract*/ class ElementView extends JPanel implements MouseListener {
     private long aClickTime1;
     private final int aId;
     

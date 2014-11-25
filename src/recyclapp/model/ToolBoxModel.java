@@ -47,6 +47,9 @@ public final class ToolBoxModel {
     
     public void selectElement(int index) {
         aSelectedIndex = index;
+        if (aSelectedIndex < 0 || aSelectedIndex >= aElements.size()) {
+            aSelectedIndex = -1;
+        }
     }
     
     public void deselectElement() {

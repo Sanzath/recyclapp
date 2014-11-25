@@ -8,6 +8,8 @@ package recyclapp.model;
 
 import recyclapp.transport.*;
 
+import java.util.List;
+
 /**
  *
  * @author Martin Boisvert
@@ -26,7 +28,7 @@ public class Controller {
         return aInstance;
     }
     
-    // Diagram
+    // <editor-fold defaultstate="collapsed" desc="Diagram" >
     public void toggleGrid(boolean active)
     {
         
@@ -46,7 +48,12 @@ public class Controller {
         return DiagramModel.getInstance().checkRecursion();
     }
     
-    // Menu
+    public List<ElementProperties> getAllElements() {
+        return DiagramModel.getInstance().getAllElements();
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="Menu">
     public void save()
     {
         
@@ -71,8 +78,9 @@ public class Controller {
     {
         // Paste to position - determined by DiagramModel
     }
+    // </editor-fold>
     
-    // History
+    // <editor-fold defaultstate="collapsed" desc="History">
     public String getOptions()
     {
         return "placeholder";
@@ -87,11 +95,12 @@ public class Controller {
     {
         
     }
+    // </editor-fold>
     
-    // ToolBox
-    public void getElements()
+    // <editor-fold defaultstate="collapsed" desc="ToolBox">
+    public List<String> getToolBoxElements()
     {
-        
+        return ToolBoxModel.getInstance().getElements();
     }
     
     public void selectElement(int index)
@@ -101,15 +110,17 @@ public class Controller {
     
     public int createElementFromToolBox(){
         int id = DiagramModel.getInstance().createFromSelectedToolbox();
+        deselectElement();
         return id;
     }
     
     public void deselectElement()
     {
-        
+        ToolBoxModel.getInstance().deselectElement();
     }
+    // </editor-fold>
     
-    // TransformDictionary
+    // <editor-fold defaultstate="collapsed" desc="TransformDictionary">
     public void addTransform(String sourceMaterial, String destinationMaterial)
     {
         
@@ -125,8 +136,9 @@ public class Controller {
     {
         
     }
+    // </editor-fold>
     
-    // Overview
+    // <editor-fold defaultstate="collapsed" desc="Overview">
     public String[] getEntryPoints()
     {
         String materials[] = new String[1];
@@ -152,8 +164,9 @@ public class Controller {
     {
         
     }
+    // </editor-fold>
     
-    // MaterialDictionary
+    // <editor-fold defaultstate="collapsed" desc="MaterialDictonary">
     public String[] getMaterials()
     {
         String materials[] = new String[1];
@@ -171,8 +184,9 @@ public class Controller {
     {
         
     }
+    // </editor-fold>
     
-    // TemplateContainer
+    // <editor-fold defaultstate="collapsed" desc="TemplateContainer">
     // void devrait être un String[] ou quelque chose dans le genre
     public void getTemplates()
     {
@@ -193,8 +207,9 @@ public class Controller {
     {
         
     }
+    // </editor-fold>
     
-    // Elements
+    // <editor-fold defaultstate="collapsed" desc="Elements">
     private ElementModel getElement(int id) {
         return DiagramModel.getInstance().getElementFromId(id);
     }
@@ -256,8 +271,9 @@ public class Controller {
     public MaterialFlowTable getThroughput(int id) {
         return getElement(id).getThroughput();
     }
+    // </editor-fold>
     
-    // Node
+    // <editor-fold defaultstate="collapsed" desc="Nodes">
     private NodeModel getEntryNode(int parentId, int index) {
         return getElement(parentId).getEntryNode(index);
     }
@@ -278,6 +294,6 @@ public class Controller {
     public MaterialFlowTable getExitNodeThroughput(int parentId, int index) {
         return getExitNode(parentId, index).getThroughput();
     }
-    
+    // </editor-fold>
     
 }
