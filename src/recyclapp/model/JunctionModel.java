@@ -78,6 +78,7 @@ public final class JunctionModel extends ElementModel {
     public void removeEntryNode(int index) {
         if (canRemoveEntryNode())
         {
+            aEntryNodes.get(index).removeLink();
             aEntryNodes.remove(index);
         }
     }
