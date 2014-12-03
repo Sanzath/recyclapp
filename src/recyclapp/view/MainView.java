@@ -407,7 +407,8 @@ public class MainView extends javax.swing.JFrame {
             toolBoxView1.deselect();
         }
         else {
-            ElementView.deselect();
+            ElementView.deselectSelected();
+            NodeView.deselectSelected();
         }
     }//GEN-LAST:event_GrilleMouseReleased
 

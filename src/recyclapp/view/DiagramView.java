@@ -17,7 +17,7 @@ import recyclapp.transport.*;
 
 public final class DiagramView extends JPanel
 {
-    private static DiagramView aInstance;
+    private static DiagramView sInstance;
     
     private static final int GRID_WIDTH = 70;
     private static final int GRID_HEIGHT = 50;
@@ -32,15 +32,14 @@ public final class DiagramView extends JPanel
     }
     
     public static DiagramView getInstance() {
-        if (aInstance == null) {
-            aInstance = new DiagramView();
+        if (sInstance == null) {
+            sInstance = new DiagramView();
         }
-        return aInstance;
+        return sInstance;
     }
  
     public void setPxPerMeter(int px) {
         aTaille = px;
-        invalidate();
         repaint();
     }
     
@@ -59,20 +58,11 @@ public final class DiagramView extends JPanel
             drawGrille(g);
         }
         
-        //Coords p = new Coords(1,1);
-        //Coords p2 = new Coords(1,2);
-        
-        //drawNode(g,p,"noeud 1",Color.BLACK);
-        //drawNode(g,p2,"noeud 2",Color.BLACK);
-        
-        //g.setStroke(new BasicStroke((this.aTaille)/20));
-        //drawConvoyeur(g, 3,1,7,2,"Convoyeur 1",Color.DARK_GRAY);
-        //drawConvoyeur(g, 1,1,1,2,"Convoyeur 2",Color.DARK_GRAY);
-        //drawEntreNode(g,1,5,"Entrée 1",Color.GREEN);
-        //drawSortieNode(g,1,6,"Sortie 1",Color.ORANGE);
-        
-        //drawStation(g, 2.5,2.5,3,1,"Station 1",Color.CYAN);
-        
+        for (Component child : getComponents()) {
+            if (child instanceof ElementView) {
+                ((ElementView)child).updatePosition();
+            }
+        }
     }
     
     public void drawGrille(Graphics g)
@@ -91,77 +81,15 @@ public final class DiagramView extends JPanel
         
     }
     
-    public void drawNode(Graphics g, Coords p, String name, Color c)
-    {
-        int ax = metreToPixel(p.x);
-        int ay = metreToPixel(p.y);
-        
-        g.setColor(c);
-        g.fillOval(ax, ay, (1*this.aTaille)/7, (1*this.aTaille)/7);
-        g.setColor(Color.BLACK);
-        g.drawString(name, ax, ay);
+    protected void addConveyor(NodeView entry, NodeView exit) {
         
     }
     
-    public void drawConvoyeur(Graphics g, double x1, double y1, double x2, double y2, String name, Color c)
-    {
-        int ax1 = metreToPixel(x1);
-        int ay1 = metreToPixel(y1);
-        
-        int ax2 = metreToPixel(x2);
-        int ay2 = metreToPixel(y2);
-        
-        
-        int xpoints[] = {ax2-(this.aTaille/10),ax2,ax2-(this.aTaille/10)};
-        int ypoints[] = {ay2-(this.aTaille/10),ay2,ay2+(this.aTaille/10)};
-        int npoints = 3;
-        
-        double op = y2-y1;
-        double ad = x2-x1;
-        
-        double Phi = Math.atan((op/ad));
-        
-        g.setColor(c);
-        g.drawLine(ax1, ay1, ax2-(this.aTaille/10), ay2);
-        g.fillPolygon(xpoints, ypoints, npoints);
-        g.setColor(Color.BLACK);
-        g.drawString(name, (ax1+ax2)/2, (ay1+ay2)/2);
-    }
-    
-    public void drawEntreNode(Graphics g, double x, double y, String name, Color c)
-    {
-        int ax = metreToPixel(x);
-        int ay = metreToPixel(y);
-        
-        g.setColor(c);
-        g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
-        
-        g.setColor(Color.BLACK);
-        g.drawString(name, ax, ay);
-    }
-    
-    public void drawSortieNode(Graphics g, double x, double y, String name, Color c)
-    {
-        int ax = metreToPixel(x);
-        int ay = metreToPixel(y);
-        
-        g.setColor(c);
-        g.fillOval(ax, ay, (1*this.aTaille)/3, (1*this.aTaille)/3);
-        g.setColor(Color.BLACK);
-        g.drawString(name, ax, ay);
-    }
-    
-    public void drawStation(Graphics g, double x, double y, double z1, double z2,  String name, Color c)
-    {
-        int ax = metreToPixel(x);
-        int ay = metreToPixel(y);
-        int az1 = metreToPixel(z1);
-        int az2 = metreToPixel(z2);
-        
-        g.setColor(c);
-        g.fillRect(ax, ay,az1, az2);
-        g.setColor(Color.BLACK);
-        g.drawString(name, ax, ay);   
+    @Override
+    public Component add(Component child) {
+        super.add(child);
+        //OverviewView.getInstance().update();
+        return child;
     }
     
     public int metreToPixel(double a)

@@ -16,7 +16,7 @@ import recyclapp.transport.MaterialFlowMatrix;
  * @author Martin Boisvert
  */
 public final class OverviewModel {
-    private static OverviewModel aInstance;
+    private static OverviewModel sInstance;
     
     private final List<EntryPointModel> aEntryPoints = new ArrayList<>();
     private final List<ExitPointModel> aExitPoints = new ArrayList<>();
@@ -24,10 +24,10 @@ public final class OverviewModel {
     private OverviewModel() {}
     
     public static OverviewModel getInstance() {
-        if (aInstance == null) {
-            aInstance = new OverviewModel();
+        if (sInstance == null) {
+            sInstance = new OverviewModel();
         }
-        return aInstance;
+        return sInstance;
     }
     
     protected void addEntryPoint(EntryPointModel element) {

@@ -14,7 +14,7 @@ import java.util.HashMap;
  * @author Martin Boisvert
  */
 public final class MaterialDictionaryModel {
-    private static MaterialDictionaryModel aInstance;
+    private static MaterialDictionaryModel sInstance;
     
     private final Map<Integer, String> aMaterials = new HashMap<>();
     private int aNextId = 0;
@@ -27,10 +27,10 @@ public final class MaterialDictionaryModel {
     }
     
     public static MaterialDictionaryModel getInstance() {
-        if (aInstance == null) {
-            aInstance = new MaterialDictionaryModel();
+        if (sInstance == null) {
+            sInstance = new MaterialDictionaryModel();
         }
-        return aInstance;
+        return sInstance;
     }
     
     public void addMaterial(String name) {

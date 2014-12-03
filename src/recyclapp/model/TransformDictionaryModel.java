@@ -11,15 +11,15 @@ package recyclapp.model;
  * @author Martin Boisvert
  */
 public class TransformDictionaryModel {
-    private static TransformDictionaryModel aInstance;
+    private static TransformDictionaryModel sInstance;
     
     private TransformDictionaryModel() {}
     
     public static TransformDictionaryModel getInstance() {
-        if (aInstance == null) {
-            aInstance = new TransformDictionaryModel();
+        if (sInstance == null) {
+            sInstance = new TransformDictionaryModel();
         }
-        return aInstance;
+        return sInstance;
     }
     
 }

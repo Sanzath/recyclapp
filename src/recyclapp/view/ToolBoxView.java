@@ -17,7 +17,7 @@ import recyclapp.model.Controller;
  * @author Martin Boisvert
  */
 public class ToolBoxView extends JPanel {
-    private static ToolBoxView aInstance;
+    private static ToolBoxView sInstance;
     
     public ToolBoxView() {
         List<String> elementNames = Controller.getInstance().getToolBoxElements();
@@ -31,10 +31,10 @@ public class ToolBoxView extends JPanel {
     }
     
     public static ToolBoxView getInstance() {
-        if (aInstance == null) {
-            aInstance = new ToolBoxView();
+        if (sInstance == null) {
+            sInstance = new ToolBoxView();
         }
-        return aInstance;
+        return sInstance;
     }
     
     public void deselect() {

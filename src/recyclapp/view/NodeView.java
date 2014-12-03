@@ -12,28 +12,37 @@ import recyclapp.transport.Coords;
 import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
+import javax.swing.border.Border;
 
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class NodeView extends JPanel implements MouseListener, MouseMotionListener {
-    private static NodeView sSelected;
+public final class NodeView extends JPanel implements MouseListener, MouseMotionListener {
+    private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
+    private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
+    
+    private static NodeView sSelected = null;
+    
+    public static final int ENTRY_NODE = 1;
+    public static final int EXIT_NODE = -1;
     
     private final ElementView aParent;
     private int aIndex;
+    private final int aNodeType;
     
     private Coords aSize;
     private int aAngle;
     
     
-    public NodeView(ElementView parent, int index, NodeProperties properties) {
+    public NodeView(ElementView parent, int index, int nodeType, NodeProperties properties) {
         aParent = parent;
+        aNodeType = nodeType;
         aIndex = index;
         aSize = properties.aSize;
         aAngle = properties.aAngle;
         
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 1, true));
+        setBorder(UNSELECTED_BORDER);
         setBackground(Color.GRAY);
         Point size = DiagramView.getInstance().coordsToPoint(aSize);
         setSize(size.x, size.y);
@@ -49,7 +58,7 @@ public abstract class NodeView extends JPanel implements MouseListener, MouseMot
     
     @Override
     protected void paintComponent( Graphics g ) {
-        updatePosition();
+        //updatePosition();
         super.paintComponent(g);
     }
     
@@ -66,7 +75,7 @@ public abstract class NodeView extends JPanel implements MouseListener, MouseMot
         position.y += parentSize.height / 2;
         
         // Now determine which of the four borders this node is "stuck" to
-        int borderAngle = (int) Math.toDegrees(Math.atan(parentSize.height / parentSize.width));
+        int borderAngle = (int) Math.toDegrees(Math.atan2(parentSize.height, parentSize.width));
         
         // Stuck to right
         if (aAngle < borderAngle || aAngle >= (360 - borderAngle))
@@ -102,56 +111,66 @@ public abstract class NodeView extends JPanel implements MouseListener, MouseMot
         position.y -= size.y / 2;
         
         setLocation(position);
+        repaint();
     }
 
     @Override
     public void mouseClicked(MouseEvent e) {
         if (sSelected != null) {
-            NodeView entryNode = null;
-            NodeView exitNode = null;
-            if (sSelected instanceof EntryNodeView && this instanceof ExitNodeView) {
-                entryNode = sSelected;
-                exitNode = this;
+            NodeView other = (NodeView) sSelected;
+            if (aNodeType == ENTRY_NODE && other.aNodeType == EXIT_NODE) {
+                DiagramView.getInstance().addConveyor(this, other);
             }
-            else if (sSelected instanceof ExitNodeView && this instanceof EntryNodeView) {
-                exitNode = sSelected;
-                entryNode = this;
+            else if (aNodeType == EXIT_NODE && other.aNodeType == ENTRY_NODE) {
+                DiagramView.getInstance().addConveyor(other, this);
             }
-            if (entryNode != null) {
-                DiagramView.getInstance().add(new ConveyorView(entryNode, exitNode));
-                DiagramView.getInstance().repaint();
-            }
-            sSelected.setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
-            sSelected.repaint();
         }
+        select();
+    }
+    
+    public static void deselectSelected() {
+        if (sSelected != null) {
+            sSelected.deselect();
+        }
+    }
+    
+    public void deselect() {
+        sSelected = null;
+        setBorder(UNSELECTED_BORDER);
+    }
+    
+    public void select() {
+        deselectSelected();
         sSelected = this;
-        setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
-        repaint();
+        setBorder(SELECTED_BORDER);
+        aParent.select();
     }
 
     @Override
     public void mousePressed(MouseEvent e) {
-
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-
     }
 
     @Override
     public void mouseEntered(MouseEvent e) {
-
+        setBorder(SELECTED_BORDER);
+        repaint();
     }
 
     @Override
     public void mouseExited(MouseEvent e) {
-
+        if (sSelected != this) {
+            setBorder(UNSELECTED_BORDER);
+            repaint();
+        }
     }
 
     @Override
     public void mouseDragged(MouseEvent e) {
-
+        
     }
 
     @Override

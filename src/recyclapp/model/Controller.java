@@ -16,16 +16,16 @@ import java.util.List;
  */
 public class Controller {
     // Singleton
-    private static Controller aInstance;
+    private static Controller sInstance;
     
     private Controller() {}
         
     public static Controller getInstance() {
-        if (aInstance == null)
+        if (sInstance == null)
         {
-            aInstance = new Controller();
+            sInstance = new Controller();
         }
-        return aInstance;
+        return sInstance;
     }
     
     // <editor-fold defaultstate="collapsed" desc="Diagram" >
@@ -219,7 +219,9 @@ public class Controller {
     }
     
     public void setElementProperties(ElementProperties properties) {
+        ElementProperties initial = getElement(properties.aId).toProperties();
         getElement(properties.aId).fromProperties(properties);
+        
     }
     
     public ParameterGroup getParameters(int id) {

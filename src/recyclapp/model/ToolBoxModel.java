@@ -14,7 +14,7 @@ import java.util.ArrayList;
  * @author Martin Boisvert
  */
 public final class ToolBoxModel {
-    private static ToolBoxModel aInstance;
+    private static ToolBoxModel sInstance;
     
     private final List<ElementModel> aElements = new ArrayList<>();
     private final List<String> aElementStrings = new ArrayList<>();
@@ -35,10 +35,10 @@ public final class ToolBoxModel {
     }
     
     public static ToolBoxModel getInstance() {
-        if (aInstance == null) {
-            aInstance = new ToolBoxModel();
+        if (sInstance == null) {
+            sInstance = new ToolBoxModel();
         }
-        return aInstance;
+        return sInstance;
     }
     
     public List<String> getElements() {

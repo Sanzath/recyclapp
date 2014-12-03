@@ -6,7 +6,6 @@
 
 package recyclapp.model;
 
-import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 
@@ -21,7 +20,7 @@ import recyclapp.transport.EntryPointParameterGroup;
  * @author Martin Boisvert
  */
 public final class DiagramModel {
-    private static DiagramModel aInstance;
+    private static DiagramModel sInstance;
     
     private boolean aGridActive = false;
     private float aGridSpacing = 1.0F;
@@ -34,14 +33,14 @@ public final class DiagramModel {
     
     public static DiagramModel getInstance() {
         boolean wasNull = false;
-        if (aInstance == null) {
+        if (sInstance == null) {
             wasNull = true;
-            aInstance = new DiagramModel();
+            sInstance = new DiagramModel();
         }
         if (wasNull) {
             initEntryNode();
         }
-        return aInstance;
+        return sInstance;
     }
     
     private static void initEntryNode() {
@@ -53,7 +52,7 @@ public final class DiagramModel {
         entryMats.add(new MaterialFlow(0, 1000));
         entryMats.add(new MaterialFlow(1, 1000));
         entry.setParameters(new EntryPointParameterGroup(entryMats));
-        aInstance.aElements.add(entry);
+        sInstance.aElements.add(entry);
     }
     
     public boolean getGridActive() {
@@ -82,8 +81,11 @@ public final class DiagramModel {
     private void addElement(ElementModel element) {
         aElements.add(element);
         
-        if (element.getClass() == EntryPointModel.class) {
+        if (element instanceof EntryPointModel) {
             OverviewModel.getInstance().addEntryPoint((EntryPointModel) element);
+        }
+        else if (element instanceof ExitPointModel) {
+            OverviewModel.getInstance().addExitPoint((ExitPointModel) element);
         }
     }
     
@@ -94,18 +96,6 @@ public final class DiagramModel {
             return element.getId();
         }
         return -1;
-    }
-    
-    public void createFromSelectedTemplate() {
-        // get from TemplateContainer
-    }
-    
-    public void selectAll() {
-        
-    }
-    
-    public void selectNone() {
-        
     }
     
     public void clear() {
