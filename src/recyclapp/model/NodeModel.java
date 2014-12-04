@@ -66,6 +66,9 @@ public abstract class NodeModel {
     public final void setAngle(int angle)
     {
         aAngle = angle % 360;
+        if (aAngle < 0) {
+            aAngle += 360;
+        }
     }
 
     public final Coords getSize() {

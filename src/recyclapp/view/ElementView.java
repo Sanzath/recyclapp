@@ -20,12 +20,10 @@ import recyclapp.transport.Coords;
  *
  * @author Martin Boisvert
  */
-public final class ElementView extends JPanel implements MouseListener, MouseMotionListener {
+public final class ElementView extends JPanel implements MouseListener, MouseMotionListener, DiagramObject {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
     private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
     private static final float MINIMUM_SIZE = 0.5F;
-    
-    private static ElementView sSelected = null;
     
     private Point aStartingPosition;
     
@@ -95,21 +93,14 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         return aId;
     }
     
-    public static void deselectSelected() {
-        if (sSelected != null) {
-            sSelected.deselect();
-        }
-    }
-    
+    @Override
     public void deselect() {
-        sSelected = null;
         setBorder(UNSELECTED_BORDER);
         aTab.setVisible(false);
     }
     
+    @Override
     public void select() {
-        deselectSelected();
-        sSelected = this;
         setBorder(SELECTED_BORDER);
         aTab.setVisible(true);
     }
@@ -120,12 +111,13 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         Controller.getInstance().setElementProperties(properties);
     }
     
+    @Override
     public void updatePosition() {
         aPositionUpdated = true;
         setLocation(DiagramView.getInstance().coordsToPoint(aPosition));
         Point size = DiagramView.getInstance().coordsToPoint(aSize);
         setSize(size.x, size.y);
-        repaint();
+        //repaint();
     }
     
     @Override
@@ -158,7 +150,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
             createPropertiesWindow(Controller.getInstance().getElementProperties(aId));
         }
         
-        select();
+        DiagramObject.select(this);
     }
      
     @Override
@@ -176,7 +168,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
 
     @Override
     public void mouseExited(MouseEvent e) {
-        if (sSelected != this) {
+        if (!DiagramObject.isSelected(this)) {
             setBorder(UNSELECTED_BORDER);
             repaint();
         }

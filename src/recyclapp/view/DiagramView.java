@@ -59,8 +59,8 @@ public final class DiagramView extends JPanel
         }
         
         for (Component child : getComponents()) {
-            if (child instanceof ElementView) {
-                ((ElementView)child).updatePosition();
+            if (child instanceof DiagramObject) {
+                ((DiagramObject)child).updatePosition();
             }
         }
     }
