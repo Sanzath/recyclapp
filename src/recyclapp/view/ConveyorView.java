@@ -6,15 +6,17 @@
 
 package recyclapp.view;
 
-import recyclapp.model.Controller;
-
-import java.util.List;
-import java.util.ArrayList;
 
 import java.awt.*;
+import java.awt.Shape;
 import java.awt.event.*;
-import java.nio.channels.SelectableChannel;
+import java.awt.geom.Ellipse2D;
+import java.util.ArrayList;
+import java.util.List;
+import javafx.scene.shape.Circle;
 import javax.swing.*;
+import recyclapp.model.Controller;
+import recyclapp.transport.Coords;
 
 /**
  * 
@@ -24,12 +26,16 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
     private static final int UNSELECTED_THICKNESS = 1;
     private static final int SELECTED_THICKNESS = 2;
     
-    private int aThickness = UNSELECTED_THICKNESS;
-    
-    private ConveyorSection aSections;
+    private final ConveyorSection aSections;
     
     private final NodeView aEntry;
     private final NodeView aExit;
+    
+    private int aThickness = UNSELECTED_THICKNESS;
+    private final List<Coords> aIntermediatePositions;
+    
+    private ConveyorSection aSectionToSeparate;
+    private int aDraggingIndex = -1;
     
     public ConveyorView(NodeView entry, NodeView exit) {
         aEntry = entry;
@@ -41,9 +47,12 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         aSections.aStartPosition = getEntryCenter();
         aSections.aEndPosition = getExitCenter();
         
+        aIntermediatePositions = new ArrayList<>();
+        
         updatePosition();
         
         addMouseListener(this);
+        addMouseMotionListener(this);
     }
     
     @Override
@@ -52,11 +61,15 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         g2.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
         g2.setStroke(new BasicStroke(aThickness));
         
+        Point mousePosition = DiagramView.getInstance().getMousePosition();
         for (ConveyorSection section = aSections;
                 section != null;
                 section = section.aNextSection) {
             g.drawLine(section.aStartPosition.x, section.aStartPosition.y,
                     section.aEndPosition.x, section.aEndPosition.y);
+            if (mousePosition != null && section.endPointContains(mousePosition)) {
+                g2.draw(section.getEndPointCircle());
+            }
         }
     }
     
@@ -87,7 +100,15 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
     @Override
     public void updatePosition() {
         aSections.aStartPosition = getEntryCenter();
-        aSections.aEndPosition = getExitCenter();
+        
+        ConveyorSection section = aSections;
+        for (int index = 0; section.aNextSection != null;
+                section = section.aNextSection, ++index) {
+            Point p = DiagramView.getInstance().coordsToPoint(aIntermediatePositions.get(index));
+            section.aEndPosition = p;
+            section.aNextSection.aStartPosition = p;
+        }
+        section.aEndPosition = getExitCenter();
         repaint();
     }
     
@@ -107,15 +128,43 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
 
     @Override
     public void mouseClicked(MouseEvent e) {
+        DiagramObject.deselectAll();
         DiagramObject.select(this);
     }
 
     @Override
+    @SuppressWarnings("empty-statement")
     public void mousePressed(MouseEvent e) {
+        Point mousePosition = getMousePosition();
+        // First find if we're selecting an intersection
+        int index = 0;
+        aDraggingIndex = -1;
+        for (ConveyorSection section = aSections;
+                section.aNextSection != null;
+                section = section.aNextSection, ++index) {
+            if (section.endPointContains(mousePosition)) {
+                aDraggingIndex = index;
+            }
+        }
+        
+        if (aDraggingIndex == -1) {
+            // An intersection was not selected, so find which section to separate
+            aDraggingIndex = 0;
+            aSectionToSeparate = aSections;
+            for (; aSectionToSeparate != null && !aSectionToSeparate.contains(mousePosition);
+                    aSectionToSeparate = aSectionToSeparate.aNextSection, ++aDraggingIndex) { /*Ultra efficient amirite*/ }
+            // aSectionToSeparate is now the section to break - not null
+        }
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
+        // Clear intersection-creation variables
+        aSectionToSeparate = null;
+        if (aDraggingIndex != -1) {
+            Controller.getInstance().moveConveyorIntermediatePosition(
+                    aEntry.getParentId(), aEntry.getIndex(), aIntermediatePositions.get(aDraggingIndex), aDraggingIndex);
+        }
     }
 
     @Override
@@ -134,10 +183,39 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
 
     @Override
     public void mouseDragged(MouseEvent e) {
+        Point mousePosition = DiagramView.getInstance().getMousePosition();
+        
+        // Check if an intersection should be added
+        if (aSectionToSeparate != null) {
+            DiagramObject.select(this);
+            // startingPos - section - endingPos
+            // becomes...
+            //startingPos - section - intermediatePos - newSection - endingPos
+            ConveyorSection newSection = new ConveyorSection();
+            newSection.aNextSection = aSectionToSeparate.aNextSection;
+            aSectionToSeparate.aNextSection = newSection;
+            newSection.aEndPosition = aSectionToSeparate.aEndPosition;
+            
+            aSectionToSeparate = null;
+            
+            // This null will be replaced with an actual value during updatePosition()
+            aIntermediatePositions.add(aDraggingIndex, null);
+            Controller.getInstance().insertConveyorIntermediatePosition(
+                    aEntry.getParentId(), aEntry.getIndex(), new Coords(0, 0), aDraggingIndex);
+            DiagramObject.select(this);
+        }
+        aIntermediatePositions.set(aDraggingIndex, DiagramView.getInstance().pointToCoords(mousePosition));
+        
+        updatePosition();
     }
 
     @Override
     public void mouseMoved(MouseEvent e) {
+        // If selected, repaint in case the mouse is above one of the intersections
+        if (DiagramObject.isSelected(this)) {
+            invalidate();
+            repaint();
+        }
     }
 }
 
@@ -149,13 +227,17 @@ class ConveyorSection {
     
     public ConveyorSection aNextSection;
     
+    public boolean contains(Point p) {
+        return contains(p.x, p.y);
+    }
+    
     public boolean contains(int x, int y) {
         Point offset = new Point();
         double angle = Math.atan2(aEndPosition.y - aStartPosition.y,
                 aEndPosition.x - aStartPosition.x);
         
-        offset.x = (int) (SELECT_THICKNESS * Math.cos(angle));
-        offset.y = (int) (SELECT_THICKNESS * Math.sin(angle));
+        offset.x = (int) (SELECT_THICKNESS * Math.sin(angle));
+        offset.y = (int) (SELECT_THICKNESS * Math.cos(angle));
         
         Polygon poly = new Polygon();
         poly.addPoint(aStartPosition.x + offset.x, aStartPosition.y - offset.y);
@@ -164,5 +246,24 @@ class ConveyorSection {
         poly.addPoint(aStartPosition.x - offset.x, aStartPosition.y + offset.y);
         
         return poly.contains(x, y);
+    }
+    
+    public boolean endPointContains(Point p) {
+        return endPointContains(p.x, p.y);
+    }
+    
+    public boolean endPointContains(int x, int y) {
+        if (aNextSection == null) {
+            return false;
+        }
+        
+        return getEndPointCircle().contains(x, y);
+    }
+    
+    public Ellipse2D getEndPointCircle() {
+        Ellipse2D c = new Ellipse2D.Float();
+        c.setFrameFromCenter(aEndPosition.x, aEndPosition.y,
+                aEndPosition.x + SELECT_THICKNESS, aEndPosition.y + SELECT_THICKNESS);
+        return c;
     }
 }

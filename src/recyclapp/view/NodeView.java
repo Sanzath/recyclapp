@@ -58,6 +58,14 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         aIndex = newIndex;
     }
     
+    public int getIndex() {
+        return aIndex;
+    }
+    
+    public int getParentId() {
+        return aParent.getID();
+    }
+    
     @Override
     protected void paintComponent( Graphics g ) {
         super.paintComponent(g);
