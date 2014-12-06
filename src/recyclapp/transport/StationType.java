@@ -10,6 +10,6 @@ package recyclapp.transport;
  *
  * @author Martin Boisvert
  */
-public enum StationType {
+public enum StationType implements java.io.Serializable{
     AUTOMATIC, MANUAL
 }

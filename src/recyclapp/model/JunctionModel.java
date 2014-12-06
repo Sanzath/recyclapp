@@ -16,7 +16,7 @@ import recyclapp.transport.MaterialFlowTable;
  *
  * @author Martin Boisvert
  */
-public final class JunctionModel extends ElementModel {
+public final class JunctionModel extends ElementModel implements java.io.Serializable{
     private static final int MINIMUM_ENTRY_NODE_COUNT = 2;
     
     private final List<EntryNodeModel> aEntryNodes = new ArrayList<>(MINIMUM_ENTRY_NODE_COUNT);

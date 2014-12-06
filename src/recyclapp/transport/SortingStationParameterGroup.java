@@ -6,7 +6,7 @@
 
 package recyclapp.transport;
 
-public class SortingStationParameterGroup implements ParameterGroup
+public class SortingStationParameterGroup implements ParameterGroup, java.io.Serializable
 {
     public MaterialFlowMatrix aSortingMatrix;
     public StationType aType;

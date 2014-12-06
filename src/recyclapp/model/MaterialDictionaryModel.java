@@ -13,7 +13,7 @@ import java.util.HashMap;
  *
  * @author Martin Boisvert
  */
-public final class MaterialDictionaryModel {
+public final class MaterialDictionaryModel implements java.io.Serializable{
     private static MaterialDictionaryModel sInstance;
     
     private final Map<Integer, String> aMaterials = new HashMap<>();

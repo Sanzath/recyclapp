@@ -453,10 +453,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="FlowMatrix10" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel11" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="FlowMatrix11" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="FlowMatrix10" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="FlowMatrix11" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -582,10 +584,12 @@
           <Layout>
             <DimensionLayout dim="0">
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Component id="FlowMatrix30" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
                   <Component id="jLabel14" alignment="0" max="32767" attributes="0"/>
-                  <Group type="102" alignment="0" attributes="0">
-                      <Component id="FlowMatrix31" min="-2" pref="36" max="-2" attributes="0"/>
+                  <Group type="102" attributes="0">
+                      <Group type="103" groupAlignment="0" attributes="0">
+                          <Component id="FlowMatrix30" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                          <Component id="FlowMatrix31" alignment="0" min="-2" pref="36" max="-2" attributes="0"/>
+                      </Group>
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
               </Group>

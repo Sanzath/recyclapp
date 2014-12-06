@@ -14,7 +14,7 @@ import java.util.List;
  *
  * @author Martin Boisvert
  */
-public class Controller {
+public class Controller  implements java.io.Serializable{
     // Singleton
     private static Controller sInstance;
     
@@ -88,14 +88,28 @@ public class Controller {
     }
     
     public void undo()
-    {
-        
+    {   
+        if (HistoryElement.getCounter() > 1)
+        {
+            HistoryElement.setCounter(HistoryElement.getCounter()-1);
+            HistoryElement.getInstance().deserializeDiag();
+        }
     }
     
     public void redo()
     {
-        
+        if ( HistoryElement.getCounter() < HistoryElement.getMax())
+        {
+            HistoryElement.setCounter(HistoryElement.getCounter()+1);
+            HistoryElement.getInstance().deserializeDiag();
+        }
     }
+    
+    public void serialize()
+    {
+        HistoryElement.getInstance().serialiseDiagram(DiagramModel.getInstance());
+    }
+    
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="ToolBox">

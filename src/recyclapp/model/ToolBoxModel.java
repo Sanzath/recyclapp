@@ -13,7 +13,7 @@ import java.util.ArrayList;
  *
  * @author Martin Boisvert
  */
-public final class ToolBoxModel {
+public final class ToolBoxModel implements java.io.Serializable{
     private static ToolBoxModel sInstance;
     
     private final List<ElementModel> aElements = new ArrayList<>();

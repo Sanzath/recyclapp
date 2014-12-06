@@ -7,7 +7,7 @@
 package recyclapp.transport;
 
 
-public class TransformStationParameterGroup implements ParameterGroup {
+public class TransformStationParameterGroup implements ParameterGroup, java.io.Serializable {
     
     public int aInputMaterial;
     public MaterialFlowTable aTransformTable;

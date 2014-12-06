@@ -10,7 +10,7 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public class HistoryModel {
+public class HistoryModel implements java.io.Serializable{
     private static HistoryModel sInstance;
     
     private HistoryModel() {}

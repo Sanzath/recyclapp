@@ -14,9 +14,10 @@ import recyclapp.transport.MaterialFlowTable;
  *
  * @author Martin Boisvert
  */
-public class ExitPointModel extends ElementModel {
+public class ExitPointModel extends ElementModel implements java.io.Serializable{
 
     private final EntryNodeModel aEntryNode;
+    private static final long serialVersionUID = 4632964078848835517L;
     
     private MaterialFlowTable aInput;
     

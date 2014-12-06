@@ -20,7 +20,7 @@ import recyclapp.transport.ElementProperties;
  *
  * @author Martin Boisvert
  */
-public abstract class ElementModel {
+public abstract class ElementModel implements java.io.Serializable{
     // Node angles rotate clockwise. 0 = right, 90 = down, etc
     protected static final int ENTRY_NODE_DEFAULT_ANGLE = 180;
     protected static final int EXIT_NODE_DEFAULT_ANGLE = 0;

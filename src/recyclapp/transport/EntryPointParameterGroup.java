@@ -6,7 +6,7 @@
 
 package recyclapp.transport;
 
-public class EntryPointParameterGroup implements ParameterGroup {
+public class EntryPointParameterGroup implements ParameterGroup, java.io.Serializable{
     
     public MaterialFlowTable aEntryMaterials;
 

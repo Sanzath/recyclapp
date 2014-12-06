@@ -12,7 +12,7 @@ import java.awt.Color;
  *
  * @author Martin Boisvert
  */
-public final class ElementProperties {
+public final class ElementProperties  implements java.io.Serializable{
     public int aId;
     public String aName;
     public String aDescription;

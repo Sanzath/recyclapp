@@ -14,7 +14,7 @@ import recyclapp.transport.NodeProperties;
  *
  * @author Martin Boisvert
  */
-public abstract class NodeModel {
+public abstract class NodeModel implements java.io.Serializable{
     private final static float SIZE = 0.25F;
     
     private String aName;

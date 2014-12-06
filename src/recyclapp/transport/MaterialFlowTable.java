@@ -12,7 +12,7 @@ import java.util.ArrayList;
  *
  * @author Martin Boisvert
  */
-public class MaterialFlowTable extends ArrayList<MaterialFlow> {
+public class MaterialFlowTable extends ArrayList<MaterialFlow> implements java.io.Serializable{
     
     
     public MaterialFlowTable() {}

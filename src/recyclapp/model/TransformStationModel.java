@@ -13,7 +13,7 @@ import recyclapp.transport.*;
  *
  * @author Martin Boisvert
  */
-public final class TransformStationModel extends ElementModel {
+public final class TransformStationModel extends ElementModel implements java.io.Serializable{
     
     private final EntryNodeModel aEntryNode;
     private final ExitNodeModel aExitNode;

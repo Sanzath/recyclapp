@@ -15,7 +15,7 @@ import recyclapp.transport.MaterialFlowMatrix;
  *
  * @author Martin Boisvert
  */
-public final class OverviewModel {
+public final class OverviewModel implements java.io.Serializable{
     private static OverviewModel sInstance;
     
     private final List<EntryPointModel> aEntryPoints = new ArrayList<>();

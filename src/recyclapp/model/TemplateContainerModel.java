@@ -10,7 +10,7 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public class TemplateContainerModel {
+public class TemplateContainerModel implements java.io.Serializable{
     private static TemplateContainerModel sInstance;
     
     private TemplateContainerModel() {}

@@ -10,7 +10,7 @@ package recyclapp.transport;
  *
  * @author Martin Boisvert
  */
-public class NodeProperties {
+public class NodeProperties implements java.io.Serializable {
     public int aParentId;
     public String aName;
     public int aAngle;

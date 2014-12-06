@@ -12,7 +12,7 @@ import recyclapp.transport.MaterialFlowTable;
  * Alexandre
  * @author Martin Boisvert
  */
-public class ExitNodeModel extends NodeModel
+public class ExitNodeModel extends NodeModel implements java.io.Serializable
 {
     private MaterialFlowTable aThroughput;
     

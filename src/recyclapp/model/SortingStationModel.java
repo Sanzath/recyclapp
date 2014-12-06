@@ -19,7 +19,7 @@ import recyclapp.transport.StationType;
  *
  * @author Martin Boisvert
  */
-public final class SortingStationModel extends ElementModel {
+public final class SortingStationModel extends ElementModel implements java.io.Serializable{
     private static final int MINIMUM_EXIT_NODE_COUNT = 2;
     
     private final EntryNodeModel aEntryNode;

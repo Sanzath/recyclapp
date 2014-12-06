@@ -10,7 +10,7 @@ package recyclapp.transport;
  *
  * @author Martin Boisvert
  */
-public class MaterialFlow {
+public class MaterialFlow implements java.io.Serializable {
     public int aId;
     public float aFlow;
     

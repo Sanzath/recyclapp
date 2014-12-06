@@ -10,7 +10,7 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public class TransformDictionaryModel {
+public class TransformDictionaryModel implements java.io.Serializable{
     private static TransformDictionaryModel sInstance;
     
     private TransformDictionaryModel() {}

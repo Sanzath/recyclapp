@@ -10,7 +10,7 @@ package recyclapp.model;
  *
  * @author Martin Boisvert
  */
-public class MenuModel {
+public class MenuModel implements java.io.Serializable{
     private static MenuModel sInstance;
     
     private MenuModel() {}

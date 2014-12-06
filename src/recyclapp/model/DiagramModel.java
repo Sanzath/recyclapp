@@ -8,7 +8,7 @@ package recyclapp.model;
 
 import java.util.List;
 import java.util.ArrayList;
-
+import java.io.*;
 import recyclapp.transport.*;
 
 import recyclapp.transport.Coords;
@@ -19,7 +19,7 @@ import recyclapp.transport.EntryPointParameterGroup;
  *
  * @author Martin Boisvert
  */
-public final class DiagramModel {
+public final class DiagramModel implements java.io.Serializable{
     private static DiagramModel sInstance;
     
     private boolean aGridActive = false;
@@ -135,5 +135,32 @@ public final class DiagramModel {
             elements.add(model.toProperties());
         }
         return elements;
+    }
+    
+    
+    public void deserialiseDiagram()
+    {
+        DiagramModel e = null;
+        String chaine = "C:/Windows/Temp/recyclapp" +HistoryElement.getCounter() +".ser";
+      try
+      {
+         FileInputStream fileIn = new FileInputStream(chaine);
+         ObjectInputStream in = new ObjectInputStream(fileIn);
+         e = (DiagramModel) in.readObject();
+         in.close();
+         fileIn.close();
+         System.out.printf("deser data  in "+ chaine);
+         sInstance = e;
+         
+      }catch(IOException i)
+      {
+         i.printStackTrace();
+         return;
+      }catch(ClassNotFoundException c)
+      {
+         System.out.println("Employee class not found");
+         c.printStackTrace();
+         return;
+      }
     }
 }

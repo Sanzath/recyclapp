@@ -14,6 +14,7 @@ import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import recyclapp.model.DiagramModel;
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
 /**
@@ -109,6 +110,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsSave.setFocusable(false);
         ButtonOutilsSave.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsSave.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsSave.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsSaveActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsSave);
         OutilsBar.add(jSeparator1);
 
@@ -119,6 +125,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsUndo.setFocusable(false);
         ButtonOutilsUndo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsUndo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsUndo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsUndoActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsUndo);
         OutilsBar.add(jSeparator6);
 
@@ -129,6 +140,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsRedo.setFocusable(false);
         ButtonOutilsRedo.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsRedo.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsRedo.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsRedoActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsRedo);
         OutilsBar.add(jSeparator2);
 
@@ -408,10 +424,25 @@ public class MainView extends javax.swing.JFrame {
     private void grilleMagnetiqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleMagnetiqueButtonActionPerformed
         Grille.setMagnetic(grilleMagnetiqueButton.isSelected());
     }//GEN-LAST:event_grilleMagnetiqueButtonActionPerformed
+
+    private void ButtonOutilsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsSaveActionPerformed
+        Controller.getInstance().serialize();
+    }//GEN-LAST:event_ButtonOutilsSaveActionPerformed
+
+    private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
+       Controller.getInstance().undo();
+       
+       TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
+    }//GEN-LAST:event_ButtonOutilsUndoActionPerformed
+
+    private void ButtonOutilsRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsRedoActionPerformed
+        Controller.getInstance().redo();
+        TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
+    }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
     
     /*
     private void buildTree(){
-        //Création d'une racine
+        //Création d'une racine 
         DefaultMutableTreeNode racine = new DefaultMutableTreeNode("Element");
         DefaultTreeModel x = new DefaultTreeModel(racine);
         //Nous allons ajouter des des feuilles à notre racine

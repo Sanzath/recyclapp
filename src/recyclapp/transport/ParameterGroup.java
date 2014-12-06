@@ -10,6 +10,6 @@ package recyclapp.transport;
  *
  * @author Martin Boisvert
  */
-public interface ParameterGroup {
+public interface ParameterGroup{
     
 }

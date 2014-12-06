@@ -14,7 +14,7 @@ import recyclapp.transport.MaterialFlowTable;
  * Alexandre
  * @author Martin Boisvert
  */
-public class ConveyorModel {
+public class ConveyorModel  implements java.io.Serializable{
     
     private String aName = "";
     private Float aMaxThroughput = 0.0F;

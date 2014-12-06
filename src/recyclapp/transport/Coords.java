@@ -10,7 +10,7 @@ package recyclapp.transport;
  *
  * @author Martin Boisvert
  */
-public class Coords {
+public class Coords implements java.io.Serializable{
     public float x;
     public float y;
     

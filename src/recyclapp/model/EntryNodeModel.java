@@ -12,7 +12,7 @@ import recyclapp.transport.MaterialFlowTable;
  * Alexandre
  * @author Martin Boisvert
  */
-public final class EntryNodeModel extends NodeModel {
+public final class EntryNodeModel extends NodeModel implements java.io.Serializable{
     
     private ExitNodeModel aExitNode;
     
