@@ -355,5 +355,10 @@ public class Controller  implements java.io.Serializable{
     public void removeConveyorIntermediatePosition(int entryParentId, int entryIndex, int index) {
         getConveyor(entryParentId, entryIndex).removeIntermediatePosition(index);
     }
+    
+    public void moveConveyorIntermediatePosition(int entryParentId, int entryIndex,
+            Coords intermediatePosition, int index) {
+        getConveyor(entryParentId, entryIndex).moveIntermediatePosition(intermediatePosition, index);
+    }
     // </editor-fold>
 }
