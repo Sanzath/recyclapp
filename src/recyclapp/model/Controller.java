@@ -29,19 +29,20 @@ public class Controller {
     }
     
     // <editor-fold defaultstate="collapsed" desc="Diagram" >
-    public void toggleGrid(boolean active)
-    {
-        
+    public void setGridActive(boolean active) {
+        DiagramModel.getInstance().setGridActive(active);
     }
     
-    public void setGridCenter(Coords center)
-    {
-        
+    public boolean getGridActive() {
+        return DiagramModel.getInstance().getGridActive();
     }
     
-    public void setGridSpacing(float spacing)
-    {
-        
+    public void setGridSpacing(float spacing) {
+        DiagramModel.getInstance().setGridSpacing(spacing);
+    }
+    
+    public float getGridSpacing() {
+        return DiagramModel.getInstance().getGridSpacing();
     }
     
     public boolean checkRecursion() {
@@ -290,10 +291,10 @@ public class Controller {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Nodes">
-    private NodeModel getEntryNode(int parentId, int index) {
+    private EntryNodeModel getEntryNode(int parentId, int index) {
         return getElement(parentId).getEntryNode(index);
     }
-    private NodeModel getExitNode(int parentId, int index) {
+    private ExitNodeModel getExitNode(int parentId, int index) {
         return getElement(parentId).getExitNode(index);
     }
     
@@ -312,4 +313,33 @@ public class Controller {
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="Conveyors">
+    private ConveyorModel getConveyor(int entryParentId, int entryIndex) {
+        return getEntryNode(entryParentId, entryIndex).getConveyor();
+    }
+    
+    public void addConveyor(int entryParentId, int entryIndex, int exitParentId, int exitIndex) {
+        EntryNodeModel entryNode = getEntryNode(entryParentId, entryIndex);
+        ExitNodeModel exitNode = getExitNode(exitParentId, exitIndex);
+        
+        entryNode.createLink(exitNode);
+    }
+    
+    public void removeConveyor(int entryParentId, int entryIndex) {
+        getEntryNode(entryParentId, entryIndex).removeLink();
+    }
+    
+    public List<Coords> getConveyorIntermediatePositions(int entryParentId, int entryIndex) {
+        return getConveyor(entryParentId, entryIndex).getIntermediatePositions();
+    }
+    
+    public void insertConveyorIntermediatePosition(int entryParentId, int entryIndex,
+            Coords intermediatePosition, int index) {
+        getConveyor(entryParentId, entryIndex).insertIntermediatePosition(intermediatePosition, index);
+    }
+    
+    public void removeConveyorIntermediatePosition(int entryParentId, int entryIndex, int index) {
+        getConveyor(entryParentId, entryIndex).removeIntermediatePosition(index);
+    }
+    // </editor-fold>
 }

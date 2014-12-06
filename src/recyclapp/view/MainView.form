@@ -247,6 +247,19 @@
             <Property name="verticalTextPosition" type="int" value="3"/>
           </Properties>
         </Component>
+        <Component class="javax.swing.JToolBar$Separator" name="jSeparator9">
+        </Component>
+        <Component class="javax.swing.JToggleButton" name="grilleMagnetiqueButton">
+          <Properties>
+            <Property name="text" type="java.lang.String" value="Magnetique"/>
+            <Property name="focusable" type="boolean" value="false"/>
+            <Property name="horizontalTextPosition" type="int" value="0"/>
+            <Property name="verticalTextPosition" type="int" value="3"/>
+          </Properties>
+          <Events>
+            <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="grilleMagnetiqueButtonActionPerformed"/>
+          </Events>
+        </Component>
         <Component class="javax.swing.JSlider" name="SlideZoom">
           <Properties>
             <Property name="majorTickSpacing" type="int" value="1"/>
@@ -444,7 +457,6 @@
               </Properties>
               <Events>
                 <EventHandler event="mouseMoved" listener="java.awt.event.MouseMotionListener" parameters="java.awt.event.MouseEvent" handler="GrilleMouseMoved"/>
-                <EventHandler event="mouseReleased" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="GrilleMouseReleased"/>
               </Events>
               <AuxValues>
                 <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="DiagramView.getInstance();"/>

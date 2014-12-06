@@ -31,9 +31,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     private final int aId;
     
     private Coords aPosition;
-    private Coords aRSize;
     private Coords aSize;
-    private boolean aPositionUpdated = false;
     
     private final JLabel aName;
     private final ElementCornerTab aTab;
@@ -86,7 +84,6 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         }
         
         addMouseListener(this);
-        addMouseMotionListener(this);
     }
     
     public int getID() {
@@ -113,26 +110,20 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     
     @Override
     public void updatePosition() {
-        aPositionUpdated = true;
         setLocation(DiagramView.getInstance().coordsToPoint(aPosition));
         Point size = DiagramView.getInstance().coordsToPoint(aSize);
         setSize(size.x, size.y);
-        //repaint();
+        repaint();
     }
     
     @Override
     protected void paintComponent(Graphics g) {
-        if (!aPositionUpdated) {
-            updatePosition();
-        }
-        
         super.paintComponent(g);
         doLayout();
         
         for (NodeView node : aNodes) {
             node.updatePosition();
         }
-        aPositionUpdated = false;
     }
             
     protected void createPropertiesWindow(ElementProperties properties){
@@ -158,6 +149,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         aStartingPosition = null;
         // Only set position model-side once done dragging
         Controller.getInstance().setElementPosition(aId, aPosition);
+        removeMouseMotionListener(this);
     }
 
     @Override
@@ -177,6 +169,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     @Override
     public void mousePressed(MouseEvent e) {
         aStartingPosition = e.getPoint();
+        addMouseMotionListener(this);
     }
 
     @Override
@@ -186,7 +179,13 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         newLocation.x += newPosition.x - aStartingPosition.x;
         newLocation.y += newPosition.y - aStartingPosition.y;
         
+        
         aPosition = DiagramView.getInstance().pointToCoords(newLocation);
+        if (Controller.getInstance().getGridActive()) {
+            float gridSpacing = Controller.getInstance().getGridSpacing();
+            aPosition.x = Math.round(aPosition.x / gridSpacing) * gridSpacing;
+            aPosition.y = Math.round(aPosition.y / gridSpacing) * gridSpacing;
+        }
         updatePosition();
     }
 
@@ -194,27 +193,34 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     public void mouseMoved(MouseEvent e) {
     }
     
-    protected void relativeResize(Coords offset) {
-        if (aRSize == null) {
-            aRSize = new Coords(aSize);
-        }
-        aRSize.x += offset.x;
-        aRSize.y += offset.y;
+    protected void resize(Coords newSize) {
+        aSize = newSize;
         
-        aSize = new Coords(aRSize);
-        
-        if (aSize.x < MINIMUM_SIZE) {
-            aSize.x = MINIMUM_SIZE;
+        if (Controller.getInstance().getGridActive()) {
+            float gridSpacing = Controller.getInstance().getGridSpacing();
+            aSize.x = Math.round(aSize.x / gridSpacing) * gridSpacing;
+            aSize.y = Math.round(aSize.y / gridSpacing) * gridSpacing;
+            
+            if (aSize.x < gridSpacing) {
+                aSize.x = gridSpacing;
+            }
+            if (aSize.y < gridSpacing) {
+                aSize.y = gridSpacing;
+            }
         }
-        if (aSize.y < MINIMUM_SIZE) {
-            aSize.y = MINIMUM_SIZE;
+        else {
+            if (aSize.x < MINIMUM_SIZE) {
+                aSize.x = MINIMUM_SIZE;
+            }
+            if (aSize.y < MINIMUM_SIZE) {
+                aSize.y = MINIMUM_SIZE;
+            }
         }
         
         updatePosition();
     }
     
     protected void saveResize() {
-        aRSize = null;
         Controller.getInstance().setElementSize(aId, aSize);
     }
     
@@ -225,7 +231,8 @@ class ElementCornerTab extends JPanel implements MouseMotionListener, MouseListe
     
     private final ElementView aParent;
     
-    private Point aLastPosition;
+    private Point aStartingPosition;
+    private Dimension aStartingSize;
     
     public ElementCornerTab(ElementView parent) {
         aParent = parent;
@@ -234,10 +241,8 @@ class ElementCornerTab extends JPanel implements MouseMotionListener, MouseListe
         
         setSize(SIZE, SIZE);
         
-        addMouseListener(this);
-        addMouseMotionListener(this);
-        
         setCursor(new Cursor(Cursor.SE_RESIZE_CURSOR));
+        addMouseListener(this);
     }
     
     @Override
@@ -255,12 +260,10 @@ class ElementCornerTab extends JPanel implements MouseMotionListener, MouseListe
         Point newPosition = e.getLocationOnScreen();
         Point offset = new Point();
         
-        offset.x = newPosition.x - aLastPosition.x;
-        offset.y = newPosition.y - aLastPosition.y;
+        offset.x = aStartingSize.width + newPosition.x - aStartingPosition.x;
+        offset.y = aStartingSize.height + newPosition.y - aStartingPosition.y;
         
-        aLastPosition = newPosition;
-        
-        aParent.relativeResize(DiagramView.getInstance().pointToCoords(offset));
+        aParent.resize(DiagramView.getInstance().pointToCoords(offset));
     }
 
     @Override
@@ -273,13 +276,17 @@ class ElementCornerTab extends JPanel implements MouseMotionListener, MouseListe
 
     @Override
     public void mousePressed(MouseEvent e) {
-        aLastPosition = e.getLocationOnScreen();
+        aStartingSize = getParent().getSize();
+        aStartingPosition = e.getLocationOnScreen();
+        addMouseMotionListener(this);
     }
 
     @Override
     public void mouseReleased(MouseEvent e) {
-        aLastPosition = null;
+        aStartingPosition = null;
+        aStartingSize = null;
         aParent.saveResize();
+        removeMouseMotionListener(this);
     }
 
     @Override

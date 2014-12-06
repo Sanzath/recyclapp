@@ -7,7 +7,9 @@
 package recyclapp.view;
 
 import javax.swing.*;
+import java.awt.event.*;
 import java.awt.*;
+import recyclapp.model.Controller;
 import recyclapp.transport.*;
 
 /**
@@ -15,20 +17,24 @@ import recyclapp.transport.*;
  * @author Martin Boisvert / Clement Sanquer
  */
 
-public final class DiagramView extends JPanel
+public final class DiagramView extends JPanel implements MouseMotionListener, MouseListener
 {
     private static DiagramView sInstance;
     
     private static final int GRID_WIDTH = 70;
     private static final int GRID_HEIGHT = 50;
     
-    private int aTaille = 50;
+    private int aZoom = 50;
+    private float aSpacing = 1;
     private boolean aGridActive = true;
     
     public DiagramView() {
         setLayout(null);
         setBackground(Color.WHITE);
         setBorder(BorderFactory.createLineBorder(Color.GRAY));
+        
+        addMouseListener(this);
+        addMouseMotionListener(this);
     }
     
     public static DiagramView getInstance() {
@@ -39,14 +45,17 @@ public final class DiagramView extends JPanel
     }
  
     public void setPxPerMeter(int px) {
-        aTaille = px;
+        aZoom = px;
         repaint();
     }
     
-    public void setGridActive(boolean active) {
+    public void setGridVisible(boolean active) {
         aGridActive = active;
-        invalidate();
         repaint();
+    }
+    
+    public void setMagnetic(boolean active) {
+        Controller.getInstance().setGridActive(active);
     }
     
     @Override
@@ -71,17 +80,14 @@ public final class DiagramView extends JPanel
         g.setColor(Color.LIGHT_GRAY);
         for(i = 1; i < GRID_WIDTH; i++)    
         {
-            g.drawLine(i * aTaille, 0, i * aTaille, GRID_HEIGHT * aTaille);
+            g.drawLine((int) (i * aZoom * aSpacing), 0,
+                    (int) (i * aZoom * aSpacing), (int) (GRID_HEIGHT * aZoom * aSpacing));
         }
-        
         for(i = 1; i < GRID_HEIGHT; i++)    
         {
-            g.drawLine(0, i * aTaille, GRID_WIDTH * aTaille, i * aTaille);
+            g.drawLine(0, (int) (i * aZoom * aSpacing),
+                    (int) (GRID_WIDTH * aZoom * aSpacing), (int) (i * aZoom * aSpacing));
         }
-        
-    }
-    
-    protected void addConveyor(NodeView entry, NodeView exit) {
         
     }
     
@@ -94,11 +100,11 @@ public final class DiagramView extends JPanel
     
     public int metreToPixel(double a)
     {
-        return (int)(a * aTaille);
+        return (int)(a * aZoom);
     }
     public float pixelToMetre(int a)
     {
-        return ((float)a) / aTaille;
+        return a / (float) aZoom;
     }
     
     public Point coordsToPoint(Coords coords) {
@@ -111,6 +117,52 @@ public final class DiagramView extends JPanel
         float x = pixelToMetre(p.x);
         float y = pixelToMetre(p.y);
         return new Coords(x, y);
+    }
+
+    @Override
+    public void mouseDragged(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseMoved(MouseEvent e) {
+
+    }
+
+    @Override
+    public void mouseClicked(MouseEvent e) {
+        //appeler la méthode de draw de station + créer la station + ouvrir fenètre édition station
+            
+        int id = Controller.getInstance().createElementFromToolBox();
+        if (id != -1) {
+            ElementProperties elem = Controller.getInstance().getElementProperties(id);
+            elem.aPosition = pointToCoords(e.getPoint());
+            Controller.getInstance().setElementPosition(id, elem.aPosition);
+            ElementView view = new ElementView(elem);
+            add(view);
+            view.createPropertiesWindow(elem);
+            repaint();
+            
+            ToolBoxView.getInstance().deselect();
+        }
+        else {
+            DiagramObject.deselectAll();
+        }
+    }
+
+    @Override
+    public void mousePressed(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseReleased(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseEntered(MouseEvent e) {
+    }
+
+    @Override
+    public void mouseExited(MouseEvent e) {
     }
    
   }

@@ -66,6 +66,8 @@ public class MainView extends javax.swing.JFrame {
         ButtonGrille = new javax.swing.JToggleButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         ButtonOutilsExport = new javax.swing.JButton();
+        jSeparator9 = new javax.swing.JToolBar.Separator();
+        grilleMagnetiqueButton = new javax.swing.JToggleButton();
         SlideZoom = new javax.swing.JSlider();
         PanelPosition = new javax.swing.JPanel();
         LabelPos = new javax.swing.JLabel();
@@ -187,6 +189,18 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
         OutilsBar.add(ButtonOutilsExport);
+        OutilsBar.add(jSeparator9);
+
+        grilleMagnetiqueButton.setText("Magnetique");
+        grilleMagnetiqueButton.setFocusable(false);
+        grilleMagnetiqueButton.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        grilleMagnetiqueButton.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        grilleMagnetiqueButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                grilleMagnetiqueButtonActionPerformed(evt);
+            }
+        });
+        OutilsBar.add(grilleMagnetiqueButton);
 
         SlideZoom.setMajorTickSpacing(1);
         SlideZoom.setMinimum(10);
@@ -286,11 +300,6 @@ public class MainView extends javax.swing.JFrame {
                 GrilleMouseMoved(evt);
             }
         });
-        Grille.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseReleased(java.awt.event.MouseEvent evt) {
-                GrilleMouseReleased(evt);
-            }
-        });
 
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
@@ -360,7 +369,7 @@ public class MainView extends javax.swing.JFrame {
 
     private void ButtonGrilleActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonGrilleActionPerformed
         aGrille = ButtonGrille.isSelected();
-        Grille.setGridActive(aGrille);
+        Grille.setGridVisible(aGrille);
     }//GEN-LAST:event_ButtonGrilleActionPerformed
 
     private void SlideZoomMouseDragged(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_SlideZoomMouseDragged
@@ -392,28 +401,13 @@ public class MainView extends javax.swing.JFrame {
        // TextEntreeSortie.setText(chaine2);
     }//GEN-LAST:event_GrilleMouseMoved
 
-    private void GrilleMouseReleased(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseReleased
-        //appeler la méthode de draw de station + créer la station + ouvrir fenètre édition station
-            
-        int id = Controller.getInstance().createElementFromToolBox();
-        if (id != -1) {
-            ElementProperties elem = Controller.getInstance().getElementProperties(id);
-            elem.aPosition = Grille.pointToCoords(evt.getPoint());
-            Controller.getInstance().setElementProperties(elem);
-            ElementView view = new ElementView(elem);
-            Grille.add(view);
-            view.createPropertiesWindow(elem);
-            Grille.repaint();
-            toolBoxView1.deselect();
-        }
-        else {
-            DiagramObject.deselectAll();
-        }
-    }//GEN-LAST:event_GrilleMouseReleased
-
     private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
 
     }//GEN-LAST:event_jToggleButton1ActionPerformed
+
+    private void grilleMagnetiqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleMagnetiqueButtonActionPerformed
+        Grille.setMagnetic(grilleMagnetiqueButton.isSelected());
+    }//GEN-LAST:event_grilleMagnetiqueButtonActionPerformed
     
     /*
     private void buildTree(){
@@ -508,6 +502,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JPanel PanelToolBox;
     private javax.swing.JSlider SlideZoom;
     private javax.swing.JTextArea TextEntreeSortie;
+    private javax.swing.JToggleButton grilleMagnetiqueButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JMenu jMenu1;
@@ -522,6 +517,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
     private javax.swing.JToolBar.Separator jSeparator8;
+    private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;

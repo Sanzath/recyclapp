@@ -13,6 +13,7 @@ import javax.swing.*;
 import java.awt.event.*;
 import java.awt.*;
 import javax.swing.border.Border;
+import recyclapp.model.Controller;
 
 /**
  *
@@ -25,15 +26,17 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     public static final int ENTRY_NODE = 1;
     public static final int EXIT_NODE = -1;
     
+    private int aSide;
+    
     private Point aParentCenter;
     
     private final ElementView aParent;
+    private ConveyorView aConveyor;
     private int aIndex;
     private final int aNodeType;
     
     private Coords aSize;
     private int aAngle;
-    
     
     public NodeView(ElementView parent, int index, int nodeType, NodeProperties properties) {
         aParent = parent;
@@ -46,10 +49,9 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         setBackground(Color.GRAY);
         Point size = DiagramView.getInstance().coordsToPoint(aSize);
         setSize(size.x, size.y);
-        repaint();
+        updatePosition();
         
         addMouseListener(this);
-        addMouseMotionListener(this);
     }
     
     public void updateIndex(int newIndex) {
@@ -58,8 +60,40 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     
     @Override
     protected void paintComponent( Graphics g ) {
-        //updatePosition();
         super.paintComponent(g);
+        
+        // Draw an arrow in the correct orientation
+        // Facing right
+        Point p1, p2, p3;
+        if ((aSide == SwingConstants.RIGHT && aNodeType == EXIT_NODE) ||
+                (aSide == SwingConstants.LEFT && aNodeType == ENTRY_NODE)) {
+            p1 = new Point(0, 0);
+            p2 = new Point(getSize().width, getSize().height / 2);
+            p3 = new Point(0, getSize().height);
+        }
+        // Facing left
+        else if ((aSide == SwingConstants.LEFT && aNodeType == EXIT_NODE) ||
+                (aSide == SwingConstants.RIGHT && aNodeType == ENTRY_NODE)) {
+            p1 = new Point(getSize().width, 0);
+            p2 = new Point(0, getSize().height / 2);
+            p3 = new Point(getSize().width, getSize().height);
+        }
+        // Facing up
+        else if ((aSide == SwingConstants.TOP && aNodeType == EXIT_NODE) ||
+                (aSide == SwingConstants.BOTTOM && aNodeType == ENTRY_NODE)) {
+            p1 = new Point(0, getSize().height);
+            p2 = new Point(getSize().width / 2, 0);
+            p3 = new Point(getSize().width, getSize().height);
+        }
+        // Facing down
+        else {
+            p1 = new Point(0, 0);
+            p2 = new Point(getSize().width / 2, getSize().height);
+            p3 = new Point(getSize().width, 0);
+        }
+        g.setColor(Color.black);
+        g.drawLine(p1.x, p1.y, p2.x, p2.y);
+        g.drawLine(p3.x, p3.y, p2.x, p2.y);
     }
     
     @Override
@@ -79,11 +113,11 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // Now determine which of the four borders this node is "stuck" to
         int borderAngle = (int) Math.toDegrees(Math.atan2(parentSize.height, parentSize.width));
         borderAngle = borderAngle % 360;
-        System.out.println("b: " + borderAngle + ", a: " + aAngle);
         
         // Stuck to right
         if (aAngle < borderAngle || aAngle >= (360 - borderAngle))
         {
+            aSide = SwingConstants.RIGHT;
             offset.x = (parentSize.width + size.x) / 2;
             offset.y = (int)((float)offset.x * Math.tan(Math.toRadians(aAngle)));
             if (offset.y > maxOffset.y) {
@@ -96,6 +130,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // Stuck to bottom
         else if (aAngle < (180 - borderAngle))
         {
+            aSide = SwingConstants.BOTTOM;
             offset.y = (parentSize.height + size.y) / 2;
             offset.x = (int)((float)offset.y / Math.tan(Math.toRadians(aAngle)));
             if (offset.x > maxOffset.x) {
@@ -108,6 +143,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // Stuck to left
         else if (aAngle < (180 + borderAngle))
         {
+            aSide = SwingConstants.LEFT;
             offset.x = - (parentSize.width + size.x) / 2;
             offset.y = (int)(offset.x * Math.tan(Math.toRadians(aAngle)));
             if (offset.y > maxOffset.y) {
@@ -120,6 +156,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // Stuck to top
         else
         {
+            aSide = SwingConstants.TOP;
             offset.y = - (parentSize.height + size.y) / 2;
             offset.x = (int)((float)offset.y / Math.tan(Math.toRadians(aAngle)));
             if (offset.x > maxOffset.x) {
@@ -144,16 +181,34 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        
-        DiagramObject selected = DiagramObject.getSelected(NodeView.class);
-        if (selected != null) {
-            NodeView other = (NodeView) selected;
-            if (aParent != other.aParent) {
-                if (aNodeType == ENTRY_NODE && other.aNodeType == EXIT_NODE) {
-                    DiagramView.getInstance().addConveyor(this, other);
-                }
-                else if (aNodeType == EXIT_NODE && other.aNodeType == ENTRY_NODE) {
-                    DiagramView.getInstance().addConveyor(other, this);
+        // If we have no conveyor, and another node is selected, and it has
+        // no conveyor, these two elements don't have the same parent,
+        // check if the node types are opposite, and create a new conveyor.
+        if (aConveyor == null) {
+            DiagramObject selected = DiagramObject.getSelected(NodeView.class);
+            if (selected != null) {
+                NodeView other = (NodeView) selected;
+                if (other.aConveyor == null && aParent != other.aParent) {
+                    NodeView entry = null;
+                    NodeView exit = null;
+                    if (aNodeType == ENTRY_NODE && other.aNodeType == EXIT_NODE) {
+                        entry = this;
+                        exit = other;
+                    }
+                    else if (aNodeType == EXIT_NODE && other.aNodeType == ENTRY_NODE) {
+                        entry = other;
+                        exit = this;
+                    }
+                    
+                    if (entry != null && exit != null) {
+                        Controller.getInstance().addConveyor(
+                                entry.aParent.getID(), entry.aIndex,
+                                exit.aParent.getID(), exit.aIndex);
+                        entry.aConveyor = new ConveyorView(entry, exit);
+                        exit.aConveyor = entry.aConveyor;
+                        DiagramView.getInstance().add(aConveyor);
+                        aConveyor.repaint();
+                    }
                 }
             }
         }
@@ -177,6 +232,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         aParentCenter = aParent.getLocationOnScreen();
         aParentCenter.x += aParent.getWidth() / 2;
         aParentCenter.y += aParent.getHeight() / 2;
+        addMouseMotionListener(this);
         
     }
 
@@ -184,7 +240,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     public void mouseReleased(MouseEvent e) {
         // Clear parent center position
         aParentCenter = null;
-        
+        removeMouseMotionListener(this);
     }
 
     @Override
