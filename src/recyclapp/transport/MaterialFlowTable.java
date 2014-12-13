@@ -40,8 +40,8 @@ public class MaterialFlowTable extends ArrayList<MaterialFlow> implements java.i
             boolean alreadyPresent = false;
             
             for (MaterialFlow matA : total) {
-                if (matA.aId == matB.aId) {
-                    matA.aFlow += matB.aId;
+                if (matA.aName.equals(matB.aName)) {
+                    matA.aFlow += matB.aFlow;
                     alreadyPresent = true;
                     break;
                 }
@@ -70,7 +70,7 @@ public class MaterialFlowTable extends ArrayList<MaterialFlow> implements java.i
             MaterialFlow result = new MaterialFlow(matA);
             
             for (MaterialFlow matB : b) {
-                if (matA.aId == matB.aId) {
+                if (matA.aName.equals(matB.aName)) {
                     result.aFlow *= matB.aFlow;
                     total.add(result);
                     break;

@@ -9,12 +9,12 @@ package recyclapp.transport;
 
 public class TransformStationParameterGroup implements ParameterGroup, java.io.Serializable {
     
-    public int aInputMaterial;
+    public String aInputMaterial;
     public MaterialFlowTable aTransformTable;
     public StationType aType;
     
     public TransformStationParameterGroup(
-            int inputMaterial, MaterialFlowTable transformTable, StationType type) {
+            String inputMaterial, MaterialFlowTable transformTable, StationType type) {
         aInputMaterial = inputMaterial;
         aTransformTable = new MaterialFlowTable(transformTable);
         aType = type;

@@ -11,18 +11,18 @@ package recyclapp.transport;
  * @author Martin Boisvert
  */
 public class MaterialFlow implements java.io.Serializable {
-    public int aId;
+    public String aName;
     public float aFlow;
     
-    public MaterialFlow(int id, float flow)
+    public MaterialFlow(String name, float flow)
     {
-        aId = id;
+        aName = name;
         aFlow = flow;
     }
     
     public MaterialFlow(MaterialFlow other)
     {
-        aId = other.aId;
+        aName = other.aName;
         aFlow = other.aFlow;
     }
 }

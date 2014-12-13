@@ -18,7 +18,7 @@ public final class TransformStationModel extends ElementModel implements java.io
     private final EntryNodeModel aEntryNode;
     private final ExitNodeModel aExitNode;
     
-    private int aInputMaterial = -1;
+    private String aInputMaterial = "";
     private MaterialFlowTable aTransformTable = new MaterialFlowTable();
     private StationType aType;
     
@@ -53,7 +53,7 @@ public final class TransformStationModel extends ElementModel implements java.io
         aOutput = new MaterialFlowTable();
         
         for (MaterialFlow input : aInput) {
-            if (input.aId == aInputMaterial) {
+            if (input.aName.equals(aInputMaterial)) {
                 aOutput.addAll(MaterialFlowTable.multiply(input.aFlow, aTransformTable));
             }
             else {

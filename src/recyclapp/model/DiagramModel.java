@@ -49,8 +49,8 @@ public final class DiagramModel implements java.io.Serializable{
         entry.setSize(new Coords(2, 2));
         entry.setPosition(new Coords(5.5F, 5.5F));
         MaterialFlowTable entryMats = new MaterialFlowTable();
-        entryMats.add(new MaterialFlow(0, 1000));
-        entryMats.add(new MaterialFlow(1, 1000));
+        entryMats.add(new MaterialFlow("P1", 1000));
+        entryMats.add(new MaterialFlow("P2", 1000));
         entry.setParameters(new EntryPointParameterGroup(entryMats));
         sInstance.aElements.add(entry);
     }
