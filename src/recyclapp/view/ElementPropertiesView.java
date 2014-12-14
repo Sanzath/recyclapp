@@ -140,6 +140,30 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aExitNodeListModel.addElement(aExitNodeList.get(i));
         }    
     }
+    private String[][] removeTableColumn(DefaultTableModel oldDtm, int selectedIndex){
+        String[][] newRowVec = new String[oldDtm.getDataVector().size()][((Vector)oldDtm.getDataVector().get(0)).size()-1];
+        for (int i = 0; i < oldDtm.getDataVector().size(); i++){
+            int k = 0;
+            for (int j = 0; j < ((Vector)oldDtm.getDataVector().get(0)).size(); j++){
+                if (j != selectedIndex){
+                    newRowVec[i][k] = ((String)((Vector)oldDtm.getDataVector().get(0)).get(k));
+                    k++;
+                }
+            }
+        }
+        return newRowVec;
+    }
+    
+    private String[] removeTableColumnHeader(DefaultTableModel oldDtm, int selectedIndex){
+        String[] newHeader = new String[oldDtm.getColumnCount()-1];
+        int k = 0;
+        for (int i = 0; i < oldDtm.getColumnCount(); i++)
+            if (i != selectedIndex){
+                newHeader[k] = oldDtm.getColumnName(i);
+                k++;
+            }
+        return newHeader;
+    }
     
     
     /**
@@ -481,10 +505,8 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aExitNodeList.remove(selectedIndex);
             aExitNodeListModel.remove(selectedIndex);
             if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
-                for (int i = 0; i < aDefTabMod.getDataVector().size(); i++){
-                    ((Vector)aDefTabMod.getDataVector().get(i)).remove(selectedIndex);
-                }
-                aDefTabMod.fireTableStructureChanged();
+                
+                aDefTabMod.setDataVector(removeTableColumn(aDefTabMod, selectedIndex),removeTableColumnHeader(aDefTabMod, selectedIndex));
             }
         }
     }//GEN-LAST:event_ExitNodeDelBtnMouseClicked
