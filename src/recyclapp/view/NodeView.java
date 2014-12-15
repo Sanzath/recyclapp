@@ -212,15 +212,19 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
                         Controller.getInstance().addConveyor(
                                 entry.aParent.getID(), entry.aIndex,
                                 exit.aParent.getID(), exit.aIndex);
-                        entry.aConveyor = new ConveyorView(entry, exit);
-                        exit.aConveyor = entry.aConveyor;
-                        DiagramView.getInstance().add(aConveyor);
-                        aConveyor.repaint();
+                        addConveyorView(entry, exit);
                     }
                 }
             }
         }
         DiagramObject.select(this);
+    }
+    
+    protected static void addConveyorView(NodeView entry, NodeView exit) {
+        entry.aConveyor = new ConveyorView(entry, exit);
+        exit.aConveyor = entry.aConveyor;
+        DiagramView.getInstance().add(entry.aConveyor);
+        entry.aConveyor.repaint();
     }
     
     @Override

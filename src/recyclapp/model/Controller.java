@@ -15,7 +15,7 @@ import java.util.ArrayList;
  *
  * @author Martin Boisvert
  */
-public class Controller  implements java.io.Serializable{
+public class Controller {
     // Singleton
     private static Controller sInstance;
     

@@ -12,6 +12,8 @@ import java.awt.*;
 import recyclapp.model.Controller;
 import recyclapp.transport.*;
 import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -46,7 +48,8 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
     }
     
     public void reloadObjects() {
-        // Teardown
+        // Teardown - remove all inter-references
+        // In theory only the ElementViews need to be torn down
         DiagramObject.deselectAll();
         for (Component comp : getComponents()) {
             if (comp instanceof DiagramObject) {
@@ -55,12 +58,21 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
         }
         removeAll();
         
-        // Setup
+        // Setup elements
         List<ElementProperties> allElements = Controller.getInstance().getAllElements();
+        Map<Integer, ElementView> elementIdMap = new HashMap<>();
         for (ElementProperties properties : allElements) {
-            add(new ElementView(properties));
+            ElementView elem = new ElementView(properties);
+            add(elem);
+            elementIdMap.put(properties.aId, elem);
         }
-        
+        // Setup conveyors
+        List<ConveyorProperties> allConveyors = Controller.getInstance().getAllConveyors();
+        for (ConveyorProperties properties : allConveyors) {
+            NodeView entryNode = elementIdMap.get(properties.aEntryParentId).getEntryNodeView(properties.aEntryIndex);
+            NodeView exitNode = elementIdMap.get(properties.aExitParentId).getExitNodeView(properties.aExitIndex);
+            NodeView.addConveyorView(entryNode, exitNode);
+        }
         
         repaint();
     }

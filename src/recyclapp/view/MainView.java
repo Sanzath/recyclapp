@@ -33,11 +33,9 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        for (ElementProperties props : Controller.getInstance().getAllElements()) {
-            Grille.add(new ElementView(props));
-        }
         updateScrollbars();
         jScrollPane2.getLocation();
+        Grille.reloadObjects();
     }
 
     /**
@@ -431,12 +429,14 @@ public class MainView extends javax.swing.JFrame {
 
     private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
        Controller.getInstance().undo();
+       Grille.reloadObjects();
        
        TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsUndoActionPerformed
 
     private void ButtonOutilsRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsRedoActionPerformed
         Controller.getInstance().redo();
+        Grille.reloadObjects();
         TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
     

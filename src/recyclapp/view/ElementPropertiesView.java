@@ -559,6 +559,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aEntryNodeListModel.addElement(newNode);
             EntryNodeAddTxtBox.setText("");
             controller.addEntryNode(aPropInitial.aId, newNode);
+            aElemView.addEntryNodeView();
             if (!controller.canAddEntryNode(aPropInitial.aId)){
                 EntryNodeAddBtn.setEnabled(false);
                 EntryNodeAddTxtBox.setEnabled(false);
@@ -583,6 +584,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             }
             ExitNodeAddTxtBox.setText("");
             controller.addExitNode(aPropInitial.aId, newNode);
+            aElemView.addExitNodeView();
             if (!controller.canAddExitNode(aPropInitial.aId)) {
                 ExitNodeAddBtn.setEnabled(false);
                 ExitNodeAddTxtBox.setEnabled(false);
@@ -600,6 +602,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aEntryNodeList.remove(selectedIndex);
             aEntryNodeListModel.remove(selectedIndex);
             controller.removeEntryNode(aPropInitial.aId, selectedIndex);
+            aElemView.removeEntryNode(selectedIndex);
             if (controller.canAddEntryNode(aPropInitial.aId)){
                 EntryNodeAddBtn.setEnabled(true);
                 EntryNodeAddTxtBox.setEnabled(true);
@@ -620,6 +623,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                 aDefTabMod.setDataVector(removeTableColumn(aDefTabMod, selectedIndex),removeTableColumnHeader(aDefTabMod, selectedIndex));
             }
             controller.removeExitNode(aPropInitial.aId, selectedIndex);
+            aElemView.removeExitNode(selectedIndex);
             if (controller.canAddExitNode(aPropInitial.aId)){
                 ExitNodeAddBtn.setEnabled(true);
                 ExitNodeAddTxtBox.setEnabled(true);

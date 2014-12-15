@@ -40,6 +40,7 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
             
             float angle = ENTRY_NODE_DEFAULT_ANGLE + NODE_SPACING * ((float)i - m);
             node.setAngle((int) angle);
+            aInputs.add(new MaterialFlowTable());
         }
         aExitNode = new ExitNodeModel(this);
         aExitNode.setAngle(EXIT_NODE_DEFAULT_ANGLE);
@@ -50,6 +51,7 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
         
         for (EntryNodeModel node : other.aEntryNodes) {
             aEntryNodes.add(new EntryNodeModel(this, node));
+            aInputs.add(new MaterialFlowTable());
         }
         aExitNode = new ExitNodeModel(this, other.aExitNode);
     }
@@ -74,6 +76,7 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
         EntryNodeModel node = new EntryNodeModel(this);
         aEntryNodes.add(node);
         node.setAngle(ENTRY_NODE_DEFAULT_ANGLE);
+        aInputs.add(new MaterialFlowTable());
         return node;
     }
     
@@ -83,6 +86,7 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
         {
             aEntryNodes.get(index).removeLink();
             aEntryNodes.remove(index);
+            aInputs.remove(index);
         }
     }
 
