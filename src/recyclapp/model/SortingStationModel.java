@@ -9,6 +9,7 @@ package recyclapp.model;
 import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import recyclapp.transport.*;
 /**
@@ -66,17 +67,20 @@ public final class SortingStationModel extends ElementModel implements java.io.S
         for (MaterialFlowTable exitSortingTable : aSortingMatrix) {
             // If a material exists in the matrix but not in the input, remove
             // it from the input
-            for (MaterialFlow matrixFlow : exitSortingTable) {
+            Iterator<MaterialFlow> it = exitSortingTable.iterator();
+            while (it.hasNext()) {
+                MaterialFlow matrixFlow = it.next();
                 boolean present = false;
                 
                 for (MaterialFlow inputFlow : aInput) {
-                    if (matrixFlow.aName == inputFlow.aName) {
+                    if (matrixFlow.aName.equals(inputFlow.aName)) {
                         present = true;
                         break;
                     }
                 }
+                
                 if (!present) {
-                    exitSortingTable.re
+                    it.remove();
                 }
             }
             
