@@ -62,15 +62,24 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                 }
             }
             else{
-                while (sortingMatrix.size() < aDefTabMod.getColumnCount()){
+                while (sortingMatrix.size() < aDefTabMod.getColumnCount()-2){
                     sortingMatrix.add(new MaterialFlowTable());
                 }
             }
             SortingStationParameterGroup sortingParamGroup = new SortingStationParameterGroup(sortingMatrix, StationType.AUTOMATIC);
             return sortingParamGroup;
         }
-        else if (aPropInitial.aParameters instanceof EntryPointParameterGroup &&
-                aDefTabMod.getDataVector().size() > 0){
+        else if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
+            MaterialFlowTable flowTable = new MaterialFlowTable();
+            if (aDefTabMod.getRowCount() > 0){
+                
+                for (int i = 0; i < aDefTabMod.getRowCount(); i++){
+                    MaterialFlow tempFlow = 
+                            new MaterialFlow(aDefTabMod.getValueAt(i, 0).toString(), Float.parseFloat(aDefTabMod.getValueAt(i, 1).toString()));
+                    flowTable.add(tempFlow);
+                }
+            }
+            return new EntryPointParameterGroup(flowTable);
             
         }
         else if (aPropInitial.aParameters instanceof TransformStationParameterGroup &&
@@ -90,11 +99,11 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             for (int i = 0; i < tableFlow.size(); i++){
                 sortingRowData[i][0] = tableFlow.get(i).aName;
                 sortingRowData[i][1] = Float.toString(tableFlow.get(i).aFlow);
-                for (int j = 2; j < aExitNodeList.size()+2; j++){
-                    sortingRowData[i][j] = Float.toString(0.0f);
-                    for (int k = 0; k < matrixFlow.get(j-2).size(); k++){
-                        if (matrixFlow.get(j-2).get(k).aName.equals(sortingRowData[i][0])){
-                            sortingRowData[i][j] = Float.toString(matrixFlow.get(j).get(k).aFlow);
+                for (int j = 0; j < aExitNodeList.size(); j++){
+                    sortingRowData[i][j+2] = Float.toString(0.0f);
+                    for (int k = 0; k < matrixFlow.get(j).size(); k++){
+                        if (matrixFlow.get(j).get(k).aName.equals(sortingRowData[i][0])){
+                            sortingRowData[i][j+2] = Float.toString(matrixFlow.get(j).get(k).aFlow);
                             break;
                         }
                     }
@@ -170,12 +179,12 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     }
     private String[][] removeTableColumn(DefaultTableModel oldDtm, int selectedIndex){
         if (oldDtm.getRowCount() > 0){
-        String[][] newRowVec = new String[oldDtm.getDataVector().size()][((Vector)oldDtm.getDataVector().get(0)).size()-1];
-        for (int i = 0; i < oldDtm.getDataVector().size(); i++){
+        String[][] newRowVec = new String[oldDtm.getRowCount()][oldDtm.getColumnCount()-1];
+        for (int i = 0; i < oldDtm.getRowCount(); i++){
             int k = 0;
-            for (int j = 0; j < ((Vector)oldDtm.getDataVector().get(0)).size(); j++){
-                if (j != selectedIndex){
-                    newRowVec[i][k] = ((String)((Vector)oldDtm.getDataVector().get(0)).get(k));
+            for (int j = 0; j < oldDtm.getColumnCount(); j++){
+                if (j != selectedIndex + 2){
+                    newRowVec[i][k] = oldDtm.getValueAt(i, j).toString();
                     k++;
                 }
             }
