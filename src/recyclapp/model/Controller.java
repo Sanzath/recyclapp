@@ -273,6 +273,13 @@ public class Controller  implements java.io.Serializable{
     public void addExitNode(int id) {
         getElement(id).canAddExitNode();
     }
+    public void addEntryNode(int id, String name) {
+        getElement(id).addEntryNode().setName(name);
+    }
+    public void addExitNode(int id, String name) {
+        getElement(id).addExitNode().setName(name);
+    }
+    
     public void removeEntryNode(int id, int index) {
         getElement(id).removeEntryNode(index);
     }

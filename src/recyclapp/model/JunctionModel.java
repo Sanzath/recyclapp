@@ -70,10 +70,11 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
     }
     
     @Override
-    public void addEntryNode() {
+    public EntryNodeModel addEntryNode() {
         EntryNodeModel node = new EntryNodeModel(this);
         aEntryNodes.add(node);
         node.setAngle(ENTRY_NODE_DEFAULT_ANGLE);
+        return node;
     }
     
     @Override

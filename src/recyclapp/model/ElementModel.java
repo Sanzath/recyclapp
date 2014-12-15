@@ -68,8 +68,8 @@ public abstract class ElementModel implements java.io.Serializable{
     public abstract boolean canRemoveEntryNode();
     public abstract boolean canRemoveExitNode();
     
-    public void addEntryNode() {}
-    public void addExitNode() {}
+    public EntryNodeModel addEntryNode() { return null; }
+    public ExitNodeModel addExitNode() { return null; }
     public void removeEntryNode(int index) {}
     public void removeExitNode(int index) {}
     

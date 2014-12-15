@@ -10,11 +10,7 @@ import java.awt.Color;
 import java.util.List;
 import java.util.ArrayList;
 
-import recyclapp.transport.MaterialFlowMatrix;
-import recyclapp.transport.MaterialFlowTable;
-import recyclapp.transport.ParameterGroup;
-import recyclapp.transport.SortingStationParameterGroup;
-import recyclapp.transport.StationType;
+import recyclapp.transport.*;
 /**
  *
  * @author Martin Boisvert
@@ -68,6 +64,22 @@ public final class SortingStationModel extends ElementModel implements java.io.S
     public void updateExits() {
         aOutputs = new MaterialFlowMatrix();
         for (MaterialFlowTable exitSortingTable : aSortingMatrix) {
+            // If a material exists in the matrix but not in the input, remove
+            // it from the input
+            for (MaterialFlow matrixFlow : exitSortingTable) {
+                boolean present = false;
+                
+                for (MaterialFlow inputFlow : aInput) {
+                    if (matrixFlow.aName == inputFlow.aName) {
+                        present = true;
+                        break;
+                    }
+                }
+                if (!present) {
+                    exitSortingTable.re
+                }
+            }
+            
             aOutputs.add(MaterialFlowTable.multiply(aInput, exitSortingTable));
         }
         
@@ -113,11 +125,12 @@ public final class SortingStationModel extends ElementModel implements java.io.S
     }
 
     @Override
-    public void addExitNode() {
+    public ExitNodeModel addExitNode() {
         ExitNodeModel node = new ExitNodeModel(this);
         aExitNodes.add(node);
         node.setAngle(EXIT_NODE_DEFAULT_ANGLE);
         aSortingMatrix.add(new MaterialFlowTable());
+        return node;
     }
     
     @Override
