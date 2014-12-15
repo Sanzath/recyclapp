@@ -158,8 +158,11 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
     @Override
     public void mouseReleased(MouseEvent e) {
         // Clear intersection-creation variables
-        aSectionToSeparate = null;
-        if (aDraggingIndex != -1) {
+        if (aSectionToSeparate != null) {
+            // User didn't actually drag, so clear
+            aSectionToSeparate = null;
+        }
+        else if (aDraggingIndex != -1) {
             Controller.getInstance().moveConveyorIntermediatePosition(
                     aEntry.getParentId(), aEntry.getIndex(), aIntermediatePositions.get(aDraggingIndex), aDraggingIndex);
         }

@@ -46,13 +46,20 @@ public final class DiagramModel implements java.io.Serializable{
     private static void initEntryNode() {
         // Pour la démo
         EntryPointModel entry = new EntryPointModel();
-        entry.setSize(new Coords(2, 2));
-        entry.setPosition(new Coords(5.5F, 5.5F));
+        entry.setSize(new Coords(1, 1));
+        entry.setPosition(new Coords(5, 5));
         MaterialFlowTable entryMats = new MaterialFlowTable();
         entryMats.add(new MaterialFlow("P1", 1000));
         entryMats.add(new MaterialFlow("P2", 1000));
         entry.setParameters(new EntryPointParameterGroup(entryMats));
         sInstance.aElements.add(entry);
+        
+        ExitPointModel exit = new ExitPointModel();
+        exit.setSize(new Coords(1, 1));
+        exit.setPosition(new Coords(10, 5));
+        sInstance.aElements.add(exit);
+        
+        entry.getExitNode(0).createLink(exit.getEntryNode(0));
     }
     
     public boolean getGridActive() {
@@ -149,7 +156,7 @@ public final class DiagramModel implements java.io.Serializable{
          e = (DiagramModel) in.readObject();
          in.close();
          fileIn.close();
-         System.out.printf("deser data  in "+ chaine);
+         System.out.println("deser data  in "+ chaine);
          sInstance = e;
          
       }catch(IOException i)

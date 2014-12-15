@@ -33,11 +33,9 @@ public class MainView extends javax.swing.JFrame {
         initComponents();
        // buildTree();
         aGrille = ButtonGrille.isSelected();
-        for (ElementProperties props : Controller.getInstance().getAllElements()) {
-            Grille.add(new ElementView(props));
-        }
         updateScrollbars();
         jScrollPane2.getLocation();
+        Grille.reloadObjects();
     }
 
     /**
@@ -397,7 +395,7 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_SlideZoomMouseDragged
 
     private void GrilleMouseMoved(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseMoved
-       
+       /*
        Point p = Grille.getMousePosition();
        
        double a = SlideZoom.getValue();
@@ -410,7 +408,7 @@ public class MainView extends javax.swing.JFrame {
        
        textPosX.setText(chaine);
        textPosY.setText(chaine2);
-       
+       */
        //Point a = jScrollPane2.getLocation();
        // String chaine2 = "Position X = " + a.x + ", Y = " + a.y ;
         
@@ -431,12 +429,14 @@ public class MainView extends javax.swing.JFrame {
 
     private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
        Controller.getInstance().undo();
+       Grille.reloadObjects();
        
        TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsUndoActionPerformed
 
     private void ButtonOutilsRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsRedoActionPerformed
         Controller.getInstance().redo();
+        Grille.reloadObjects();
         TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
     

@@ -125,6 +125,9 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         for (NodeView node : aEntryNodes) {
             node.updatePosition();
         }
+        for (NodeView node : aExitNodes) {
+            node.updatePosition();
+        }
     }
             
     protected void createPropertiesWindow(ElementProperties properties){
@@ -227,6 +230,12 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
 
     @Override
     public void tearDown() {
+        for (NodeView node : aEntryNodes) {
+            node.tearDown();
+        }
+        for (NodeView node : aExitNodes) {
+            node.tearDown();
+        }
         aEntryNodes.clear();
         aExitNodes.clear();
     }
@@ -238,12 +247,15 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
         nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
-        DiagramView.getInstance().remove(conveyorToRemove);
+        if (conveyorToRemove != null) {
+            DiagramView.getInstance().remove(conveyorToRemove);
+        }
         aEntryNodes.remove(index);
         
         for (int i = index; i < aEntryNodes.size(); i++) {
             aEntryNodes.get(i).decrementIndex();
         }
+        DiagramView.getInstance().repaint();
     }
     protected void removeExitNode(int index) {
         // Teardown and remove node and associated conveyor; update indexes of
@@ -252,28 +264,40 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
         nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
-        DiagramView.getInstance().remove(conveyorToRemove);
-        aEntryNodes.remove(index);
+        if (conveyorToRemove != null) {
+            DiagramView.getInstance().remove(conveyorToRemove);
+        }
+        aExitNodes.remove(index);
         
         for (int i = index; i < aExitNodes.size(); i++) {
             aExitNodes.get(i).decrementIndex();
         }
+        DiagramView.getInstance().repaint();
     }
     
-    protected void addEntryNode() {
+    protected void addEntryNodeView() {
         int newIndex = aEntryNodes.size();
         NodeView node = new NodeView(this, newIndex, NodeView.ENTRY_NODE, Controller.getInstance().getEntryNodeProperties(aId, newIndex));
         aEntryNodes.add(node);
         DiagramView.getInstance().add(node);
+        node.updatePosition();
     }
     
-    protected void addExitNode() {
+    protected void addExitNodeView() {
         int newIndex = aExitNodes.size();
-        NodeView node = new NodeView(this, newIndex, NodeView.EXIT_NODE, Controller.getInstance().getEntryNodeProperties(aId, newIndex));
+        NodeView node = new NodeView(this, newIndex, NodeView.EXIT_NODE, Controller.getInstance().getExitNodeProperties(aId, newIndex));
         aExitNodes.add(node);
         DiagramView.getInstance().add(node);
+        node.updatePosition();
     }
     
+    protected NodeView getEntryNodeView(int index) {
+        return aEntryNodes.get(index);
+    }
+    
+    protected NodeView getExitNodeView(int index) {
+        return aExitNodes.get(index);
+    }
 }
 
 class ElementCornerTab extends JPanel implements MouseMotionListener, MouseListener {

@@ -67,7 +67,7 @@ public class HistoryElement {
             out.writeObject(diag);
             out.close();
             fileOut.close();
-            System.out.printf("Serialized data is saved in "+ chaine);
+            System.out.println("Serialized data is saved in "+ chaine);
             
             
             
