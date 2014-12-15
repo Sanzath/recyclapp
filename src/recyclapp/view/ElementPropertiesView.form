@@ -44,15 +44,6 @@
           <Group type="102" attributes="0">
               <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="0" attributes="0">
-                  <Group type="102" alignment="1" attributes="0">
-                      <Component id="ajoutMatTextField" max="32767" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="ajoutMatButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace type="separate" max="-2" attributes="0"/>
-                      <Component id="AcceptButton" min="-2" max="-2" attributes="0"/>
-                      <EmptySpace max="-2" attributes="0"/>
-                      <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
-                  </Group>
                   <Component id="jScrollPane1" alignment="0" max="32767" attributes="0"/>
                   <Group type="102" alignment="0" attributes="0">
                       <Group type="103" groupAlignment="0" attributes="0">
@@ -108,6 +99,18 @@
                       <EmptySpace min="0" pref="0" max="32767" attributes="0"/>
                   </Group>
                   <Component id="sortingMatrixScrollPane" alignment="0" max="32767" attributes="0"/>
+                  <Group type="102" alignment="1" attributes="0">
+                      <Component id="ajoutMatTextField" max="32767" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Group type="103" groupAlignment="0" max="-2" attributes="0">
+                          <Component id="supMatButton" max="32767" attributes="0"/>
+                          <Component id="ajoutMatButton" max="32767" attributes="0"/>
+                      </Group>
+                      <EmptySpace type="separate" max="-2" attributes="0"/>
+                      <Component id="AcceptButton" min="-2" max="-2" attributes="0"/>
+                      <EmptySpace max="-2" attributes="0"/>
+                      <Component id="CancelButton" min="-2" max="-2" attributes="0"/>
+                  </Group>
               </Group>
               <EmptySpace max="-2" attributes="0"/>
           </Group>
@@ -154,8 +157,10 @@
                   <Component id="ExitNodeDelBtn" alignment="0" min="-2" max="-2" attributes="0"/>
               </Group>
               <EmptySpace type="unrelated" max="-2" attributes="0"/>
-              <Component id="sortingMatrixScrollPane" min="-2" pref="108" max="-2" attributes="0"/>
-              <EmptySpace type="separate" max="-2" attributes="0"/>
+              <Component id="sortingMatrixScrollPane" min="-2" pref="91" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
+              <Component id="supMatButton" min="-2" max="-2" attributes="0"/>
+              <EmptySpace max="-2" attributes="0"/>
               <Group type="103" groupAlignment="3" attributes="0">
                   <Component id="AcceptButton" alignment="3" min="-2" max="-2" attributes="0"/>
                   <Component id="CancelButton" alignment="3" min="-2" max="-2" attributes="0"/>
@@ -285,6 +290,9 @@
       </SubComponents>
     </Container>
     <Component class="javax.swing.JTextField" name="EntryNodeAddTxtBox">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canAddEntryNode(aPropInitial.aId)){&#xd;&#xa;     EntryNodeAddTxtBox.setEnabled(true);&#xd;&#xa; }&#xd;&#xa; else EntryNodeAddTxtBox.setEnabled(false);&#xd;&#xa; "/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JLabel" name="jLabel5">
       <Properties>
@@ -307,6 +315,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EntryNodeAddBtnMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canAddEntryNode(aPropInitial.aId)){&#xd;&#xa;    EntryNodeAddBtn.setEnabled(true);&#xd;&#xa;}&#xd;&#xa;else EntryNodeAddBtn.setEnabled(false);&#xd;&#xa;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="EntryNodeDelBtn">
       <Properties>
@@ -315,8 +326,14 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="EntryNodeDelBtnMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canRemoveEntryNode(aPropInitial.aId) &amp;&amp; &#xd;&#xa;        controller.getEntryNodeCount(aPropInitial.aId) &gt; 0){&#xd;&#xa;    EntryNodeDelBtn.setEnabled(true);&#xd;&#xa;}&#xd;&#xa;else EntryNodeDelBtn.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JTextField" name="ExitNodeAddTxtBox">
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canAddExitNode(aPropInitial.aId)){&#xd;&#xa;    ExitNodeAddTxtBox.setEnabled(true);&#xd;&#xa;}&#xd;&#xa;else ExitNodeAddTxtBox.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="jScrollPane3">
       <AuxValues>
@@ -358,6 +375,9 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ExitNodeAddBtnMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canAddExitNode(aPropInitial.aId)){&#xd;&#xa;    ExitNodeAddBtn.setEnabled(true);&#xd;&#xa;}&#xd;&#xa;else ExitNodeAddBtn.setEnabled(false);&#xd;&#xa;"/>
+      </AuxValues>
     </Component>
     <Component class="javax.swing.JButton" name="ExitNodeDelBtn">
       <Properties>
@@ -366,10 +386,14 @@
       <Events>
         <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="ExitNodeDelBtnMouseClicked"/>
       </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (controller.canRemoveExitNode(aPropInitial.aId) &amp;&amp; &#xd;&#xa;        controller.getExitNodeCount(aPropInitial.aId) &gt; 0){&#xd;&#xa;    ExitNodeDelBtn.setEnabled(true);&#xd;&#xa;}&#xd;&#xa;else ExitNodeDelBtn.setEnabled(false);"/>
+      </AuxValues>
     </Component>
     <Container class="javax.swing.JScrollPane" name="sortingMatrixScrollPane">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new javax.swing.JScrollPane(initTable())"/>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (aPropInitial.aParameters == null){   &#xd;&#xa;     sortingMatrixScrollPane.setVisible(false);&#xd;&#xa; }&#xd;&#xa; else {&#xd;&#xa;     sortingMatrixScrollPane.setVisible(true);&#xd;&#xa; }"/>
         <AuxValue name="JavaCodeGenerator_TypeParameters" type="java.lang.String" value=""/>
       </AuxValues>
 
@@ -389,6 +413,17 @@
     <Component class="javax.swing.JTextField" name="ajoutMatTextField">
       <AuxValues>
         <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (aPropInitial.aParameters instanceof EntryPointParameterGroup){&#xd;&#xa;    ajoutMatTextField.setVisible(true);&#xd;&#xa;}&#xd;&#xa;else {&#xd;&#xa;    ajoutMatTextField.setVisible(false);&#xd;&#xa;}"/>
+      </AuxValues>
+    </Component>
+    <Component class="javax.swing.JButton" name="supMatButton">
+      <Properties>
+        <Property name="text" type="java.lang.String" value="Supprimer mat&#xe9;riel"/>
+      </Properties>
+      <Events>
+        <EventHandler event="mouseClicked" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="supMatButtonMouseClicked"/>
+      </Events>
+      <AuxValues>
+        <AuxValue name="JavaCodeGenerator_InitCodePost" type="java.lang.String" value="if (aPropInitial.aParameters instanceof EntryPointParameterGroup){      supMatButton.setVisible(true);  }  else {      supMatButton.setVisible(false);  }"/>
       </AuxValues>
     </Component>
   </SubComponents>

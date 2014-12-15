@@ -28,6 +28,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     private List<String> aExitNodeList;
     private final Controller controller = Controller.getInstance();
     private DefaultTableModel aDefTabMod;
+    private JTable aTable;
 
     
     public ElementPropertiesView(ElementProperties properties, ElementView elemView){
@@ -45,12 +46,41 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         ColorComboBox.setSelectedItem(aColorStringMap.get(aPropInitial.aColor));
         
     }
-
+    
+    private ParameterGroup createNewParamGroup(){
+        if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
+            MaterialFlowMatrix sortingMatrix = new MaterialFlowMatrix();
+            if (aDefTabMod.getRowCount() > 0){
+                for(int i = 2; i < aDefTabMod.getColumnCount() - 2; i++){
+                    MaterialFlowTable tempTable = new MaterialFlowTable();
+                    for (int j = 0; j < aDefTabMod.getRowCount(); j++){
+                        MaterialFlow tempFlow = 
+                                new MaterialFlow(aDefTabMod.getValueAt(j, 0).toString(), (Float) aDefTabMod.getValueAt(j, i));
+                        tempTable.add(tempFlow);
+                    }
+                    sortingMatrix.add(tempTable);
+                }
+            }
+            else{
+                while (sortingMatrix.size() < aDefTabMod.getColumnCount()){
+                    sortingMatrix.add(new MaterialFlowTable());
+                }
+            }
+            SortingStationParameterGroup sortingParamGroup = new SortingStationParameterGroup(sortingMatrix, StationType.AUTOMATIC);
+            return sortingParamGroup;
+        }
+        else if (aPropInitial.aParameters instanceof EntryPointParameterGroup &&
+                aDefTabMod.getDataVector().size() > 0){
+            
+        }
+        else if (aPropInitial.aParameters instanceof TransformStationParameterGroup &&
+                aDefTabMod.getDataVector().size() > 0){
+            return null;
+        }
+        return null;
+    }
+    
     private JTable initTable(){
-        /*
-
-        String[][] rowData;
-        String[] columnNames; 
         
         if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
             MaterialFlowTable tableFlow = controller.getEntryNodeThroughput(aPropInitial.aId, 0);
@@ -63,7 +93,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                 for (int j = 2; j < aExitNodeList.size()+2; j++){
                     sortingRowData[i][j] = Float.toString(0.0f);
                     for (int k = 0; k < matrixFlow.get(j-2).size(); k++){
-                        if (matrixFlow.get(j-2).get(k).aName.equals(rowData[i][0])){
+                        if (matrixFlow.get(j-2).get(k).aName.equals(sortingRowData[i][0])){
                             sortingRowData[i][j] = Float.toString(matrixFlow.get(j).get(k).aFlow);
                             break;
                         }
@@ -73,10 +103,9 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             sortingColumnNames[0] = "Matériaux";
             sortingColumnNames[1] = "Débit (Kg/h)";
             for (int i = 2; i < sortingColumnNames.length; i++){
-                sortingColumnNames[i] = controller.getExitNodeProperties(aPropInitial.aId, i).aName;
+                sortingColumnNames[i] = controller.getExitNodeProperties(aPropInitial.aId, i-2).aName;
             }
-            columnNames = sortingColumnNames;
-            rowData = sortingRowData;
+            aDefTabMod = new DefaultTableModel(sortingRowData, sortingColumnNames);
         }
         
         else if (aPropInitial.aParameters instanceof TransformStationParameterGroup){
@@ -92,17 +121,16 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             }
             entryColumnNames[0] = "Matériaux";
             entryColumnNames[1] = "Débit (Kg/h)";
-            rowData = entryRowData;
-            columnNames = entryColumnNames;
-        }*/
-        String[][] rowData = new String[1][2];
+            aDefTabMod = new DefaultTableModel(entryRowData, entryColumnNames);
+        }
+       /* String[][] rowData = new String[1][2];
         rowData[0][0] = "Hi";
         rowData[0][1] = "allo";
         String[] columnNames = new String[2];
         columnNames[0] = "Hello";
-        columnNames[1] = "bonj";
-        aDefTabMod = new DefaultTableModel(rowData, columnNames);
-        JTable table = new JTable(aDefTabMod){
+        columnNames[1] = "bonj";*/
+        
+        aTable = new JTable(aDefTabMod){
             @Override
             public boolean isCellEditable(int row, int column){
                 boolean editable = true;
@@ -112,7 +140,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                 return editable;
             }
         };
-        return table;
+        return aTable;
     }
     
     private void initColorMap(){
@@ -141,6 +169,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         }    
     }
     private String[][] removeTableColumn(DefaultTableModel oldDtm, int selectedIndex){
+        if (oldDtm.getRowCount() > 0){
         String[][] newRowVec = new String[oldDtm.getDataVector().size()][((Vector)oldDtm.getDataVector().get(0)).size()-1];
         for (int i = 0; i < oldDtm.getDataVector().size(); i++){
             int k = 0;
@@ -152,13 +181,18 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             }
         }
         return newRowVec;
+        }
+        else {
+            return new String[0][oldDtm.getColumnCount()-1];
+        }
+        
     }
     
     private String[] removeTableColumnHeader(DefaultTableModel oldDtm, int selectedIndex){
         String[] newHeader = new String[oldDtm.getColumnCount()-1];
         int k = 0;
         for (int i = 0; i < oldDtm.getColumnCount(); i++)
-            if (i != selectedIndex){
+            if (i != selectedIndex+2){
                 newHeader[k] = oldDtm.getColumnName(i);
                 k++;
             }
@@ -202,6 +236,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         sortingMatrixScrollPane = new javax.swing.JScrollPane(initTable());
         ajoutMatButton = new javax.swing.JButton();
         ajoutMatTextField = new javax.swing.JTextField();
+        supMatButton = new javax.swing.JButton();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -270,12 +305,21 @@ public class ElementPropertiesView extends javax.swing.JFrame {
 
         jScrollPane2.setViewportView(EntryNodeList);
 
+        if (controller.canAddEntryNode(aPropInitial.aId)){
+            EntryNodeAddTxtBox.setEnabled(true);
+        }
+        else EntryNodeAddTxtBox.setEnabled(false);
+
         jLabel5.setText("Noeuds d'entrée:");
 
         EntryNodeAddBtn.setText("Ajout");
         EntryNodeAddBtn.setMaximumSize(new java.awt.Dimension(65, 23));
         EntryNodeAddBtn.setMinimumSize(new java.awt.Dimension(65, 23));
         EntryNodeAddBtn.setPreferredSize(new java.awt.Dimension(65, 23));
+        if (controller.canAddEntryNode(aPropInitial.aId)){
+            EntryNodeAddBtn.setEnabled(true);
+        }
+        else EntryNodeAddBtn.setEnabled(false);
         EntryNodeAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EntryNodeAddBtnMouseClicked(evt);
@@ -283,11 +327,21 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         });
 
         EntryNodeDelBtn.setText("Suppr.");
+        if (controller.canRemoveEntryNode(aPropInitial.aId) && 
+            controller.getEntryNodeCount(aPropInitial.aId) > 0){
+            EntryNodeDelBtn.setEnabled(true);
+        }
+        else EntryNodeDelBtn.setEnabled(false);
         EntryNodeDelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 EntryNodeDelBtnMouseClicked(evt);
             }
         });
+
+        if (controller.canAddExitNode(aPropInitial.aId)){
+            ExitNodeAddTxtBox.setEnabled(true);
+        }
+        else ExitNodeAddTxtBox.setEnabled(false);
 
         jScrollPane3.setViewportView(ExitNodeList);
 
@@ -297,6 +351,10 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         ExitNodeAddBtn.setMaximumSize(new java.awt.Dimension(65, 23));
         ExitNodeAddBtn.setMinimumSize(new java.awt.Dimension(65, 23));
         ExitNodeAddBtn.setPreferredSize(new java.awt.Dimension(65, 23));
+        if (controller.canAddExitNode(aPropInitial.aId)){
+            ExitNodeAddBtn.setEnabled(true);
+        }
+        else ExitNodeAddBtn.setEnabled(false);
         ExitNodeAddBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ExitNodeAddBtnMouseClicked(evt);
@@ -304,11 +362,23 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         });
 
         ExitNodeDelBtn.setText("Suppr.");
+        if (controller.canRemoveExitNode(aPropInitial.aId) && 
+            controller.getExitNodeCount(aPropInitial.aId) > 0){
+            ExitNodeDelBtn.setEnabled(true);
+        }
+        else ExitNodeDelBtn.setEnabled(false);
         ExitNodeDelBtn.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 ExitNodeDelBtnMouseClicked(evt);
             }
         });
+
+        if (aPropInitial.aParameters == null){   
+            sortingMatrixScrollPane.setVisible(false);
+        }
+        else {
+            sortingMatrixScrollPane.setVisible(true);
+        }
 
         ajoutMatButton.setText("Ajouter matériel");
         if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
@@ -330,6 +400,14 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             ajoutMatTextField.setVisible(false);
         }
 
+        supMatButton.setText("Supprimer matériel");
+        if (aPropInitial.aParameters instanceof EntryPointParameterGroup){      supMatButton.setVisible(true);  }  else {      supMatButton.setVisible(false);  }
+        supMatButton.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                supMatButtonMouseClicked(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -337,14 +415,6 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                        .addComponent(ajoutMatTextField)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(ajoutMatButton)
-                        .addGap(18, 18, 18)
-                        .addComponent(AcceptButton)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton))
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -386,7 +456,17 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                         .addComponent(ExitNodeAddBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(sortingMatrixScrollPane))
+                    .addComponent(sortingMatrixScrollPane)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addComponent(ajoutMatTextField)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                            .addComponent(supMatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(ajoutMatButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addGap(18, 18, 18)
+                        .addComponent(AcceptButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(CancelButton)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -424,8 +504,10 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                     .addComponent(EntryNodeDelBtn)
                     .addComponent(ExitNodeDelBtn))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(sortingMatrixScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 108, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
+                .addComponent(sortingMatrixScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 91, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(supMatButton)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(AcceptButton)
                     .addComponent(CancelButton)
@@ -460,6 +542,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
 
     private void AcceptButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_AcceptButtonMouseClicked
         AcceptButton.requestFocusInWindow();
+        aPropFinal.aParameters = createNewParamGroup();
         aElemView.updateProperties(aPropFinal);
         this.dispose();
         
@@ -475,6 +558,15 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aEntryNodeList.add(newNode);
             aEntryNodeListModel.addElement(newNode);
             EntryNodeAddTxtBox.setText("");
+            controller.addEntryNode(aPropInitial.aId, newNode);
+            if (!controller.canAddEntryNode(aPropInitial.aId)){
+                EntryNodeAddBtn.setEnabled(false);
+                EntryNodeAddTxtBox.setEnabled(false);
+            }
+            if (controller.canRemoveEntryNode(aPropInitial.aId) && 
+                    controller.getEntryNodeCount(aPropInitial.aId) > 0){
+                EntryNodeDelBtn.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_EntryNodeAddBtnMouseClicked
 
@@ -483,30 +575,59 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         if (!newNode.isEmpty()){
             aExitNodeList.add(newNode);
             aExitNodeListModel.addElement(newNode);
+            if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
             aDefTabMod.addColumn(newNode);
             for (int i = 0; i < aDefTabMod.getRowCount(); i++){
                 aDefTabMod.setValueAt("0", i, aDefTabMod.getColumnCount() - 1);
             }
+            }
             ExitNodeAddTxtBox.setText("");
+            controller.addExitNode(aPropInitial.aId, newNode);
+            if (!controller.canAddExitNode(aPropInitial.aId)) {
+                ExitNodeAddBtn.setEnabled(false);
+                ExitNodeAddTxtBox.setEnabled(false);
+            }
+            if (controller.canRemoveExitNode(aPropInitial.aId) && 
+                    controller.getExitNodeCount(aPropInitial.aId) > 0){
+                ExitNodeDelBtn.setEnabled(true);
+            }
         }
     }//GEN-LAST:event_ExitNodeAddBtnMouseClicked
 
     private void EntryNodeDelBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_EntryNodeDelBtnMouseClicked
         int selectedIndex = EntryNodeList.getSelectedIndex();
-        if (selectedIndex != -1){
+        if (selectedIndex != -1 && EntryNodeDelBtn.isEnabled()){
             aEntryNodeList.remove(selectedIndex);
             aEntryNodeListModel.remove(selectedIndex);
+            controller.removeEntryNode(aPropInitial.aId, selectedIndex);
+            if (controller.canAddEntryNode(aPropInitial.aId)){
+                EntryNodeAddBtn.setEnabled(true);
+                EntryNodeAddTxtBox.setEnabled(true);
+            }
+            if (controller.getEntryNodeCount(aPropInitial.aId) < 1 ||
+                    !controller.canRemoveEntryNode(aPropInitial.aId)){
+                EntryNodeDelBtn.setEnabled(false);          
+            }
         }
     }//GEN-LAST:event_EntryNodeDelBtnMouseClicked
 
     private void ExitNodeDelBtnMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ExitNodeDelBtnMouseClicked
         int selectedIndex = ExitNodeList.getSelectedIndex();
-        if (selectedIndex != -1){
+        if (selectedIndex != -1 && ExitNodeDelBtn.isEnabled()){
             aExitNodeList.remove(selectedIndex);
             aExitNodeListModel.remove(selectedIndex);
-            if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
-                
+            if (aPropInitial.aParameters instanceof SortingStationParameterGroup){               
                 aDefTabMod.setDataVector(removeTableColumn(aDefTabMod, selectedIndex),removeTableColumnHeader(aDefTabMod, selectedIndex));
+            }
+            controller.removeExitNode(aPropInitial.aId, selectedIndex);
+            if (controller.canAddExitNode(aPropInitial.aId)){
+                ExitNodeAddBtn.setEnabled(true);
+                ExitNodeAddTxtBox.setEnabled(true);
+            }
+            if (controller.getExitNodeCount(aPropInitial.aId) < 1 || 
+                    !controller.canRemoveExitNode(aPropInitial.aId)){
+                ExitNodeDelBtn.setEnabled(false);
+            
             }
         }
     }//GEN-LAST:event_ExitNodeDelBtnMouseClicked
@@ -522,6 +643,12 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             ajoutMatTextField.setText("");
         }
     }//GEN-LAST:event_ajoutMatButtonMouseClicked
+
+    private void supMatButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_supMatButtonMouseClicked
+       if (aTable.getSelectedRow() != -1){
+           aDefTabMod.removeRow(aTable.getSelectedRow());
+       }
+    }//GEN-LAST:event_supMatButtonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -552,5 +679,6 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane sortingMatrixScrollPane;
+    private javax.swing.JButton supMatButton;
     // End of variables declaration//GEN-END:variables
 }
