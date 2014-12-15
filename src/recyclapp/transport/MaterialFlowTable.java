@@ -67,9 +67,14 @@ public class MaterialFlowTable extends ArrayList<MaterialFlow> implements java.i
         MaterialFlowTable total = new MaterialFlowTable();
         
         for (MaterialFlow matA : a) {
+            if (matA.aFlow == 0) {
+                continue;
+            }
             MaterialFlow result = new MaterialFlow(matA);
-            
             for (MaterialFlow matB : b) {
+                if (matB.aFlow == 0) {
+                    continue;
+                }
                 if (matA.aName.equals(matB.aName)) {
                     result.aFlow *= matB.aFlow;
                     total.add(result);
