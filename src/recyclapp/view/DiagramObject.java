@@ -80,4 +80,9 @@ public interface DiagramObject {
      * Logic to apply to update the object before repainting.
      */
     public void updatePosition();
+    
+    /**
+     * Logic to apply before deleting this object.
+     */
+    public void tearDown();
 }

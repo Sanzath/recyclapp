@@ -30,8 +30,8 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     
     private Point aParentCenter;
     
-    private final ElementView aParent;
-    private ConveyorView aConveyor;
+    private ElementView aParent;
+    protected ConveyorView aConveyor;
     private int aIndex;
     private final int aNodeType;
     
@@ -54,8 +54,8 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         addMouseListener(this);
     }
     
-    public void updateIndex(int newIndex) {
-        aIndex = newIndex;
+    public void decrementIndex() {
+        aIndex--;
     }
     
     public int getIndex() {
@@ -277,5 +277,14 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     @Override
     public void mouseMoved(MouseEvent e) {
 
+    }
+
+    @Override
+    public void tearDown() {
+        aParent = null;
+        if (aConveyor != null) {
+            aConveyor.tearDown();
+            aConveyor = null;
+        }
     }
 }

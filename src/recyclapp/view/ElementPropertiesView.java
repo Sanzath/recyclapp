@@ -576,10 +576,10 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             aExitNodeList.add(newNode);
             aExitNodeListModel.addElement(newNode);
             if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
-            aDefTabMod.addColumn(newNode);
-            for (int i = 0; i < aDefTabMod.getRowCount(); i++){
-                aDefTabMod.setValueAt("0", i, aDefTabMod.getColumnCount() - 1);
-            }
+                aDefTabMod.addColumn(newNode);
+                for (int i = 0; i < aDefTabMod.getRowCount(); i++){
+                    aDefTabMod.setValueAt("0", i, aDefTabMod.getColumnCount() - 1);
+                }
             }
             ExitNodeAddTxtBox.setText("");
             controller.addExitNode(aPropInitial.aId, newNode);
