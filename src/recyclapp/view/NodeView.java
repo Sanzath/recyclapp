@@ -217,6 +217,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
                 }
             }
         }
+        DiagramObject.deselectAll();
         DiagramObject.select(this);
     }
     

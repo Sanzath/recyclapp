@@ -115,6 +115,7 @@ public final class TransformStationModel extends ElementModel implements java.io
         }
         
         aInput = throughput;
+        aInputMaterial = throughput.size() == 0 ? "" : throughput.get(0).aName;
         
         updateExits();
         
