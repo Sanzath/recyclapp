@@ -72,7 +72,6 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         else if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
             MaterialFlowTable flowTable = new MaterialFlowTable();
             if (aDefTabMod.getRowCount() > 0){
-                
                 for (int i = 0; i < aDefTabMod.getRowCount(); i++){
                     MaterialFlow tempFlow = 
                             new MaterialFlow(aDefTabMod.getValueAt(i, 0).toString(), Float.parseFloat(aDefTabMod.getValueAt(i, 1).toString()));
@@ -82,9 +81,17 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             return new EntryPointParameterGroup(flowTable);
             
         }
-        else if (aPropInitial.aParameters instanceof TransformStationParameterGroup &&
-                aDefTabMod.getDataVector().size() > 0){
-            return null;
+        else if (aPropInitial.aParameters instanceof TransformStationParameterGroup){
+            MaterialFlowTable flowTable = new MaterialFlowTable();
+            if (aDefTabMod.getRowCount() > 0){
+                for (int i = 0; i < aDefTabMod.getRowCount(); i++){
+                    MaterialFlow tempFlow =
+                            new MaterialFlow(aDefTabMod.getValueAt(i, 0).toString(), Float.parseFloat(aDefTabMod.getValueAt(i, 1).toString()));
+                    flowTable.add(tempFlow);
+                }
+            }
+            return new TransformStationParameterGroup(((TransformStationParameterGroup)
+                    aPropInitial.aParameters).aInputMaterial, flowTable, StationType.AUTOMATIC);
         }
         return null;
     }
@@ -118,7 +125,16 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         }
         
         else if (aPropInitial.aParameters instanceof TransformStationParameterGroup){
-                    
+            MaterialFlowTable transTable = ((TransformStationParameterGroup) aPropInitial.aParameters).aTransformTable;
+            String[][] transRowData = new String[transTable.size()][2];
+            String[] transColumnNames = new String[2];
+            for (int i = 0; i < transTable.size(); i++){
+                transRowData[i][0] = transTable.get(i).aName;
+                transRowData[i][1] = Float.toString(transTable.get(i).aFlow);
+            }
+            transColumnNames[0] = "Matière sortante";
+            transColumnNames[1] = "% de transformation";
+            aDefTabMod = new DefaultTableModel(transRowData, transColumnNames);
         }
         else if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
             MaterialFlowTable flowTable = ((EntryPointParameterGroup) aPropInitial.aParameters).aEntryMaterials;
@@ -246,6 +262,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         ajoutMatButton = new javax.swing.JButton();
         ajoutMatTextField = new javax.swing.JTextField();
         supMatButton = new javax.swing.JButton();
+        jLabel7 = new javax.swing.JLabel();
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -390,7 +407,8 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         }
 
         ajoutMatButton.setText("Ajouter matériel");
-        if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
+        if (aPropInitial.aParameters instanceof EntryPointParameterGroup ||
+            aPropInitial.aParameters instanceof TransformStationParameterGroup){
             ajoutMatButton.setVisible(true);
         }
         else {
@@ -402,7 +420,8 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             }
         });
 
-        if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
+        if (aPropInitial.aParameters instanceof EntryPointParameterGroup ||
+            aPropInitial.aParameters instanceof TransformStationParameterGroup){
             ajoutMatTextField.setVisible(true);
         }
         else {
@@ -410,12 +429,32 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         }
 
         supMatButton.setText("Supprimer matériel");
-        if (aPropInitial.aParameters instanceof EntryPointParameterGroup){      supMatButton.setVisible(true);  }  else {      supMatButton.setVisible(false);  }
+        if (aPropInitial.aParameters instanceof EntryPointParameterGroup ||
+            aPropInitial.aParameters instanceof TransformStationParameterGroup){
+            supMatButton.setVisible(true);
+        }  
+        else {
+            supMatButton.setVisible(false);  
+        }
         supMatButton.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 supMatButtonMouseClicked(evt);
             }
         });
+
+        jLabel7.setText("jLabel7");
+        if(aPropInitial.aParameters instanceof TransformStationParameterGroup){
+            jLabel7.setVisible(true);
+            if (((TransformStationParameterGroup) aPropInitial.aParameters).aInputMaterial.equals("")){
+                jLabel7.setText("Matériel d'entrée : Aucun");
+            }
+            else{
+                jLabel7.setText(String.format("Matériel d'entrée : %s", ((TransformStationParameterGroup) aPropInitial.aParameters).aInputMaterial));
+            }
+        }
+        else{
+            jLabel7.setVisible(false);
+        }
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -427,20 +466,6 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                     .addComponent(jScrollPane1)
                     .addGroup(layout.createSequentialGroup()
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(NameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jLabel1))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel3)
-                            .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addGroup(layout.createSequentialGroup()
-                                .addComponent(InputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))))
-                    .addGroup(layout.createSequentialGroup()
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(layout.createSequentialGroup()
                                 .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 83, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -449,7 +474,6 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                                 .addComponent(ExitNodeDelBtn, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE))
-                            .addComponent(jLabel2)
                             .addGroup(layout.createSequentialGroup()
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createSequentialGroup()
@@ -475,7 +499,25 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addComponent(AcceptButton)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(CancelButton)))
+                        .addComponent(CancelButton))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(NameTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel1))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel3)
+                            .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 101, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel4, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addComponent(InputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, 93, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jLabel7)))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -492,7 +534,9 @@ public class ElementPropertiesView extends javax.swing.JFrame {
                     .addComponent(ColorComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(InputTxtBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(18, 18, 18)
-                .addComponent(jLabel2)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -643,8 +687,14 @@ public class ElementPropertiesView extends javax.swing.JFrame {
 
     private void ajoutMatButtonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_ajoutMatButtonMouseClicked
         if (!ajoutMatTextField.getText().isEmpty()){
+            if (aPropInitial.aParameters instanceof EntryPointParameterGroup ){
             ( (EntryPointParameterGroup) aPropInitial.aParameters).
                     aEntryMaterials.add(new MaterialFlow(ajoutMatTextField.getText(), 0));
+            }
+            if (aPropInitial.aParameters instanceof TransformStationParameterGroup){
+                ((TransformStationParameterGroup) aPropInitial.aParameters).
+                        aTransformTable.add(new MaterialFlow(ajoutMatTextField.getText(), 0));
+            }
             String[] row = new String[2];
             row[0] = ajoutMatTextField.getText();
             row[1] = "0";
@@ -683,6 +733,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel7;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
