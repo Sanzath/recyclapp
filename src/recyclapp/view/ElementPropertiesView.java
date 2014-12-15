@@ -51,11 +51,11 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         if (aPropInitial.aParameters instanceof SortingStationParameterGroup){
             MaterialFlowMatrix sortingMatrix = new MaterialFlowMatrix();
             if (aDefTabMod.getRowCount() > 0){
-                for(int i = 2; i < aDefTabMod.getColumnCount() - 2; i++){
+                for(int i = 2; i < aDefTabMod.getColumnCount(); i++){
                     MaterialFlowTable tempTable = new MaterialFlowTable();
                     for (int j = 0; j < aDefTabMod.getRowCount(); j++){
                         MaterialFlow tempFlow = 
-                                new MaterialFlow(aDefTabMod.getValueAt(j, 0).toString(), (Float) aDefTabMod.getValueAt(j, i));
+                                new MaterialFlow(aDefTabMod.getValueAt(j, 0).toString(),   Float.parseFloat(aDefTabMod.getValueAt(j, i).toString()));
                         tempTable.add(tempFlow);
                     }
                     sortingMatrix.add(tempTable);
