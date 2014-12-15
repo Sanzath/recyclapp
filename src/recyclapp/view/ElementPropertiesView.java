@@ -69,8 +69,17 @@ public class ElementPropertiesView extends javax.swing.JFrame {
             SortingStationParameterGroup sortingParamGroup = new SortingStationParameterGroup(sortingMatrix, StationType.AUTOMATIC);
             return sortingParamGroup;
         }
-        else if (aPropInitial.aParameters instanceof EntryPointParameterGroup &&
-                aDefTabMod.getDataVector().size() > 0){
+        else if (aPropInitial.aParameters instanceof EntryPointParameterGroup){
+            MaterialFlowTable flowTable = new MaterialFlowTable();
+            if (aDefTabMod.getRowCount() > 0){
+                
+                for (int i = 0; i < aDefTabMod.getRowCount(); i++){
+                    MaterialFlow tempFlow = 
+                            new MaterialFlow(aDefTabMod.getValueAt(i, 0).toString(), Float.parseFloat(aDefTabMod.getValueAt(i, 1).toString()));
+                    flowTable.add(tempFlow);
+                }
+            }
+            return new EntryPointParameterGroup(flowTable);
             
         }
         else if (aPropInitial.aParameters instanceof TransformStationParameterGroup &&
