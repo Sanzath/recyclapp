@@ -55,7 +55,7 @@ public class HistoryElement {
     public void serialiseDiagram(DiagramModel diag)
     {   
         aCounter++;
-        aMax++;
+        aMax = aCounter;
         
         String chaine = null;
         try

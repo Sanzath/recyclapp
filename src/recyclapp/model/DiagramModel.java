@@ -159,6 +159,8 @@ public final class DiagramModel implements java.io.Serializable{
          System.out.println("deser data  in "+ chaine);
          sInstance = e;
          
+         
+         
       }catch(IOException i)
       {
          i.printStackTrace();

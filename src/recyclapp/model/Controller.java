@@ -237,7 +237,7 @@ public class Controller {
     public void setElementProperties(ElementProperties properties) {
         ElementProperties initial = getElement(properties.aId).toProperties();
         getElement(properties.aId).fromProperties(properties);
-        
+        Controller.getInstance().serialize();
     }
     
     public ParameterGroup getParameters(int id) {
@@ -245,14 +245,17 @@ public class Controller {
     }
     public void setParameters(int id, ParameterGroup parameters) {
         getElement(id).setParameters(parameters);
+        Controller.getInstance().serialize();
     }
     
     public void setElementPosition(int id, Coords position) {
         getElement(id).setPosition(position);
+        Controller.getInstance().serialize();
     }
     
     public void setElementSize(int id, Coords size) {
         getElement(id).setSize(size);
+        Controller.getInstance().serialize();
     }
     
     public boolean canAddEntryNode(int id) {
@@ -270,22 +273,28 @@ public class Controller {
     
     public void addEntryNode(int id) {
         getElement(id).addEntryNode();
+        Controller.getInstance().serialize();
     }
     public void addExitNode(int id) {
         getElement(id).canAddExitNode();
+        Controller.getInstance().serialize();
     }
     public void addEntryNode(int id, String name) {
         getElement(id).addEntryNode().setName(name);
+        Controller.getInstance().serialize();
     }
     public void addExitNode(int id, String name) {
         getElement(id).addExitNode().setName(name);
+        Controller.getInstance().serialize();
     }
     
     public void removeEntryNode(int id, int index) {
         getElement(id).removeEntryNode(index);
+        Controller.getInstance().serialize();
     }
     public void removeExitNode(int id, int index) {
         getElement(id).removeExitNode(index);
+        Controller.getInstance().serialize();
     }
     
     public int getEntryNodeCount(int id) {
@@ -380,10 +389,12 @@ public class Controller {
         ExitNodeModel exitNode = getExitNode(exitParentId, exitIndex);
         
         entryNode.createLink(exitNode);
+        Controller.getInstance().serialize();
     }
     
     public void removeConveyor(int entryParentId, int entryIndex) {
         getEntryNode(entryParentId, entryIndex).removeLink();
+        Controller.getInstance().serialize();
     }
     
     public List<Coords> getConveyorIntermediatePositions(int entryParentId, int entryIndex) {
