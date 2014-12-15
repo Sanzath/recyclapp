@@ -58,15 +58,13 @@ public class MainView extends javax.swing.JFrame {
         jSeparator2 = new javax.swing.JToolBar.Separator();
         ButtonOutilsStart = new javax.swing.JButton();
         jSeparator3 = new javax.swing.JToolBar.Separator();
-        ButtonOutilsNouveau = new javax.swing.JButton();
-        jSeparator7 = new javax.swing.JToolBar.Separator();
-        ButtonOutilsZoom = new javax.swing.JButton();
-        jSeparator8 = new javax.swing.JToolBar.Separator();
         ButtonGrille = new javax.swing.JToggleButton();
         jSeparator4 = new javax.swing.JToolBar.Separator();
         ButtonOutilsExport = new javax.swing.JButton();
         jSeparator9 = new javax.swing.JToolBar.Separator();
         grilleMagnetiqueButton = new javax.swing.JToggleButton();
+        jSeparator10 = new javax.swing.JToolBar.Separator();
+        jLabel3 = new javax.swing.JLabel();
         SlideZoom = new javax.swing.JSlider();
         PanelPosition = new javax.swing.JPanel();
         LabelPos = new javax.swing.JLabel();
@@ -161,26 +159,6 @@ public class MainView extends javax.swing.JFrame {
         OutilsBar.add(ButtonOutilsStart);
         OutilsBar.add(jSeparator3);
 
-        ButtonOutilsNouveau.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/add11.png"))); // NOI18N
-        ButtonOutilsNouveau.setBorder(null);
-        ButtonOutilsNouveau.setContentAreaFilled(false);
-        ButtonOutilsNouveau.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ButtonOutilsNouveau.setFocusable(false);
-        ButtonOutilsNouveau.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ButtonOutilsNouveau.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        OutilsBar.add(ButtonOutilsNouveau);
-        OutilsBar.add(jSeparator7);
-
-        ButtonOutilsZoom.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/magnifier13.png"))); // NOI18N
-        ButtonOutilsZoom.setBorder(null);
-        ButtonOutilsZoom.setContentAreaFilled(false);
-        ButtonOutilsZoom.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
-        ButtonOutilsZoom.setFocusable(false);
-        ButtonOutilsZoom.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
-        ButtonOutilsZoom.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
-        OutilsBar.add(ButtonOutilsZoom);
-        OutilsBar.add(jSeparator8);
-
         ButtonGrille.setIcon(new javax.swing.ImageIcon(getClass().getResource("/recyclapp/view/img/table41.png"))); // NOI18N
         ButtonGrille.setSelected(true);
         ButtonGrille.setBorder(null);
@@ -215,6 +193,10 @@ public class MainView extends javax.swing.JFrame {
             }
         });
         OutilsBar.add(grilleMagnetiqueButton);
+        OutilsBar.add(jSeparator10);
+
+        jLabel3.setText("Zoom :");
+        OutilsBar.add(jLabel3);
 
         SlideZoom.setMajorTickSpacing(1);
         SlideZoom.setMinimum(10);
@@ -517,12 +499,10 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JButton BouttonOutilsOuvir;
     private javax.swing.JToggleButton ButtonGrille;
     private javax.swing.JButton ButtonOutilsExport;
-    private javax.swing.JButton ButtonOutilsNouveau;
     private javax.swing.JButton ButtonOutilsRedo;
     private javax.swing.JButton ButtonOutilsSave;
     private javax.swing.JButton ButtonOutilsStart;
     private javax.swing.JButton ButtonOutilsUndo;
-    private javax.swing.JButton ButtonOutilsZoom;
     private recyclapp.view.DiagramView Grille;
     private javax.swing.JLabel LabelPos;
     private javax.swing.JMenuBar MenuBar;
@@ -536,18 +516,18 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToggleButton grilleMagnetiqueButton;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JToolBar.Separator jSeparator1;
+    private javax.swing.JToolBar.Separator jSeparator10;
     private javax.swing.JToolBar.Separator jSeparator2;
     private javax.swing.JToolBar.Separator jSeparator3;
     private javax.swing.JToolBar.Separator jSeparator4;
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
-    private javax.swing.JToolBar.Separator jSeparator7;
-    private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToggleButton jToggleButton1;
     private javax.swing.JTextField textPosX;
