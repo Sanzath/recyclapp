@@ -8,12 +8,10 @@ package recyclapp.view;
 
 
 import java.awt.*;
-import java.awt.Shape;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
 import java.util.ArrayList;
 import java.util.List;
-import javafx.scene.shape.Circle;
 import javax.swing.*;
 import recyclapp.model.Controller;
 import recyclapp.transport.Coords;
@@ -28,8 +26,8 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
     
     private final ConveyorSection aSections;
     
-    private final NodeView aEntry;
-    private final NodeView aExit;
+    protected NodeView aEntry;
+    protected NodeView aExit;
     
     private int aThickness = UNSELECTED_THICKNESS;
     private final List<Coords> aIntermediatePositions;
@@ -215,6 +213,18 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         if (DiagramObject.isSelected(this)) {
             invalidate();
             repaint();
+        }
+    }
+
+    @Override
+    public void tearDown() {
+        if (aEntry != null) {
+            aEntry.aConveyor = null;
+            aEntry = null;
+        }
+        if (aExit != null) {
+            aExit.aConveyor = null;
+            aExit = null;
         }
     }
 }

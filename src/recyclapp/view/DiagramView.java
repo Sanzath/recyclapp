@@ -11,6 +11,7 @@ import java.awt.event.*;
 import java.awt.*;
 import recyclapp.model.Controller;
 import recyclapp.transport.*;
+import java.util.List;
 
 /**
  *
@@ -42,6 +43,26 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
             sInstance = new DiagramView();
         }
         return sInstance;
+    }
+    
+    public void reloadObjects() {
+        // Teardown
+        DiagramObject.deselectAll();
+        for (Component comp : getComponents()) {
+            if (comp instanceof DiagramObject) {
+                ((DiagramObject)comp).tearDown();
+            }
+        }
+        removeAll();
+        
+        // Setup
+        List<ElementProperties> allElements = Controller.getInstance().getAllElements();
+        for (ElementProperties properties : allElements) {
+            add(new ElementView(properties));
+        }
+        
+        
+        repaint();
     }
  
     public void setPxPerMeter(int px) {

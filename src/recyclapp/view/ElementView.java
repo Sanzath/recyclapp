@@ -36,7 +36,8 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     private final JLabel aName;
     private final ElementCornerTab aTab;
     
-    private final List<NodeView> aNodes = new ArrayList<>();
+    private final List<NodeView> aEntryNodes = new ArrayList<>();
+    private final List<NodeView> aExitNodes = new ArrayList<>();
     
     public ElementView(ElementProperties properties){
         aId = properties.aId;
@@ -74,12 +75,12 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         
         for (int i = 0; i < Controller.getInstance().getEntryNodeCount(aId); ++i) {
             NodeView node = new NodeView(this, i, NodeView.ENTRY_NODE, Controller.getInstance().getEntryNodeProperties(aId, i));
-            aNodes.add(node);
+            aEntryNodes.add(node);
             DiagramView.getInstance().add(node);
         }
         for (int i = 0; i < Controller.getInstance().getExitNodeCount(aId); ++i) {
             NodeView node = new NodeView(this, i, NodeView.EXIT_NODE, Controller.getInstance().getExitNodeProperties(aId, i));
-            aNodes.add(node);
+            aExitNodes.add(node);
             DiagramView.getInstance().add(node);
         }
         
@@ -121,7 +122,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         super.paintComponent(g);
         doLayout();
         
-        for (NodeView node : aNodes) {
+        for (NodeView node : aEntryNodes) {
             node.updatePosition();
         }
     }
@@ -222,6 +223,55 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     
     protected void saveResize() {
         Controller.getInstance().setElementSize(aId, aSize);
+    }
+
+    @Override
+    public void tearDown() {
+        aEntryNodes.clear();
+        aExitNodes.clear();
+    }
+    
+    protected void removeEntryNode(int index) {
+        // Teardown and remove node and associated conveyor; update indexes of
+        // the nodes that come after
+        NodeView nodeToRemove = aEntryNodes.get(index);
+        ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
+        nodeToRemove.tearDown();
+        DiagramView.getInstance().remove(nodeToRemove);
+        DiagramView.getInstance().remove(conveyorToRemove);
+        aEntryNodes.remove(index);
+        
+        for (int i = index; i < aEntryNodes.size(); i++) {
+            aEntryNodes.get(i).decrementIndex();
+        }
+    }
+    protected void removeExitNode(int index) {
+        // Teardown and remove node and associated conveyor; update indexes of
+        // the nodes that come after
+        NodeView nodeToRemove = aExitNodes.get(index);
+        ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
+        nodeToRemove.tearDown();
+        DiagramView.getInstance().remove(nodeToRemove);
+        DiagramView.getInstance().remove(conveyorToRemove);
+        aEntryNodes.remove(index);
+        
+        for (int i = index; i < aExitNodes.size(); i++) {
+            aExitNodes.get(i).decrementIndex();
+        }
+    }
+    
+    protected void addEntryNode() {
+        int newIndex = aEntryNodes.size();
+        NodeView node = new NodeView(this, newIndex, NodeView.ENTRY_NODE, Controller.getInstance().getEntryNodeProperties(aId, newIndex));
+        aEntryNodes.add(node);
+        DiagramView.getInstance().add(node);
+    }
+    
+    protected void addExitNode() {
+        int newIndex = aExitNodes.size();
+        NodeView node = new NodeView(this, newIndex, NodeView.EXIT_NODE, Controller.getInstance().getEntryNodeProperties(aId, newIndex));
+        aExitNodes.add(node);
+        DiagramView.getInstance().add(node);
     }
     
 }

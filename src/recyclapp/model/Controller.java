@@ -9,6 +9,7 @@ package recyclapp.model;
 import recyclapp.transport.*;
 
 import java.util.List;
+import java.util.ArrayList;
 
 /**
  *
@@ -337,6 +338,41 @@ public class Controller  implements java.io.Serializable{
     // <editor-fold defaultstate="collapsed" desc="Conveyors">
     private ConveyorModel getConveyor(int entryParentId, int entryIndex) {
         return getEntryNode(entryParentId, entryIndex).getConveyor();
+    }
+    
+    public List<ConveyorProperties> getAllConveyors() {
+        List<ConveyorProperties> conveyorProperties = new ArrayList<>();
+        // Goes through each element. For each element, get all entry nodes (i).
+        // If the entry node has a conveyor, get the corresponding exit element.
+        // Find which index is associated with the exit node connected to the conveyor.
+        // Add a new ConveyorProperties to the list for each conveyor found.
+        
+        List<ElementProperties> allElements = DiagramModel.getInstance().getAllElements();
+        for (ElementProperties properties : allElements) {
+            ElementModel entryElement = getElement(properties.aId);
+            int entryNodeCount = entryElement.getEntryNodeCount();
+            for (int i = 0; i < entryNodeCount; i++) {
+                ConveyorModel conveyor = entryElement.getEntryNode(i).getConveyor();
+                if (conveyor != null) {
+                    ElementModel exitElement = conveyor.getExitNode().getElement();
+                    int exitNodeCount = exitElement.getExitNodeCount();
+                    for (int j = 0; j < exitNodeCount; j++) {
+                        if (exitElement.getExitNode(j) == conveyor.getExitNode()) {
+                            ConveyorProperties conveyorProp = new ConveyorProperties();
+                            conveyorProp.aEntryParentId = entryElement.getId();
+                            conveyorProp.aEntryIndex = i;
+                            conveyorProp.aExitParentId = exitElement.getId();
+                            conveyorProp.aExitIndex = j;
+                            conveyorProp.aIntermediatePositions = conveyor.getIntermediatePositions();
+                            conveyorProperties.add(conveyorProp);
+                            break;
+                        }
+                    }
+                }
+            }
+        }
+        
+        return conveyorProperties;
     }
     
     public void addConveyor(int entryParentId, int entryIndex, int exitParentId, int exitIndex) {

@@ -9,6 +9,7 @@ package recyclapp.model;
 import java.util.*;
 import recyclapp.transport.Coords;
 import recyclapp.transport.MaterialFlowTable;
+import recyclapp.transport.ConveyorProperties;
 
 /**
  * Alexandre
