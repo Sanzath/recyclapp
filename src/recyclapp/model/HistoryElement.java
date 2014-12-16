@@ -52,15 +52,21 @@ public class HistoryElement {
         aMax = a;
     }
     
-    public void serialiseDiagram(DiagramModel diag)
+    public void serialiseDiagram(DiagramModel diag,String chemin)
     {   
-        aCounter++;
-        aMax = aCounter;
-        
         String chaine = null;
+        if(chemin == null)
+        {
+            aCounter++;
+            aMax = aCounter;
+            chaine = "C:/Windows/Temp/recyclapp"+aCounter + ".rec";
+        }
+        else
+        {
+            chaine = chemin;
+        }
         try
         {
-            chaine = "C:/Windows/Temp/recyclapp"+aCounter + ".ser";
          
             FileOutputStream fileOut = new FileOutputStream(chaine);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -79,9 +85,9 @@ public class HistoryElement {
         
     }
     
-    public void deserializeDiag()
+    public void deserializeDiag(String chemin)
     {
-        DiagramModel.getInstance().deserialiseDiagram();
+        DiagramModel.getInstance().deserialiseDiagram(chemin);
     }
     
     

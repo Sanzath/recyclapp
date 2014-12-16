@@ -6,14 +6,15 @@
 
 package recyclapp.view;
 
-import recyclapp.model.Controller;
 import java.awt.Color;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.*;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import recyclapp.model.Controller;
 import recyclapp.model.DiagramModel;
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
@@ -73,7 +74,6 @@ public class MainView extends javax.swing.JFrame {
         textPosY = new javax.swing.JTextField();
         PanelToolBox = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         toolBoxView1 = ToolBoxView.getInstance();
         overviewView1 = OverviewView.getInstance();
         PanelEntreeSortie = new javax.swing.JPanel();
@@ -97,6 +97,11 @@ public class MainView extends javax.swing.JFrame {
         BouttonOutilsOuvir.setFocusable(false);
         BouttonOutilsOuvir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BouttonOutilsOuvir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BouttonOutilsOuvir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BouttonOutilsOuvirActionPerformed(evt);
+            }
+        });
         OutilsBar.add(BouttonOutilsOuvir);
         OutilsBar.add(jSeparator5);
 
@@ -181,6 +186,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setFocusable(false);
         ButtonOutilsExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsExportActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsExport);
         OutilsBar.add(jSeparator9);
 
@@ -232,49 +242,9 @@ public class MainView extends javax.swing.JFrame {
         PanelToolBox.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
         jLabel2.setText("Element:");
-
-        jToggleButton1.setText("Convoyeur");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
-        javax.swing.GroupLayout PanelToolBoxLayout = new javax.swing.GroupLayout(PanelToolBox);
-        PanelToolBox.setLayout(PanelToolBoxLayout);
-        PanelToolBoxLayout.setHorizontalGroup(
-            PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
-                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jToggleButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
-                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
-                .addContainerGap())
-        );
-        PanelToolBoxLayout.setVerticalGroup(
-            PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jLabel2)
-                .addGap(2, 2, 2)
-                .addComponent(toolBoxView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
-        );
+        PanelToolBox.add(jLabel2);
+        PanelToolBox.add(toolBoxView1);
+        PanelToolBox.add(overviewView1);
 
         PanelEntreeSortie.setBorder(javax.swing.BorderFactory.createEtchedBorder());
 
@@ -314,7 +284,7 @@ public class MainView extends javax.swing.JFrame {
         Grille.setLayout(GrilleLayout);
         GrilleLayout.setHorizontalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 590, Short.MAX_VALUE)
+            .addGap(0, 627, Short.MAX_VALUE)
         );
         GrilleLayout.setVerticalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -410,29 +380,22 @@ public class MainView extends javax.swing.JFrame {
        // TextEntreeSortie.setText(chaine2);
     }//GEN-LAST:event_GrilleMouseMoved
 
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
-
     private void grilleMagnetiqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleMagnetiqueButtonActionPerformed
         Grille.setMagnetic(grilleMagnetiqueButton.isSelected());
     }//GEN-LAST:event_grilleMagnetiqueButtonActionPerformed
 
     private void ButtonOutilsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsSaveActionPerformed
-        Controller.getInstance().serialize();
+        TextEntreeSortie.setText(Controller.getInstance().saveAs());
     }//GEN-LAST:event_ButtonOutilsSaveActionPerformed
 
     private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
        Controller.getInstance().undo();
        Grille.reloadObjects();
-       
-       TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsUndoActionPerformed
 
     private void ButtonOutilsRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsRedoActionPerformed
         Controller.getInstance().redo();
         Grille.reloadObjects();
-        TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
 
     private void GrilleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseClicked
@@ -545,7 +508,6 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JToggleButton jToggleButton1;
     private recyclapp.view.OverviewView overviewView1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;
