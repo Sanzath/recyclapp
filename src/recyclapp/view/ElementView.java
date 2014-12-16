@@ -20,12 +20,13 @@ import recyclapp.transport.Coords;
  *
  * @author Martin Boisvert
  */
-public final class ElementView extends JPanel implements MouseListener, MouseMotionListener, DiagramObject {
+public final class ElementView extends DiagramObject implements MouseListener, MouseMotionListener {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
     private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
     private static final float MINIMUM_SIZE = 0.5F;
     
     private Point aStartingPosition;
+    private boolean aMoved = false;
     
     private long aClickTime1;
     private final int aId;
@@ -151,8 +152,11 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     @Override
     public void mouseReleased(MouseEvent e) {
         aStartingPosition = null;
-        // Only set position model-side once done dragging
-        Controller.getInstance().setElementPosition(aId, aPosition);
+        if (aMoved) {
+            // Only set position model-side once done dragging
+            Controller.getInstance().setElementPosition(aId, aPosition);
+            aMoved = false;
+        }
         removeMouseMotionListener(this);
     }
 
@@ -191,6 +195,7 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
             aPosition.y = Math.round(aPosition.y / gridSpacing) * gridSpacing;
         }
         updatePosition();
+        aMoved = true;
     }
 
     @Override

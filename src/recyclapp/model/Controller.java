@@ -6,7 +6,6 @@
 
 package recyclapp.model;
 
-import java.io.FileFilter;
 import java.util.ArrayList;
 import java.util.List;
 import javax.swing.JFileChooser;
@@ -275,7 +274,6 @@ public class Controller {
     }
     
     public void setElementProperties(ElementProperties properties) {
-        ElementProperties initial = getElement(properties.aId).toProperties();
         getElement(properties.aId).fromProperties(properties);
         Controller.getInstance().serialize(null);
     }
@@ -359,6 +357,14 @@ public class Controller {
     public MaterialFlowTable getThroughput(int id) {
         return getElement(id).getThroughput();
     }
+    
+    public String getElementName(int id) {
+        return getElement(id).getName();
+    }
+    
+    public String getElementType(int id) {
+        return getElement(id).getType();
+    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Nodes">
@@ -381,6 +387,31 @@ public class Controller {
     }
     public MaterialFlowTable getExitNodeThroughput(int parentId, int index) {
         return getExitNode(parentId, index).getThroughput();
+    }
+    
+    public String getEntryNodeName(int parentId, int index) {
+        return getEntryNode(parentId, index).getName();
+    }
+    public String getExitNodeName(int parentId, int index) {
+        return getExitNode(parentId, index).getName();
+    }
+    
+    public void setEntryNodeName(int parentId, int index, String name) {
+        getEntryNode(parentId, index).setName(name);
+        serialize(null);
+    }
+    public void setExitNodeName(int parentId, int index, String name) {
+        getExitNode(parentId, index).setName(name);
+        serialize(null);
+    }
+    
+    public void setEntryNodeAngle(int parentId, int index, int angle) {
+        getEntryNode(parentId, index).setAngle(angle);
+        serialize(null);
+    }
+    public void setExitNodeAngle(int parentId, int index, int angle) {
+        getExitNode(parentId, index).setAngle(angle);
+        serialize(null);
     }
     // </editor-fold>
     
@@ -442,17 +473,26 @@ public class Controller {
     }
     
     public void insertConveyorIntermediatePosition(int entryParentId, int entryIndex,
-            Coords intermediatePosition, int index) {
+            Coords intermediatePosition, int index, boolean undoable) {
         getConveyor(entryParentId, entryIndex).insertIntermediatePosition(intermediatePosition, index);
+        if (undoable) {
+            serialize(null);
+        }
     }
     
     public void removeConveyorIntermediatePosition(int entryParentId, int entryIndex, int index) {
         getConveyor(entryParentId, entryIndex).removeIntermediatePosition(index);
+        serialize(null);
     }
     
     public void moveConveyorIntermediatePosition(int entryParentId, int entryIndex,
             Coords intermediatePosition, int index) {
         getConveyor(entryParentId, entryIndex).moveIntermediatePosition(intermediatePosition, index);
+        serialize(null);
+    }
+    
+    public String getConveyorName(int entryParentId, int entryIndex) {
+        return getConveyor(entryParentId, entryIndex).getName();
     }
     // </editor-fold>
 }

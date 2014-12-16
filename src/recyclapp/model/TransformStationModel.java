@@ -14,6 +14,7 @@ import recyclapp.transport.*;
  * @author Martin Boisvert
  */
 public final class TransformStationModel extends ElementModel implements java.io.Serializable{
+    private static final String ELEMENT_TYPE = "Transform Station";
     
     private final EntryNodeModel aEntryNode;
     private final ExitNodeModel aExitNode;
@@ -148,6 +149,11 @@ public final class TransformStationModel extends ElementModel implements java.io
     @Override
     protected ExitNodeModel getExitNode(int index) {
         return aExitNode;
+    }
+
+    @Override
+    public String getType() {
+        return ELEMENT_TYPE;
     }
     
 }

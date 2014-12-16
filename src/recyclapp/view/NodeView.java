@@ -19,7 +19,7 @@ import recyclapp.model.Controller;
  *
  * @author Martin Boisvert
  */
-public final class NodeView extends JPanel implements MouseListener, MouseMotionListener, DiagramObject {
+public final class NodeView extends DiagramObject implements MouseListener, MouseMotionListener {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
     private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
     
@@ -27,13 +27,14 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     public static final int EXIT_NODE = -1;
     
     private int aSide;
+    private boolean aMoved = false;
     
     private Point aParentCenter;
     
     private ElementView aParent;
     protected ConveyorView aConveyor;
     private int aIndex;
-    private final int aNodeType;
+    protected final int aNodeType;
     
     private Coords aSize;
     private int aAngle;
@@ -193,8 +194,8 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // no conveyor, these two elements don't have the same parent,
         // check if the node types are opposite, and create a new conveyor.
         if (aConveyor == null) {
-            DiagramObject selected = DiagramObject.getSelected(NodeView.class);
-            if (selected != null) {
+            DiagramObject selected = DiagramObject.getSelected();
+            if (selected instanceof NodeView) {
                 NodeView other = (NodeView) selected;
                 if (other.aConveyor == null && aParent != other.aParent) {
                     NodeView entry = null;
@@ -217,7 +218,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
                 }
             }
         }
-        DiagramObject.deselectAll();
+        DiagramObject.deselectCurrent();
         DiagramObject.select(this);
     }
     
@@ -236,7 +237,6 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     @Override
     public void select() {
         setBorder(SELECTED_BORDER);
-        DiagramObject.select(aParent);
     }
 
     @Override
@@ -254,6 +254,15 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         // Clear parent center position
         aParentCenter = null;
         removeMouseMotionListener(this);
+        if (aMoved) {
+            // Only call controller once done moving
+            if (aNodeType == ENTRY_NODE) {
+                Controller.getInstance().setEntryNodeAngle(getParentId(), aIndex, aAngle);
+            }
+            else if (aNodeType == EXIT_NODE) {
+                Controller.getInstance().setExitNodeAngle(getParentId(), aIndex, aAngle);
+            }
+        }
     }
 
     @Override
@@ -277,6 +286,7 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
         aAngle = (int) Math.toDegrees(Math.atan2(mousePos.y - aParentCenter.y, mousePos.x - aParentCenter.x));
         if (aAngle < 0) aAngle += 360;
         updatePosition();
+        aMoved = true;
     }
 
     @Override

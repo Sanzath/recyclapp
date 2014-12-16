@@ -49,7 +49,7 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
     
     public void reloadObjects() {
         // Teardown - remove all root references
-        DiagramObject.deselectAll();
+        DiagramObject.deselectCurrent();
         removeAll();
         
         // Setup elements
@@ -172,7 +172,7 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
             ToolBoxView.getInstance().deselect();
         }
         else {
-            DiagramObject.deselectAll();
+            DiagramObject.deselectCurrent();
         }
     }
 
