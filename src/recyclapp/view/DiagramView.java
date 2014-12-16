@@ -6,15 +6,14 @@
 
 package recyclapp.view;
 
-import java.awt.*;
-import java.awt.event.*;
-import java.awt.image.BufferedImage;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import javax.swing.*;
+import java.awt.event.*;
+import java.awt.*;
 import recyclapp.model.Controller;
 import recyclapp.transport.*;
+import java.util.List;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
@@ -49,8 +48,14 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
     }
     
     public void reloadObjects() {
-        // Teardown - remove all root references
-        DiagramObject.deselectCurrent();
+        // Teardown - remove all inter-references
+        // In theory only the ElementViews need to be torn down
+        DiagramObject.deselectAll();
+        for (Component comp : getComponents()) {
+            if (comp instanceof DiagramObject) {
+                ((DiagramObject)comp).tearDown();
+            }
+        }
         removeAll();
         
         // Setup elements
@@ -171,7 +176,7 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
             ToolBoxView.getInstance().deselect();
         }
         else {
-            DiagramObject.deselectCurrent();
+            DiagramObject.deselectAll();
         }
     }
 
@@ -191,13 +196,4 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
     public void mouseExited(MouseEvent e) {
     }
    
-    public BufferedImage createImage() {
-
-        int w = DiagramView.getInstance().getWidth();
-        int h = DiagramView.getInstance().getHeight();
-        BufferedImage bi = new BufferedImage(w, h, BufferedImage.TYPE_INT_RGB);
-        Graphics2D g = bi.createGraphics();
-        DiagramView.getInstance().print(g);
-        return bi;
-    }
   }

@@ -15,7 +15,6 @@ import recyclapp.transport.MaterialFlowTable;
  * @author Martin Boisvert
  */
 public class ExitPointModel extends ElementModel implements java.io.Serializable{
-    private static final String ELEMENT_TYPE = "Exit Point";
 
     private final EntryNodeModel aEntryNode;
     private static final long serialVersionUID = 4632964078848835517L;
@@ -104,16 +103,6 @@ public class ExitPointModel extends ElementModel implements java.io.Serializable
     @Override
     protected ExitNodeModel getExitNode(int index) {
         return null;
-    }
-
-    @Override
-    public String getType() {
-        return ELEMENT_TYPE;
-    }
-
-    @Override
-    protected void removeAllLinks() {
-        aEntryNode.removeLink();
     }
 
 }

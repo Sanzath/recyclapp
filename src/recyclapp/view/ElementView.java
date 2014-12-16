@@ -20,13 +20,12 @@ import recyclapp.transport.Coords;
  *
  * @author Martin Boisvert
  */
-public final class ElementView extends DiagramObject implements MouseListener, MouseMotionListener, KeyListener {
+public final class ElementView extends JPanel implements MouseListener, MouseMotionListener, DiagramObject {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
     private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
     private static final float MINIMUM_SIZE = 0.5F;
     
     private Point aStartingPosition;
-    private boolean aMoved = false;
     
     private long aClickTime1;
     private final int aId;
@@ -95,14 +94,12 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     @Override
     public void deselect() {
         setBorder(UNSELECTED_BORDER);
-        removeKeyListener(this);
         aTab.setVisible(false);
     }
     
     @Override
     public void select() {
         setBorder(SELECTED_BORDER);
-        addKeyListener(this);
         aTab.setVisible(true);
     }
     
@@ -154,11 +151,8 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     @Override
     public void mouseReleased(MouseEvent e) {
         aStartingPosition = null;
-        if (aMoved) {
-            // Only set position model-side once done dragging
-            Controller.getInstance().setElementPosition(aId, aPosition);
-            aMoved = false;
-        }
+        // Only set position model-side once done dragging
+        Controller.getInstance().setElementPosition(aId, aPosition);
         removeMouseMotionListener(this);
     }
 
@@ -197,7 +191,6 @@ public final class ElementView extends DiagramObject implements MouseListener, M
             aPosition.y = Math.round(aPosition.y / gridSpacing) * gridSpacing;
         }
         updatePosition();
-        aMoved = true;
     }
 
     @Override
@@ -234,15 +227,27 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     protected void saveResize() {
         Controller.getInstance().setElementSize(aId, aSize);
     }
+
+    @Override
+    public void tearDown() {
+        for (NodeView node : aEntryNodes) {
+            node.tearDown();
+        }
+        for (NodeView node : aExitNodes) {
+            node.tearDown();
+        }
+        aEntryNodes.clear();
+        aExitNodes.clear();
+    }
     
     protected void removeEntryNode(int index) {
         // Teardown and remove node and associated conveyor; update indexes of
         // the nodes that come after
         NodeView nodeToRemove = aEntryNodes.get(index);
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
+        nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
         if (conveyorToRemove != null) {
-            conveyorToRemove.aExit.aConveyor = null;
             DiagramView.getInstance().remove(conveyorToRemove);
         }
         aEntryNodes.remove(index);
@@ -257,9 +262,9 @@ public final class ElementView extends DiagramObject implements MouseListener, M
         // the nodes that come after
         NodeView nodeToRemove = aExitNodes.get(index);
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
+        nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
         if (conveyorToRemove != null) {
-            conveyorToRemove.aEntry.aConveyor = null;
             DiagramView.getInstance().remove(conveyorToRemove);
         }
         aExitNodes.remove(index);
@@ -292,18 +297,6 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     
     protected NodeView getExitNodeView(int index) {
         return aExitNodes.get(index);
-    }
-
-    @Override
-    public void deleteFromDiagram() {
-        for (NodeView entry : aEntryNodes) {
-            entry.deleteFromDiagram();
-        }
-        for (NodeView exit : aExitNodes) {
-            exit.deleteFromDiagram();
-        }
-        DiagramView.getInstance().remove(this);
-        Controller.getInstance().removeElement(aId);
     }
 }
 

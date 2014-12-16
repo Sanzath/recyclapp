@@ -17,8 +17,6 @@ import recyclapp.transport.*;
  * @author Martin Boisvert
  */
 public final class SortingStationModel extends ElementModel implements java.io.Serializable{
-    private static final String ELEMENT_TYPE = "Sorting Station";
-    
     private static final int MINIMUM_EXIT_NODE_COUNT = 2;
     
     private final EntryNodeModel aEntryNode;
@@ -200,19 +198,6 @@ public final class SortingStationModel extends ElementModel implements java.io.S
     @Override
     protected ExitNodeModel getExitNode(int index) {
         return aExitNodes.get(index);
-    }
-
-    @Override
-    public String getType() {
-        return ELEMENT_TYPE;
-    }
-
-    @Override
-    protected void removeAllLinks() {
-        aEntryNode.removeLink();
-        for (ExitNodeModel exit : aExitNodes) {
-            exit.removeLink();
-        }
     }
     
 }

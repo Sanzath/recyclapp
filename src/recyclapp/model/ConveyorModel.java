@@ -9,6 +9,7 @@ package recyclapp.model;
 import java.util.*;
 import recyclapp.transport.Coords;
 import recyclapp.transport.MaterialFlowTable;
+import recyclapp.transport.ConveyorProperties;
 
 /**
  * Alexandre
@@ -84,12 +85,6 @@ public class ConveyorModel  implements java.io.Serializable{
     }
     
     public List<Coords> getIntermediatePositions() {
-        List<Coords> positions = new ArrayList<>();
-        
-        for (Coords position : aIntermediatePositions) {
-            positions.add(new Coords(position));
-        }
-        
-        return positions;
+        return aIntermediatePositions;
     }
 }

@@ -6,37 +6,46 @@
 
 package recyclapp.view;
 
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import javax.swing.JPanel;
+import java.util.Map;
+import java.util.HashMap;
 
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class DiagramObject extends JPanel implements KeyListener {
-    private static DiagramObject sSelected = null;
+public interface DiagramObject {
+    static Map<Class, DiagramObject> sSelected = new HashMap<>();
     
     /**
-     * Select specified object after deselecting the previously selected object.
+     * Select specified object after deselecting the previously selected object
+     * of its class.
      * @param obj 
      */
     public static void select(DiagramObject obj) {
-        deselectCurrent();
+        deselectSelected(obj.getClass());
+        
         obj.select();
-        sSelected = obj;
-        SelectedPropertiesPanel.getInstance().setSelection(sSelected);
+        sSelected.put(obj.getClass(), obj);
     }
     
     /**
-     * Deselect currently selected object.
+     * Deselect selected object of specified type.
+     * @param objClass 
      */
-    public static void deselectCurrent() {
-        if (sSelected != null) {
-            sSelected.deselect();
-            sSelected = null;
-            SelectedPropertiesPanel.getInstance().clearSelection();
+    public static void deselectSelected(Class objClass) {
+        if (sSelected.containsKey(objClass)) {
+            sSelected.remove(objClass).deselect();
         }
+    }
+    
+    /**
+     * Deselect all Selectables of all types.
+     */
+    public static void deselectAll() {
+        for (Map.Entry<Class, DiagramObject> e : sSelected.entrySet()) {
+            e.getValue().deselect();
+        }
+        sSelected.clear();
     }
     
     /**
@@ -45,51 +54,35 @@ public abstract class DiagramObject extends JPanel implements KeyListener {
      * @return 
      */
     public static boolean isSelected(DiagramObject obj) {
-        return sSelected == obj;
+        return sSelected.get(obj.getClass()) == obj;
     }
     
     /**
-     * Get currently selected DiagramObject.
+     * Get Selectable object of specified type objClass.
+     * @param objClass
      * @return 
      */
-    public static DiagramObject getSelected() {
-        return sSelected;
+    public static DiagramObject getSelected(Class objClass) {
+        return sSelected.get(objClass);
     }
     
     /**
-     * Logic to apply once an object is selected. Should register as keyListener.
+     * Logic to apply once an object is selected.
      */
-    public abstract void select();
+    public void select();
     
     /**
-     * Logic to apply once an object is deselected. Should deregister as keyListener.
+     * Logic to apply once an object is deselected.
      */
-    public abstract void deselect();
+    public void deselect();
     
     /**
      * Logic to apply to update the object before repainting.
      */
-    public abstract void updatePosition();
+    public void updatePosition();
     
     /**
-     * Logic to apply to delete from both the model and the view. This calls
-     * DiagramView.remove().
+     * Logic to apply before deleting this object.
      */
-    public abstract void deleteFromDiagram();
-
-    @Override
-    public void keyTyped(KeyEvent e) {
-    }
-
-    @Override
-    public void keyPressed(KeyEvent e) {
-    }
-
-    @Override
-    public void keyReleased(KeyEvent e) {
-        if (e.getKeyCode() == KeyEvent.VK_DELETE) {
-            deleteFromDiagram();
-        }
-        DiagramView.getInstance().repaint();
-    }
+    public void tearDown();
 }

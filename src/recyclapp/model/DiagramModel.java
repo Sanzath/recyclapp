@@ -131,7 +131,6 @@ public final class DiagramModel implements java.io.Serializable{
         for (ElementModel element : aElements) {
             if (id == element.getId()) {
                 found = element;
-                break;
             }
         }
         return found;
@@ -145,35 +144,11 @@ public final class DiagramModel implements java.io.Serializable{
         return elements;
     }
     
-    public void removeElement(int id) {
-        ElementModel element = getElementFromId(id);
-        
-        // Remove from the overview
-        if (element instanceof EntryPointModel) {
-            OverviewModel.getInstance().removeEntryPoint((EntryPointModel)element);
-        }
-        else if (element instanceof ExitPointModel) {
-            OverviewModel.getInstance().removeExitPoint((ExitPointModel)element);
-        }
-        
-        // Remove links, this removing accessible references to it
-        element.removeAllLinks();
-        
-        // Remove from ourselves
-        aElements.remove(element);
-    }
     
-    public void deserialiseDiagram(String chemin)
+    public void deserialiseDiagram()
     {
-        String chaine = null;
         DiagramModel e = null;
-        if(chemin == null)
-        {
-            chaine = "C:/Windows/Temp/recyclapp" +HistoryElement.getCounter() +".rec";
-        }
-        else{
-            chaine = chemin;
-        }
+        String chaine = "C:/Windows/Temp/recyclapp" +HistoryElement.getCounter() +".ser";
       try
       {
          FileInputStream fileIn = new FileInputStream(chaine);
@@ -192,7 +167,7 @@ public final class DiagramModel implements java.io.Serializable{
          return;
       }catch(ClassNotFoundException c)
       {
-         System.out.println("Recyclapp class not found");
+         System.out.println("Employee class not found");
          c.printStackTrace();
          return;
       }

@@ -6,25 +6,11 @@
 
 package recyclapp.model;
 
-//<<<<<<< HEAD
-import java.awt.Desktop;
-import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.FileFilter;
-import java.io.IOException;
-//=======
-//>>>>>>> origin/master
-import java.util.ArrayList;
-
-import recyclapp.view.OverviewView;
-import java.util.List;
-import javax.imageio.ImageIO;
-import javax.security.auth.DestroyFailedException;
-import javax.swing.JFileChooser;
-import javax.swing.JPanel;
 import recyclapp.transport.*;
-import recyclapp.view.*;
 
+import java.util.List;
+import java.util.ArrayList;
+import recyclapp.view.OverviewView;
 
 /**
  *
@@ -68,49 +54,6 @@ public class Controller {
     public List<ElementProperties> getAllElements() {
         return DiagramModel.getInstance().getAllElements();
     }
-    
-    public void exportImage()
-    {
-        BufferedImage bi = DiagramView.getInstance().createImage();
-        
-        String chemin =null;
-        FilterFileModel filtre = new FilterFileModel(new String[]{"PNG"},"Image PNG (*.png)");
-        JFileChooser choix = new JFileChooser();
-        choix.addChoosableFileFilter(filtre);
-        int retour = choix.showSaveDialog(null);
-    
-        if(retour==JFileChooser.APPROVE_OPTION){
-        // un fichier a été choisi (sortie par OK)
-        // nom du fichier  choisi 
-            choix.getSelectedFile().getName();
-        // chemin absolu du fichier choisi
-            chemin = choix.getSelectedFile().getAbsolutePath();
-            chemin = chemin.replace('\\', '/');
-            chemin = chemin + ".png";
-            
-            try
-            {
-                ImageIO.write(bi, "png", new File(chemin));
-                
-                //try {
-                    
-                    
-                    Desktop.getDesktop().open(new File(chemin));
-                    
-                    //} 
-                //catch{}
-                // (DesktopException e2) {
-                    //Problème lors du lancement du programme
-                    //e2.printStackTrace();
-               // }
-                
-            } catch (IOException e) {
-            // TODO Auto-generated catch block
-                e.printStackTrace();
-            }  
-
-        }  
-    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Menu">
@@ -119,52 +62,24 @@ public class Controller {
         
     }
  
-    public String saveAs()
+    public void saveAs(String name)
     {
-        String chemin =null;
-        FilterFileModel filtre = new FilterFileModel(new String[]{"rec"},"les fichiers Recyclapp (*.rec)");
-        JFileChooser choix = new JFileChooser();
-        choix.addChoosableFileFilter(filtre);
-        int retour = choix.showSaveDialog(null);
-    
-        if(retour==JFileChooser.APPROVE_OPTION){
-        // un fichier a été choisi (sortie par OK)
-        // nom du fichier  choisi 
-            choix.getSelectedFile().getName();
-        // chemin absolu du fichier choisi
-            chemin = choix.getSelectedFile().getAbsolutePath();
-            chemin = chemin.replace('\\', '/');
-            chemin = chemin + ".rec";
-            
-            Controller.getInstance().serialize(chemin);
-        }
         
-        return chemin;
     }
     
-    public void load()
+    public void load(String name)
     {
-        String chemin = null;
         
-        FilterFileModel filtre = new FilterFileModel(new String[]{"rec"},"les fichiers Recyclapp (*.rec)");
-        
-        JFileChooser choix = new JFileChooser();
-        choix.addChoosableFileFilter(filtre);
-        int retour = choix.showOpenDialog(null);
+    }
     
-        if(retour==JFileChooser.APPROVE_OPTION){
-        // un fichier a été choisi (sortie par OK)
-        // nom du fichier  choisi 
-            choix.getSelectedFile().getName();
-        // chemin absolu du fichier choisi
-            chemin = choix.getSelectedFile().getAbsolutePath();
-            
-            chemin = chemin.replace('\\', '/');
-           
-            HistoryElement.getInstance().deserializeDiag(chemin);
-            HistoryElement.setCounter(0);
-            HistoryElement.setMax(0);
-        }
+    public void copy()
+    {
+        // Copy from selection - determined by DiagramModel
+    }
+    
+    public void paste()
+    {
+        // Paste to position - determined by DiagramModel
     }
     // </editor-fold>
     
@@ -179,7 +94,7 @@ public class Controller {
         if (HistoryElement.getCounter() > 1)
         {
             HistoryElement.setCounter(HistoryElement.getCounter()-1);
-            HistoryElement.getInstance().deserializeDiag(null);
+            HistoryElement.getInstance().deserializeDiag();
         }
     }
     
@@ -188,13 +103,13 @@ public class Controller {
         if ( HistoryElement.getCounter() < HistoryElement.getMax())
         {
             HistoryElement.setCounter(HistoryElement.getCounter()+1);
-            HistoryElement.getInstance().deserializeDiag(null);
+            HistoryElement.getInstance().deserializeDiag();
         }
     }
     
-    public void serialize(String chemin)
+    public void serialize()
     {
-        HistoryElement.getInstance().serialiseDiagram(DiagramModel.getInstance(),chemin);
+        HistoryElement.getInstance().serialiseDiagram(DiagramModel.getInstance());
     }
     
     // </editor-fold>
@@ -222,6 +137,24 @@ public class Controller {
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="TransformDictionary">
+    public void addTransform(String sourceMaterial, String destinationMaterial)
+    {
+        
+    }
+    
+    public void removeTransform(String sourceMaterial, String destinationMaterial)
+    {
+        
+    }
+    
+    // Void devrait être quelque chose d'autre, possiblement String ou String[] ou...
+    public void getTransforms()
+    {
+        
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Overview">
     public List<EntryPointModel> getEntryPoints()
     {
@@ -246,6 +179,49 @@ public class Controller {
     }
     // </editor-fold>
     
+    // <editor-fold defaultstate="collapsed" desc="MaterialDictonary">
+    public String[] getMaterials()
+    {
+        String materials[] = new String[1];
+        materials[1] = "placeholder";
+        
+        return materials;
+    }
+    
+    public void addMaterial(String name)
+    {
+        
+    }
+    
+    public void removeMaterial(String name)
+    {
+        
+    }
+    // </editor-fold>
+    
+    // <editor-fold defaultstate="collapsed" desc="TemplateContainer">
+    // void devrait être un String[] ou quelque chose dans le genre
+    public void getTemplates()
+    {
+        
+    }
+    
+    public void selectTemplate(int index)
+    {
+        
+    }
+    
+    public void deselectTemplate()
+    {
+        
+    }
+    
+    public void addTemplate(/* quelque chose */)
+    {
+        
+    }
+    // </editor-fold>
+    
     // <editor-fold defaultstate="collapsed" desc="Elements">
     private ElementModel getElement(int id) {
         return DiagramModel.getInstance().getElementFromId(id);
@@ -256,8 +232,9 @@ public class Controller {
     }
     
     public void setElementProperties(ElementProperties properties) {
+        ElementProperties initial = getElement(properties.aId).toProperties();
         getElement(properties.aId).fromProperties(properties);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public ParameterGroup getParameters(int id) {
@@ -265,17 +242,17 @@ public class Controller {
     }
     public void setParameters(int id, ParameterGroup parameters) {
         getElement(id).setParameters(parameters);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public void setElementPosition(int id, Coords position) {
         getElement(id).setPosition(position);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public void setElementSize(int id, Coords size) {
         getElement(id).setSize(size);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public boolean canAddEntryNode(int id) {
@@ -293,28 +270,28 @@ public class Controller {
     
     public void addEntryNode(int id) {
         getElement(id).addEntryNode();
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     public void addExitNode(int id) {
         getElement(id).canAddExitNode();
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     public void addEntryNode(int id, String name) {
         getElement(id).addEntryNode().setName(name);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     public void addExitNode(int id, String name) {
         getElement(id).addExitNode().setName(name);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public void removeEntryNode(int id, int index) {
         getElement(id).removeEntryNode(index);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     public void removeExitNode(int id, int index) {
         getElement(id).removeExitNode(index);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public int getEntryNodeCount(int id) {
@@ -339,19 +316,6 @@ public class Controller {
     public MaterialFlowTable getThroughput(int id) {
         return getElement(id).getThroughput();
     }
-    
-    public String getElementName(int id) {
-        return getElement(id).getName();
-    }
-    
-    public String getElementType(int id) {
-        return getElement(id).getType();
-    }
-    
-    public void removeElement(int id) {
-        DiagramModel.getInstance().removeElement(id);
-        serialize(null);
-    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Nodes">
@@ -374,31 +338,6 @@ public class Controller {
     }
     public MaterialFlowTable getExitNodeThroughput(int parentId, int index) {
         return getExitNode(parentId, index).getThroughput();
-    }
-    
-    public String getEntryNodeName(int parentId, int index) {
-        return getEntryNode(parentId, index).getName();
-    }
-    public String getExitNodeName(int parentId, int index) {
-        return getExitNode(parentId, index).getName();
-    }
-    
-    public void setEntryNodeName(int parentId, int index, String name) {
-        getEntryNode(parentId, index).setName(name);
-        serialize(null);
-    }
-    public void setExitNodeName(int parentId, int index, String name) {
-        getExitNode(parentId, index).setName(name);
-        serialize(null);
-    }
-    
-    public void setEntryNodeAngle(int parentId, int index, int angle) {
-        getEntryNode(parentId, index).setAngle(angle);
-        serialize(null);
-    }
-    public void setExitNodeAngle(int parentId, int index, int angle) {
-        getExitNode(parentId, index).setAngle(angle);
-        serialize(null);
     }
     // </editor-fold>
     
@@ -447,12 +386,12 @@ public class Controller {
         ExitNodeModel exitNode = getExitNode(exitParentId, exitIndex);
         
         entryNode.createLink(exitNode);
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public void removeConveyor(int entryParentId, int entryIndex) {
         getEntryNode(entryParentId, entryIndex).removeLink();
-        serialize(null);
+        Controller.getInstance().serialize();
     }
     
     public List<Coords> getConveyorIntermediatePositions(int entryParentId, int entryIndex) {
@@ -460,26 +399,17 @@ public class Controller {
     }
     
     public void insertConveyorIntermediatePosition(int entryParentId, int entryIndex,
-            Coords intermediatePosition, int index, boolean undoable) {
+            Coords intermediatePosition, int index) {
         getConveyor(entryParentId, entryIndex).insertIntermediatePosition(intermediatePosition, index);
-        if (undoable) {
-            serialize(null);
-        }
     }
     
     public void removeConveyorIntermediatePosition(int entryParentId, int entryIndex, int index) {
         getConveyor(entryParentId, entryIndex).removeIntermediatePosition(index);
-        serialize(null);
     }
     
     public void moveConveyorIntermediatePosition(int entryParentId, int entryIndex,
             Coords intermediatePosition, int index) {
         getConveyor(entryParentId, entryIndex).moveIntermediatePosition(intermediatePosition, index);
-        serialize(null);
-    }
-    
-    public String getConveyorName(int entryParentId, int entryIndex) {
-        return getConveyor(entryParentId, entryIndex).getName();
     }
     // </editor-fold>
 }
