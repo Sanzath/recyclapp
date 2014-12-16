@@ -63,21 +63,30 @@ public class Controller {
         
     }
  
-    public void saveAs(String name)
+    public String saveAs()
     {
+        String chemin =null;
+        FilterFileModel filtre = new FilterFileModel(new String[]{"rec"},"les fichiers Recyclapp (*.rec)");
         JFileChooser choix = new JFileChooser();
-        int retour = choix.showOpenDialog(null);
+        choix.addChoosableFileFilter(filtre);
+        int retour = choix.showSaveDialog(null);
     
         if(retour==JFileChooser.APPROVE_OPTION){
         // un fichier a été choisi (sortie par OK)
         // nom du fichier  choisi 
             choix.getSelectedFile().getName();
         // chemin absolu du fichier choisi
-            choix.getSelectedFile().getAbsolutePath();
+            chemin = choix.getSelectedFile().getAbsolutePath();
+            chemin = chemin.replace('\\', '/');
+            chemin = chemin + ".rec";
+            
+            Controller.getInstance().serialize(chemin);
         }
+        
+        return chemin;
     }
     
-    public String load()
+    public void load()
     {
         String chemin = null;
         
@@ -94,14 +103,12 @@ public class Controller {
         // chemin absolu du fichier choisi
             chemin = choix.getSelectedFile().getAbsolutePath();
             
-            
             chemin = chemin.replace('\\', '/');
            
             HistoryElement.getInstance().deserializeDiag(chemin);
             HistoryElement.setCounter(0);
             HistoryElement.setMax(0);
         }
-        return chemin;
     }
     
     public void copy()
@@ -139,9 +146,9 @@ public class Controller {
         }
     }
     
-    public void serialize()
+    public void serialize(String chemin)
     {
-        HistoryElement.getInstance().serialiseDiagram(DiagramModel.getInstance());
+        HistoryElement.getInstance().serialiseDiagram(DiagramModel.getInstance(),chemin);
     }
     
     // </editor-fold>
@@ -270,7 +277,7 @@ public class Controller {
     public void setElementProperties(ElementProperties properties) {
         ElementProperties initial = getElement(properties.aId).toProperties();
         getElement(properties.aId).fromProperties(properties);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public ParameterGroup getParameters(int id) {
@@ -278,17 +285,17 @@ public class Controller {
     }
     public void setParameters(int id, ParameterGroup parameters) {
         getElement(id).setParameters(parameters);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public void setElementPosition(int id, Coords position) {
         getElement(id).setPosition(position);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public void setElementSize(int id, Coords size) {
         getElement(id).setSize(size);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public boolean canAddEntryNode(int id) {
@@ -306,28 +313,28 @@ public class Controller {
     
     public void addEntryNode(int id) {
         getElement(id).addEntryNode();
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     public void addExitNode(int id) {
         getElement(id).canAddExitNode();
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     public void addEntryNode(int id, String name) {
         getElement(id).addEntryNode().setName(name);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     public void addExitNode(int id, String name) {
         getElement(id).addExitNode().setName(name);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public void removeEntryNode(int id, int index) {
         getElement(id).removeEntryNode(index);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     public void removeExitNode(int id, int index) {
         getElement(id).removeExitNode(index);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public int getEntryNodeCount(int id) {
@@ -422,12 +429,12 @@ public class Controller {
         ExitNodeModel exitNode = getExitNode(exitParentId, exitIndex);
         
         entryNode.createLink(exitNode);
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public void removeConveyor(int entryParentId, int entryIndex) {
         getEntryNode(entryParentId, entryIndex).removeLink();
-        Controller.getInstance().serialize();
+        Controller.getInstance().serialize(null);
     }
     
     public List<Coords> getConveyorIntermediatePositions(int entryParentId, int entryIndex) {

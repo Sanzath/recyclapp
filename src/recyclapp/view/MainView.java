@@ -412,27 +412,21 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_grilleMagnetiqueButtonActionPerformed
 
     private void ButtonOutilsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsSaveActionPerformed
-        
-       //saveView save = new saveView();
-       //save.setVisible(true);
-       // 
+        TextEntreeSortie.setText(Controller.getInstance().saveAs());
     }//GEN-LAST:event_ButtonOutilsSaveActionPerformed
 
     private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
        Controller.getInstance().undo();
        Grille.reloadObjects();
-       
-       TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsUndoActionPerformed
 
     private void ButtonOutilsRedoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsRedoActionPerformed
         Controller.getInstance().redo();
         Grille.reloadObjects();
-        TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
 
     private void BouttonOutilsOuvirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BouttonOutilsOuvirActionPerformed
-        TextEntreeSortie.setText(Controller.getInstance().load());
+        Controller.getInstance().load();
         Grille.reloadObjects();
     }//GEN-LAST:event_BouttonOutilsOuvirActionPerformed
     
