@@ -48,14 +48,8 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
     }
     
     public void reloadObjects() {
-        // Teardown - remove all inter-references
-        // In theory only the ElementViews need to be torn down
+        // Teardown - remove all root references
         DiagramObject.deselectAll();
-        for (Component comp : getComponents()) {
-            if (comp instanceof DiagramObject) {
-                ((DiagramObject)comp).tearDown();
-            }
-        }
         removeAll();
         
         // Setup elements

@@ -283,13 +283,8 @@ public final class NodeView extends JPanel implements MouseListener, MouseMotion
     public void mouseMoved(MouseEvent e) {
 
     }
-
-    @Override
-    public void tearDown() {
-        aParent = null;
-        if (aConveyor != null) {
-            aConveyor.tearDown();
-            aConveyor = null;
-        }
+    
+    protected ElementView getElement() {
+        return aParent;
     }
 }

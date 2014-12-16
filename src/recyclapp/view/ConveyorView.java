@@ -45,7 +45,12 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         aSections.aStartPosition = getEntryCenter();
         aSections.aEndPosition = getExitCenter();
         
-        aIntermediatePositions = new ArrayList<>();
+        aIntermediatePositions = Controller.getInstance().getConveyorIntermediatePositions(aEntry.getParentId(), aEntry.getIndex());
+        ConveyorSection currentSection = aSections;
+        for (int i = 0; i < aIntermediatePositions.size(); i++) {
+            currentSection.aNextSection = new ConveyorSection();
+            currentSection = currentSection.aNextSection;
+        }
         
         updatePosition();
         
@@ -216,18 +221,6 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         if (DiagramObject.isSelected(this)) {
             invalidate();
             repaint();
-        }
-    }
-
-    @Override
-    public void tearDown() {
-        if (aEntry != null) {
-            aEntry.aConveyor = null;
-            aEntry = null;
-        }
-        if (aExit != null) {
-            aExit.aConveyor = null;
-            aExit = null;
         }
     }
 }

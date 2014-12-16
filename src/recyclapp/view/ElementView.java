@@ -227,27 +227,15 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
     protected void saveResize() {
         Controller.getInstance().setElementSize(aId, aSize);
     }
-
-    @Override
-    public void tearDown() {
-        for (NodeView node : aEntryNodes) {
-            node.tearDown();
-        }
-        for (NodeView node : aExitNodes) {
-            node.tearDown();
-        }
-        aEntryNodes.clear();
-        aExitNodes.clear();
-    }
     
     protected void removeEntryNode(int index) {
         // Teardown and remove node and associated conveyor; update indexes of
         // the nodes that come after
         NodeView nodeToRemove = aEntryNodes.get(index);
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
-        nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
         if (conveyorToRemove != null) {
+            conveyorToRemove.aExit.aConveyor = null;
             DiagramView.getInstance().remove(conveyorToRemove);
         }
         aEntryNodes.remove(index);
@@ -262,9 +250,9 @@ public final class ElementView extends JPanel implements MouseListener, MouseMot
         // the nodes that come after
         NodeView nodeToRemove = aExitNodes.get(index);
         ConveyorView conveyorToRemove = nodeToRemove.aConveyor;
-        nodeToRemove.tearDown();
         DiagramView.getInstance().remove(nodeToRemove);
         if (conveyorToRemove != null) {
+            conveyorToRemove.aEntry.aConveyor = null;
             DiagramView.getInstance().remove(conveyorToRemove);
         }
         aExitNodes.remove(index);
