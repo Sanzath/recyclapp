@@ -10,7 +10,6 @@ package recyclapp.view;
 import java.awt.*;
 import java.awt.event.*;
 import java.awt.geom.Ellipse2D;
-import java.util.ArrayList;
 import java.util.List;
 import javax.swing.*;
 import recyclapp.model.Controller;
@@ -20,7 +19,7 @@ import recyclapp.transport.Coords;
  * 
  * @author Martin Boisvert
  */
-public final class ConveyorView extends JPanel implements MouseListener, MouseMotionListener, DiagramObject {
+public final class ConveyorView extends DiagramObject implements MouseListener, MouseMotionListener {
     private static final int UNSELECTED_THICKNESS = 1;
     private static final int SELECTED_THICKNESS = 2;
     
@@ -45,7 +44,12 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         aSections.aStartPosition = getEntryCenter();
         aSections.aEndPosition = getExitCenter();
         
-        aIntermediatePositions = new ArrayList<>();
+        aIntermediatePositions = Controller.getInstance().getConveyorIntermediatePositions(aEntry.getParentId(), aEntry.getIndex());
+        ConveyorSection currentSection = aSections;
+        for (int i = 0; i < aIntermediatePositions.size(); i++) {
+            currentSection.aNextSection = new ConveyorSection();
+            currentSection = currentSection.aNextSection;
+        }
         
         updatePosition();
         
@@ -126,7 +130,7 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        DiagramObject.deselectAll();
+        DiagramObject.deselectCurrent();
         DiagramObject.select(this);
     }
 
@@ -202,7 +206,7 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
             // This null will be replaced with an actual value during updatePosition()
             aIntermediatePositions.add(aDraggingIndex, null);
             Controller.getInstance().insertConveyorIntermediatePosition(
-                    aEntry.getParentId(), aEntry.getIndex(), new Coords(0, 0), aDraggingIndex);
+                    aEntry.getParentId(), aEntry.getIndex(), new Coords(0, 0), aDraggingIndex, false);
             DiagramObject.select(this);
         }
         aIntermediatePositions.set(aDraggingIndex, DiagramView.getInstance().pointToCoords(mousePosition));
@@ -216,18 +220,6 @@ public final class ConveyorView extends JPanel implements MouseListener, MouseMo
         if (DiagramObject.isSelected(this)) {
             invalidate();
             repaint();
-        }
-    }
-
-    @Override
-    public void tearDown() {
-        if (aEntry != null) {
-            aEntry.aConveyor = null;
-            aEntry = null;
-        }
-        if (aExit != null) {
-            aExit.aConveyor = null;
-            aExit = null;
         }
     }
 }

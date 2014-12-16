@@ -131,6 +131,7 @@ public final class DiagramModel implements java.io.Serializable{
         for (ElementModel element : aElements) {
             if (id == element.getId()) {
                 found = element;
+                break;
             }
         }
         return found;
@@ -144,6 +145,10 @@ public final class DiagramModel implements java.io.Serializable{
         return elements;
     }
     
+    public void removeElement(int id) {
+        ElementModel element = getElementFromId(id);
+        
+    }
     
     public void deserialiseDiagram(String chemin)
     {

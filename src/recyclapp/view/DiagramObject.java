@@ -6,46 +6,35 @@
 
 package recyclapp.view;
 
-import java.util.Map;
-import java.util.HashMap;
+import javax.swing.JPanel;
 
 /**
  *
  * @author Martin Boisvert
  */
-public interface DiagramObject {
-    static Map<Class, DiagramObject> sSelected = new HashMap<>();
+public abstract class DiagramObject extends JPanel {
+    private static DiagramObject sSelected = null;
     
     /**
-     * Select specified object after deselecting the previously selected object
-     * of its class.
+     * Select specified object after deselecting the previously selected object.
      * @param obj 
      */
     public static void select(DiagramObject obj) {
-        deselectSelected(obj.getClass());
-        
+        deselectCurrent();
         obj.select();
-        sSelected.put(obj.getClass(), obj);
+        sSelected = obj;
+        SelectedPropertiesPanel.getInstance().setSelection(sSelected);
     }
     
     /**
-     * Deselect selected object of specified type.
-     * @param objClass 
+     * Deselect currently selected object.
      */
-    public static void deselectSelected(Class objClass) {
-        if (sSelected.containsKey(objClass)) {
-            sSelected.remove(objClass).deselect();
+    public static void deselectCurrent() {
+        if (sSelected != null) {
+            sSelected.deselect();
+            sSelected = null;
+            SelectedPropertiesPanel.getInstance().clearSelection();
         }
-    }
-    
-    /**
-     * Deselect all Selectables of all types.
-     */
-    public static void deselectAll() {
-        for (Map.Entry<Class, DiagramObject> e : sSelected.entrySet()) {
-            e.getValue().deselect();
-        }
-        sSelected.clear();
     }
     
     /**
@@ -54,35 +43,29 @@ public interface DiagramObject {
      * @return 
      */
     public static boolean isSelected(DiagramObject obj) {
-        return sSelected.get(obj.getClass()) == obj;
+        return sSelected == obj;
     }
     
     /**
-     * Get Selectable object of specified type objClass.
-     * @param objClass
+     * Get currently selected DiagramObject.
      * @return 
      */
-    public static DiagramObject getSelected(Class objClass) {
-        return sSelected.get(objClass);
+    public static DiagramObject getSelected() {
+        return sSelected;
     }
     
     /**
      * Logic to apply once an object is selected.
      */
-    public void select();
+    public abstract void select();
     
     /**
      * Logic to apply once an object is deselected.
      */
-    public void deselect();
+    public abstract void deselect();
     
     /**
      * Logic to apply to update the object before repainting.
      */
-    public void updatePosition();
-    
-    /**
-     * Logic to apply before deleting this object.
-     */
-    public void tearDown();
+    public abstract void updatePosition();
 }

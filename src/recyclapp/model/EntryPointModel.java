@@ -17,6 +17,7 @@ import recyclapp.transport.MaterialFlowMatrix;
  * @author Martin Boisvert
  */
 public final class EntryPointModel extends ElementModel implements java.io.Serializable{
+    private static final String ELEMENT_TYPE = "Entry Point";
     
     private MaterialFlowTable aEntryMaterials = new MaterialFlowTable();
     private final ExitNodeModel aExitNode;
@@ -117,6 +118,11 @@ public final class EntryPointModel extends ElementModel implements java.io.Seria
     @Override
     protected ExitNodeModel getExitNode(int index) {
         return aExitNode;
+    }
+
+    @Override
+    public String getType() {
+        return ELEMENT_TYPE;
     }
     
 }

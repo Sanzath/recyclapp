@@ -74,8 +74,8 @@ public class MainView extends javax.swing.JFrame {
         textPosY = new javax.swing.JTextField();
         PanelToolBox = new javax.swing.JPanel();
         jLabel2 = new javax.swing.JLabel();
-        jToggleButton1 = new javax.swing.JToggleButton();
         toolBoxView1 = ToolBoxView.getInstance();
+        selectedPropertiesPanel1 = SelectedPropertiesPanel.getInstance();
         PanelEntreeSortie = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextEntreeSortie = new javax.swing.JTextArea();
@@ -243,13 +243,6 @@ public class MainView extends javax.swing.JFrame {
 
         jLabel2.setText("Element:");
 
-        jToggleButton1.setText("Convoyeur");
-        jToggleButton1.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jToggleButton1ActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout PanelToolBoxLayout = new javax.swing.GroupLayout(PanelToolBox);
         PanelToolBox.setLayout(PanelToolBoxLayout);
         PanelToolBoxLayout.setHorizontalGroup(
@@ -257,15 +250,12 @@ public class MainView extends javax.swing.JFrame {
             .addGroup(PanelToolBoxLayout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
                     .addGroup(PanelToolBoxLayout.createSequentialGroup()
                         .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                    .addComponent(selectedPropertiesPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelToolBoxLayout.setVerticalGroup(
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,9 +264,9 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(jLabel2)
                 .addGap(2, 2, 2)
                 .addComponent(toolBoxView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(selectedPropertiesPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         PanelEntreeSortie.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -407,10 +397,6 @@ public class MainView extends javax.swing.JFrame {
         
        // TextEntreeSortie.setText(chaine2);
     }//GEN-LAST:event_GrilleMouseMoved
-
-    private void jToggleButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jToggleButton1ActionPerformed
-
-    }//GEN-LAST:event_jToggleButton1ActionPerformed
 
     private void grilleMagnetiqueButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_grilleMagnetiqueButtonActionPerformed
         Grille.setMagnetic(grilleMagnetiqueButton.isSelected());
@@ -546,7 +532,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JToggleButton jToggleButton1;
+    private recyclapp.view.SelectedPropertiesPanel selectedPropertiesPanel1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;
     private recyclapp.view.ToolBoxView toolBoxView1;
