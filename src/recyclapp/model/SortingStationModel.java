@@ -206,5 +206,13 @@ public final class SortingStationModel extends ElementModel implements java.io.S
     public String getType() {
         return ELEMENT_TYPE;
     }
+
+    @Override
+    protected void removeAllLinks() {
+        aEntryNode.removeLink();
+        for (ExitNodeModel exit : aExitNodes) {
+            exit.removeLink();
+        }
+    }
     
 }

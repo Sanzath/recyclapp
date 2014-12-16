@@ -124,5 +124,10 @@ public final class EntryPointModel extends ElementModel implements java.io.Seria
     public String getType() {
         return ELEMENT_TYPE;
     }
+
+    @Override
+    protected void removeAllLinks() {
+        aExitNode.removeLink();
+    }
     
 }

@@ -164,16 +164,6 @@ public class Controller {
             HistoryElement.setMax(0);
         }
     }
-    
-    public void copy()
-    {
-        // Copy from selection - determined by DiagramModel
-    }
-    
-    public void paste()
-    {
-        // Paste to position - determined by DiagramModel
-    }
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="History">
@@ -230,24 +220,6 @@ public class Controller {
     }
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="TransformDictionary">
-    public void addTransform(String sourceMaterial, String destinationMaterial)
-    {
-        
-    }
-    
-    public void removeTransform(String sourceMaterial, String destinationMaterial)
-    {
-        
-    }
-    
-    // Void devrait être quelque chose d'autre, possiblement String ou String[] ou...
-    public void getTransforms()
-    {
-        
-    }
-    // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Overview">
     public String[] getEntryPoints()
     {
@@ -276,49 +248,6 @@ public class Controller {
     }
     // </editor-fold>
     
-    // <editor-fold defaultstate="collapsed" desc="MaterialDictonary">
-    public String[] getMaterials()
-    {
-        String materials[] = new String[1];
-        materials[1] = "placeholder";
-        
-        return materials;
-    }
-    
-    public void addMaterial(String name)
-    {
-        
-    }
-    
-    public void removeMaterial(String name)
-    {
-        
-    }
-    // </editor-fold>
-    
-    // <editor-fold defaultstate="collapsed" desc="TemplateContainer">
-    // void devrait être un String[] ou quelque chose dans le genre
-    public void getTemplates()
-    {
-        
-    }
-    
-    public void selectTemplate(int index)
-    {
-        
-    }
-    
-    public void deselectTemplate()
-    {
-        
-    }
-    
-    public void addTemplate(/* quelque chose */)
-    {
-        
-    }
-    // </editor-fold>
-    
     // <editor-fold defaultstate="collapsed" desc="Elements">
     private ElementModel getElement(int id) {
         return DiagramModel.getInstance().getElementFromId(id);
@@ -330,7 +259,7 @@ public class Controller {
     
     public void setElementProperties(ElementProperties properties) {
         getElement(properties.aId).fromProperties(properties);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public ParameterGroup getParameters(int id) {
@@ -338,17 +267,17 @@ public class Controller {
     }
     public void setParameters(int id, ParameterGroup parameters) {
         getElement(id).setParameters(parameters);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public void setElementPosition(int id, Coords position) {
         getElement(id).setPosition(position);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public void setElementSize(int id, Coords size) {
         getElement(id).setSize(size);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public boolean canAddEntryNode(int id) {
@@ -366,28 +295,28 @@ public class Controller {
     
     public void addEntryNode(int id) {
         getElement(id).addEntryNode();
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     public void addExitNode(int id) {
         getElement(id).canAddExitNode();
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     public void addEntryNode(int id, String name) {
         getElement(id).addEntryNode().setName(name);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     public void addExitNode(int id, String name) {
         getElement(id).addExitNode().setName(name);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public void removeEntryNode(int id, int index) {
         getElement(id).removeEntryNode(index);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     public void removeExitNode(int id, int index) {
         getElement(id).removeExitNode(index);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public int getEntryNodeCount(int id) {
@@ -419,6 +348,11 @@ public class Controller {
     
     public String getElementType(int id) {
         return getElement(id).getType();
+    }
+    
+    public void removeElement(int id) {
+        DiagramModel.getInstance().removeElement(id);
+        serialize(null);
     }
     // </editor-fold>
     
@@ -515,12 +449,12 @@ public class Controller {
         ExitNodeModel exitNode = getExitNode(exitParentId, exitIndex);
         
         entryNode.createLink(exitNode);
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public void removeConveyor(int entryParentId, int entryIndex) {
         getEntryNode(entryParentId, entryIndex).removeLink();
-        Controller.getInstance().serialize(null);
+        serialize(null);
     }
     
     public List<Coords> getConveyorIntermediatePositions(int entryParentId, int entryIndex) {

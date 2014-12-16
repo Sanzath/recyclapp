@@ -155,6 +155,12 @@ public final class TransformStationModel extends ElementModel implements java.io
     public String getType() {
         return ELEMENT_TYPE;
     }
+
+    @Override
+    protected void removeAllLinks() {
+        aEntryNode.removeLink();
+        aExitNode.removeLink();
+    }
     
 }
 

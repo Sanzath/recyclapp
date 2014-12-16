@@ -6,13 +6,15 @@
 
 package recyclapp.view;
 
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
 import javax.swing.JPanel;
 
 /**
  *
  * @author Martin Boisvert
  */
-public abstract class DiagramObject extends JPanel {
+public abstract class DiagramObject extends JPanel implements KeyListener {
     private static DiagramObject sSelected = null;
     
     /**
@@ -55,12 +57,12 @@ public abstract class DiagramObject extends JPanel {
     }
     
     /**
-     * Logic to apply once an object is selected.
+     * Logic to apply once an object is selected. Should register as keyListener.
      */
     public abstract void select();
     
     /**
-     * Logic to apply once an object is deselected.
+     * Logic to apply once an object is deselected. Should deregister as keyListener.
      */
     public abstract void deselect();
     
@@ -68,4 +70,26 @@ public abstract class DiagramObject extends JPanel {
      * Logic to apply to update the object before repainting.
      */
     public abstract void updatePosition();
+    
+    /**
+     * Logic to apply to delete from both the model and the view. This calls
+     * DiagramView.remove().
+     */
+    public abstract void deleteFromDiagram();
+
+    @Override
+    public void keyTyped(KeyEvent e) {
+    }
+
+    @Override
+    public void keyPressed(KeyEvent e) {
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        if (e.getKeyCode() == KeyEvent.VK_DELETE) {
+            deleteFromDiagram();
+        }
+        DiagramView.getInstance().repaint();
+    }
 }

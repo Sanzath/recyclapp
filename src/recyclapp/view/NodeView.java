@@ -297,4 +297,18 @@ public final class NodeView extends DiagramObject implements MouseListener, Mous
     protected ElementView getElement() {
         return aParent;
     }
+
+    @Override
+    public void deleteFromDiagram() {
+        if (aConveyor != null) {
+            aConveyor.deleteFromDiagram();
+        }
+        DiagramView.getInstance().remove(this);
+    }
+    
+    @Override
+    public void keyReleased(KeyEvent e) {
+        // Override so deletion only happens from the ElementPropertiesView
+        // Besides we don't do addKeyListener so it's probably fine
+    }
 }

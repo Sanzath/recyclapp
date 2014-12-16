@@ -20,7 +20,7 @@ import recyclapp.transport.Coords;
  *
  * @author Martin Boisvert
  */
-public final class ElementView extends DiagramObject implements MouseListener, MouseMotionListener {
+public final class ElementView extends DiagramObject implements MouseListener, MouseMotionListener, KeyListener {
     private static final Border SELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 2);
     private static final Border UNSELECTED_BORDER = BorderFactory.createLineBorder(Color.black, 1);
     private static final float MINIMUM_SIZE = 0.5F;
@@ -95,12 +95,14 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     @Override
     public void deselect() {
         setBorder(UNSELECTED_BORDER);
+        removeKeyListener(this);
         aTab.setVisible(false);
     }
     
     @Override
     public void select() {
         setBorder(SELECTED_BORDER);
+        addKeyListener(this);
         aTab.setVisible(true);
     }
     
@@ -290,6 +292,18 @@ public final class ElementView extends DiagramObject implements MouseListener, M
     
     protected NodeView getExitNodeView(int index) {
         return aExitNodes.get(index);
+    }
+
+    @Override
+    public void deleteFromDiagram() {
+        for (NodeView entry : aEntryNodes) {
+            entry.deleteFromDiagram();
+        }
+        for (NodeView exit : aExitNodes) {
+            exit.deleteFromDiagram();
+        }
+        DiagramView.getInstance().remove(this);
+        Controller.getInstance().removeElement(aId);
     }
 }
 

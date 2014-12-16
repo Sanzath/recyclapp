@@ -219,4 +219,6 @@ public abstract class ElementModel implements java.io.Serializable{
     }
     
     public abstract String getType();
+    
+    protected abstract void removeAllLinks();
 }

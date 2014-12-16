@@ -148,6 +148,19 @@ public final class DiagramModel implements java.io.Serializable{
     public void removeElement(int id) {
         ElementModel element = getElementFromId(id);
         
+        // Remove from the overview
+        if (element instanceof EntryPointModel) {
+            OverviewModel.getInstance().removeEntryPoint((EntryPointModel)element);
+        }
+        else if (element instanceof ExitPointModel) {
+            OverviewModel.getInstance().removeExitPoint((ExitPointModel)element);
+        }
+        
+        // Remove links, this removing accessible references to it
+        element.removeAllLinks();
+        
+        // Remove from ourselves
+        aElements.remove(element);
     }
     
     public void deserialiseDiagram(String chemin)

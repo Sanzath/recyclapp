@@ -111,4 +111,9 @@ public class ExitPointModel extends ElementModel implements java.io.Serializable
         return ELEMENT_TYPE;
     }
 
+    @Override
+    protected void removeAllLinks() {
+        aEntryNode.removeLink();
+    }
+
 }

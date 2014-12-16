@@ -165,4 +165,12 @@ public final class JunctionModel extends ElementModel implements java.io.Seriali
         return ELEMENT_TYPE;
     }
 
+    @Override
+    protected void removeAllLinks() {
+        for (EntryNodeModel entry : aEntryNodes) {
+            entry.removeLink();
+        }
+        aExitNode.removeLink();
+    }
+
 }

@@ -23,7 +23,7 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
     private static final int UNSELECTED_THICKNESS = 1;
     private static final int SELECTED_THICKNESS = 2;
     
-    private final ConveyorSection aSections;
+    private ConveyorSection aSections;
     
     protected NodeView aEntry;
     protected NodeView aExit;
@@ -33,16 +33,18 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
     
     private ConveyorSection aSectionToSeparate;
     private int aDraggingIndex = -1;
+    private boolean aDeleteJunction = false;
     
     public ConveyorView(NodeView entry, NodeView exit) {
         aEntry = entry;
         aExit = exit;
         setOpaque(false);
         setSize(DiagramView.getInstance().getSize());
+        setFocusable(true);
         
         aSections = new ConveyorSection();
-        aSections.aStartPosition = getEntryCenter();
-        aSections.aEndPosition = getExitCenter();
+//        aSections.aStartPosition = getEntryCenter();
+//        aSections.aEndPosition = getExitCenter();
         
         aIntermediatePositions = Controller.getInstance().getConveyorIntermediatePositions(aEntry.getParentId(), aEntry.getIndex());
         ConveyorSection currentSection = aSections;
@@ -90,13 +92,25 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
     @Override
     public void select() {
         aThickness = SELECTED_THICKNESS;
+        addKeyListener(this);
+        requestFocusInWindow();
         repaint();
     }
 
     @Override
     public void deselect() {
         aThickness = UNSELECTED_THICKNESS;
+        removeKeyListener(this);
         repaint();
+    }
+    
+    @Override
+    public void deleteFromDiagram() {
+        aEntry.aConveyor = null;
+        aExit.aConveyor = null;
+        System.out.println("hi");
+        DiagramView.getInstance().remove(this);
+        Controller.getInstance().removeConveyor(aEntry.getParentId(), aEntry.getIndex());
     }
 
     @Override
@@ -130,7 +144,6 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
 
     @Override
     public void mouseClicked(MouseEvent e) {
-        DiagramObject.deselectCurrent();
         DiagramObject.select(this);
     }
 
@@ -167,8 +180,22 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
             aSectionToSeparate = null;
         }
         else if (aDraggingIndex != -1) {
-            Controller.getInstance().moveConveyorIntermediatePosition(
-                    aEntry.getParentId(), aEntry.getIndex(), aIntermediatePositions.get(aDraggingIndex), aDraggingIndex);
+            if (!aDeleteJunction) {
+                Controller.getInstance().moveConveyorIntermediatePosition(
+                        aEntry.getParentId(), aEntry.getIndex(), aIntermediatePositions.get(aDraggingIndex), aDraggingIndex);
+            }
+            else {
+                Controller.getInstance().removeConveyorIntermediatePosition(
+                        aEntry.getParentId(), aEntry.getIndex(), aDraggingIndex);
+                
+                // Remove one section
+                aSections = aSections.aNextSection;
+                
+                // Remove the intermediate position locally
+                aIntermediatePositions.remove(aDraggingIndex);
+                updatePosition();
+            }
+            aDraggingIndex = -1;
         }
     }
 
@@ -220,6 +247,22 @@ public final class ConveyorView extends DiagramObject implements MouseListener, 
         if (DiagramObject.isSelected(this)) {
             invalidate();
             repaint();
+        }
+    }
+    
+    @Override
+    public void keyPressed(KeyEvent e) {
+        super.keyPressed(e); // Regular processing
+        if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+            aDeleteJunction = true;
+        }
+    }
+
+    @Override
+    public void keyReleased(KeyEvent e) {
+        super.keyReleased(e); // Regular processing
+        if (e.getKeyCode() == KeyEvent.VK_CONTROL) {
+            aDeleteJunction = false;
         }
     }
 }
