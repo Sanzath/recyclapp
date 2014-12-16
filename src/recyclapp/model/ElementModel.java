@@ -26,6 +26,8 @@ public abstract class ElementModel implements java.io.Serializable{
     protected static final int EXIT_NODE_DEFAULT_ANGLE = 0;
     protected static final int NODE_SPACING = 30;
     
+    private static final long serialVersionUID = 1247776848009982420L;
+    
     private static int sNextId = 0;
     
     private final int aId;
