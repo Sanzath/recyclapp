@@ -6,10 +6,12 @@
 
 package recyclapp.model;
 
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
+import javax.swing.JFileChooser;
 import recyclapp.transport.*;
 
-import java.util.List;
-import java.util.ArrayList;
 
 /**
  *
@@ -63,12 +65,43 @@ public class Controller {
  
     public void saveAs(String name)
     {
-        
+        JFileChooser choix = new JFileChooser();
+        int retour = choix.showOpenDialog(null);
+    
+        if(retour==JFileChooser.APPROVE_OPTION){
+        // un fichier a été choisi (sortie par OK)
+        // nom du fichier  choisi 
+            choix.getSelectedFile().getName();
+        // chemin absolu du fichier choisi
+            choix.getSelectedFile().getAbsolutePath();
+        }
     }
     
-    public void load(String name)
+    public String load()
     {
+        String chemin = null;
         
+        FilterFileModel filtre = new FilterFileModel(new String[]{"rec"},"les fichiers Recyclapp (*.rec)");
+        
+        JFileChooser choix = new JFileChooser();
+        choix.addChoosableFileFilter(filtre);
+        int retour = choix.showOpenDialog(null);
+    
+        if(retour==JFileChooser.APPROVE_OPTION){
+        // un fichier a été choisi (sortie par OK)
+        // nom du fichier  choisi 
+            choix.getSelectedFile().getName();
+        // chemin absolu du fichier choisi
+            chemin = choix.getSelectedFile().getAbsolutePath();
+            
+            
+            chemin = chemin.replace('\\', '/');
+           
+            HistoryElement.getInstance().deserializeDiag(chemin);
+            HistoryElement.setCounter(0);
+            HistoryElement.setMax(0);
+        }
+        return chemin;
     }
     
     public void copy()
@@ -93,7 +126,7 @@ public class Controller {
         if (HistoryElement.getCounter() > 1)
         {
             HistoryElement.setCounter(HistoryElement.getCounter()-1);
-            HistoryElement.getInstance().deserializeDiag();
+            HistoryElement.getInstance().deserializeDiag(null);
         }
     }
     
@@ -102,7 +135,7 @@ public class Controller {
         if ( HistoryElement.getCounter() < HistoryElement.getMax())
         {
             HistoryElement.setCounter(HistoryElement.getCounter()+1);
-            HistoryElement.getInstance().deserializeDiag();
+            HistoryElement.getInstance().deserializeDiag(null);
         }
     }
     

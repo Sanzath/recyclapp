@@ -6,14 +6,15 @@
 
 package recyclapp.view;
 
-import recyclapp.model.Controller;
 import java.awt.Color;
-import javax.swing.tree.DefaultMutableTreeNode;
-import javax.swing.*;
-import javax.swing.tree.DefaultTreeModel;
 import java.awt.Point;
 import java.text.DecimalFormat;
 import java.util.ArrayList;
+import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
+import javax.swing.tree.DefaultMutableTreeNode;
+import javax.swing.tree.DefaultTreeModel;
+import recyclapp.model.Controller;
 import recyclapp.model.DiagramModel;
 import recyclapp.transport.Coords;
 import recyclapp.transport.ElementProperties;
@@ -96,6 +97,11 @@ public class MainView extends javax.swing.JFrame {
         BouttonOutilsOuvir.setFocusable(false);
         BouttonOutilsOuvir.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         BouttonOutilsOuvir.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        BouttonOutilsOuvir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                BouttonOutilsOuvirActionPerformed(evt);
+            }
+        });
         OutilsBar.add(BouttonOutilsOuvir);
         OutilsBar.add(jSeparator5);
 
@@ -406,7 +412,10 @@ public class MainView extends javax.swing.JFrame {
     }//GEN-LAST:event_grilleMagnetiqueButtonActionPerformed
 
     private void ButtonOutilsSaveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsSaveActionPerformed
-        Controller.getInstance().serialize();
+        
+       //saveView save = new saveView();
+       //save.setVisible(true);
+       // 
     }//GEN-LAST:event_ButtonOutilsSaveActionPerformed
 
     private void ButtonOutilsUndoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsUndoActionPerformed
@@ -421,6 +430,11 @@ public class MainView extends javax.swing.JFrame {
         Grille.reloadObjects();
         TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
+
+    private void BouttonOutilsOuvirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_BouttonOutilsOuvirActionPerformed
+        TextEntreeSortie.setText(Controller.getInstance().load());
+        Grille.reloadObjects();
+    }//GEN-LAST:event_BouttonOutilsOuvirActionPerformed
     
     /*
     private void buildTree(){

@@ -60,7 +60,7 @@ public class HistoryElement {
         String chaine = null;
         try
         {
-            chaine = "C:/Windows/Temp/recyclapp"+aCounter + ".ser";
+            chaine = "C:/Windows/Temp/recyclapp"+aCounter + ".rec";
          
             FileOutputStream fileOut = new FileOutputStream(chaine);
             ObjectOutputStream out = new ObjectOutputStream(fileOut);
@@ -79,9 +79,9 @@ public class HistoryElement {
         
     }
     
-    public void deserializeDiag()
+    public void deserializeDiag(String chemin)
     {
-        DiagramModel.getInstance().deserialiseDiagram();
+        DiagramModel.getInstance().deserialiseDiagram(chemin);
     }
     
     

@@ -145,10 +145,17 @@ public final class DiagramModel implements java.io.Serializable{
     }
     
     
-    public void deserialiseDiagram()
+    public void deserialiseDiagram(String chemin)
     {
+        String chaine = null;
         DiagramModel e = null;
-        String chaine = "C:/Windows/Temp/recyclapp" +HistoryElement.getCounter() +".ser";
+        if(chemin == null)
+        {
+            chaine = "C:/Windows/Temp/recyclapp" +HistoryElement.getCounter() +".rec";
+        }
+        else{
+            chaine = chemin;
+        }
       try
       {
          FileInputStream fileIn = new FileInputStream(chaine);
@@ -167,7 +174,7 @@ public final class DiagramModel implements java.io.Serializable{
          return;
       }catch(ClassNotFoundException c)
       {
-         System.out.println("Employee class not found");
+         System.out.println("Recyclapp class not found");
          c.printStackTrace();
          return;
       }
