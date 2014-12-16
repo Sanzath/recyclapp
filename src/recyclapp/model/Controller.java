@@ -6,11 +6,19 @@
 
 package recyclapp.model;
 
+import java.awt.Desktop;
+import java.awt.image.BufferedImage;
+import java.io.File;
 import java.io.FileFilter;
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
+import javax.imageio.ImageIO;
+import javax.security.auth.DestroyFailedException;
 import javax.swing.JFileChooser;
+import javax.swing.JPanel;
 import recyclapp.transport.*;
+import recyclapp.view.*;
 
 
 /**
@@ -54,6 +62,49 @@ public class Controller {
     
     public List<ElementProperties> getAllElements() {
         return DiagramModel.getInstance().getAllElements();
+    }
+    
+    public void exportImage()
+    {
+        BufferedImage bi = DiagramView.getInstance().createImage();
+        
+        String chemin =null;
+        FilterFileModel filtre = new FilterFileModel(new String[]{"PNG"},"Image PNG (*.png)");
+        JFileChooser choix = new JFileChooser();
+        choix.addChoosableFileFilter(filtre);
+        int retour = choix.showSaveDialog(null);
+    
+        if(retour==JFileChooser.APPROVE_OPTION){
+        // un fichier a été choisi (sortie par OK)
+        // nom du fichier  choisi 
+            choix.getSelectedFile().getName();
+        // chemin absolu du fichier choisi
+            chemin = choix.getSelectedFile().getAbsolutePath();
+            chemin = chemin.replace('\\', '/');
+            chemin = chemin + ".png";
+            
+            try
+            {
+                ImageIO.write(bi, "png", new File(chemin));
+                
+                //try {
+                    
+                    
+                    Desktop.getDesktop().open(new File(chemin));
+                    
+                    //} 
+                //catch{}
+                // (DesktopException e2) {
+                    //Problème lors du lancement du programme
+                    //e2.printStackTrace();
+               // }
+                
+            } catch (IOException e) {
+            // TODO Auto-generated catch block
+                e.printStackTrace();
+            }  
+
+        }  
     }
     // </editor-fold>
     

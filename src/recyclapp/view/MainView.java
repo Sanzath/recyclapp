@@ -186,6 +186,11 @@ public class MainView extends javax.swing.JFrame {
         ButtonOutilsExport.setFocusable(false);
         ButtonOutilsExport.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
         ButtonOutilsExport.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        ButtonOutilsExport.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                ButtonOutilsExportActionPerformed(evt);
+            }
+        });
         OutilsBar.add(ButtonOutilsExport);
         OutilsBar.add(jSeparator9);
 
@@ -429,6 +434,10 @@ public class MainView extends javax.swing.JFrame {
         Controller.getInstance().load();
         Grille.reloadObjects();
     }//GEN-LAST:event_BouttonOutilsOuvirActionPerformed
+
+    private void ButtonOutilsExportActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_ButtonOutilsExportActionPerformed
+        Controller.getInstance().exportImage();
+    }//GEN-LAST:event_ButtonOutilsExportActionPerformed
     
     /*
     private void buildTree(){
