@@ -76,6 +76,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         toolBoxView1 = ToolBoxView.getInstance();
         overviewView1 = OverviewView.getInstance();
+        selectedPropertiesPanel1 = SelectedPropertiesPanel.getInstance();
         PanelEntreeSortie = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextEntreeSortie = new javax.swing.JTextArea();
@@ -249,22 +250,19 @@ public class MainView extends javax.swing.JFrame {
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelToolBoxLayout.createSequentialGroup()
                 .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)
+                    .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(PanelToolBoxLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
-                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                        .addGap(65, 65, 65)
-                        .addComponent(jToggleButton1)
-                        .addGap(0, 0, Short.MAX_VALUE))
+                        .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(PanelToolBoxLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
+            .addGroup(PanelToolBoxLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(selectedPropertiesPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, 218, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelToolBoxLayout.setVerticalGroup(
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -274,7 +272,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGap(2, 2, 2)
                 .addComponent(toolBoxView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jToggleButton1)
+                .addComponent(selectedPropertiesPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -306,11 +304,6 @@ public class MainView extends javax.swing.JFrame {
         Grille.addMouseMotionListener(new java.awt.event.MouseMotionAdapter() {
             public void mouseMoved(java.awt.event.MouseEvent evt) {
                 GrilleMouseMoved(evt);
-            }
-        });
-        Grille.addMouseListener(new java.awt.event.MouseAdapter() {
-            public void mouseClicked(java.awt.event.MouseEvent evt) {
-                GrilleMouseClicked(evt);
             }
         });
 
@@ -548,8 +541,8 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator9;
-    private javax.swing.JToggleButton jToggleButton1;
     private recyclapp.view.OverviewView overviewView1;
+    private recyclapp.view.SelectedPropertiesPanel selectedPropertiesPanel1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;
     private recyclapp.view.ToolBoxView toolBoxView1;
