@@ -75,6 +75,7 @@ public class MainView extends javax.swing.JFrame {
         jLabel2 = new javax.swing.JLabel();
         jToggleButton1 = new javax.swing.JToggleButton();
         toolBoxView1 = ToolBoxView.getInstance();
+        overviewView1 = OverviewView.getInstance();
         PanelEntreeSortie = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
         TextEntreeSortie = new javax.swing.JTextArea();
@@ -244,17 +245,22 @@ public class MainView extends javax.swing.JFrame {
         PanelToolBoxLayout.setHorizontalGroup(
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                        .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap()
+                        .addGroup(PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(PanelToolBoxLayout.createSequentialGroup()
+                                .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 59, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
+                            .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE)))
+                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
+                        .addGap(65, 65, 65)
+                        .addComponent(jToggleButton1)
                         .addGap(0, 0, Short.MAX_VALUE))
-                    .addComponent(toolBoxView1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 196, Short.MAX_VALUE))
+                    .addGroup(PanelToolBoxLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(PanelToolBoxLayout.createSequentialGroup()
-                .addGap(65, 65, 65)
-                .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         PanelToolBoxLayout.setVerticalGroup(
             PanelToolBoxLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -265,7 +271,9 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(toolBoxView1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jToggleButton1)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(overviewView1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         PanelEntreeSortie.setBorder(javax.swing.BorderFactory.createEtchedBorder());
@@ -296,16 +304,21 @@ public class MainView extends javax.swing.JFrame {
                 GrilleMouseMoved(evt);
             }
         });
+        Grille.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                GrilleMouseClicked(evt);
+            }
+        });
 
         javax.swing.GroupLayout GrilleLayout = new javax.swing.GroupLayout(Grille);
         Grille.setLayout(GrilleLayout);
         GrilleLayout.setHorizontalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 655, Short.MAX_VALUE)
+            .addGap(0, 590, Short.MAX_VALUE)
         );
         GrilleLayout.setVerticalGroup(
             GrilleLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 493, Short.MAX_VALUE)
+            .addGap(0, 485, Short.MAX_VALUE)
         );
 
         jScrollPane2.setViewportView(Grille);
@@ -314,11 +327,11 @@ public class MainView extends javax.swing.JFrame {
         PanelGraph.setLayout(PanelGraphLayout);
         PanelGraphLayout.setHorizontalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 594, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
         PanelGraphLayout.setVerticalGroup(
             PanelGraphLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 489, Short.MAX_VALUE)
+            .addComponent(jScrollPane2)
         );
 
         jMenu1.setText("File");
@@ -421,6 +434,9 @@ public class MainView extends javax.swing.JFrame {
         Grille.reloadObjects();
         TextEntreeSortie.setText("taille = " + DiagramModel.getInstance().getAllElements().size());
     }//GEN-LAST:event_ButtonOutilsRedoActionPerformed
+
+    private void GrilleMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_GrilleMouseClicked
+    }//GEN-LAST:event_GrilleMouseClicked
     
     /*
     private void buildTree(){
@@ -530,6 +546,7 @@ public class MainView extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator9;
     private javax.swing.JToggleButton jToggleButton1;
+    private recyclapp.view.OverviewView overviewView1;
     private javax.swing.JTextField textPosX;
     private javax.swing.JTextField textPosY;
     private recyclapp.view.ToolBoxView toolBoxView1;

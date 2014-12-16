@@ -76,6 +76,14 @@ public final class OverviewModel implements java.io.Serializable{
         return names;
     }
     
+    public List<EntryPointModel> getEntryPoints(){
+        return aEntryPoints;
+    }
+    
+    public List<ExitPointModel> getExitPoints(){
+        return aExitPoints;
+    }
+    
     public List<String> getExitNames() {
         List<String> names = new ArrayList<>();
         

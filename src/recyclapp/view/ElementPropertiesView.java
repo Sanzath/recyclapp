@@ -597,6 +597,7 @@ public class ElementPropertiesView extends javax.swing.JFrame {
         AcceptButton.requestFocusInWindow();
         aPropFinal.aParameters = createNewParamGroup();
         aElemView.updateProperties(aPropFinal);
+        OverviewView.getInstance().updateView();
         this.dispose();
         
     }//GEN-LAST:event_AcceptButtonMouseClicked

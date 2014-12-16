@@ -73,7 +73,6 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
             NodeView exitNode = elementIdMap.get(properties.aExitParentId).getExitNodeView(properties.aExitIndex);
             NodeView.addConveyorView(entryNode, exitNode);
         }
-        
         repaint();
     }
  
@@ -174,7 +173,6 @@ public final class DiagramView extends JPanel implements MouseMotionListener, Mo
             add(view);
             view.createPropertiesWindow(elem);
             repaint();
-            
             ToolBoxView.getInstance().deselect();
         }
         else {

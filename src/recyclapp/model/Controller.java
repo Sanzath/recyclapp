@@ -10,6 +10,7 @@ import recyclapp.transport.*;
 
 import java.util.List;
 import java.util.ArrayList;
+import recyclapp.view.OverviewView;
 
 /**
  *
@@ -155,20 +156,16 @@ public class Controller {
     // </editor-fold>
     
     // <editor-fold defaultstate="collapsed" desc="Overview">
-    public String[] getEntryPoints()
+    public List<EntryPointModel> getEntryPoints()
     {
-        String materials[] = new String[1];
-        materials[1] = "placeholder";
-        
-        return materials;
+        List<EntryPointModel> entries = OverviewModel.getInstance().getEntryPoints();
+        return entries;
     }
     
-    public String[] getExitPoints()
+    public List<ExitPointModel> getExitPoints()
     {
-        String materials[] = new String[1];
-        materials[1] = "placeholder";
-        
-        return materials;
+        List<ExitPointModel> exits = OverviewModel.getInstance().getExitPoints();
+        return exits;
     }
     
     public void selectEntryPoint(int index)
